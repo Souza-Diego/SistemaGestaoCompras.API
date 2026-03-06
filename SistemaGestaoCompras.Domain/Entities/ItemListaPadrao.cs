@@ -2,9 +2,8 @@
 
 namespace SistemaGestaoCompras.Domain.Entities
 {
-    public class ItemListaPadrao
-    {
-        public Guid IdItemListaPadrao { get; private set; }
+    public class ItemListaPadrao : Entidade
+    {        
         public Guid IdListaDeComprasPadrao { get; private set; }
         public Guid IdProduto { get; private set; }
         public decimal QuantidadePlanejada { get; private set; }
@@ -21,8 +20,7 @@ namespace SistemaGestaoCompras.Domain.Entities
             Guid idProduto,
             decimal quantidadePlanejada,
             UnidadeMedida unidade)
-        {
-            IdItemListaPadrao = Guid.NewGuid();
+        {            
             IdListaDeComprasPadrao = idListaDeComprasPadrao;
             IdProduto = idProduto;
 

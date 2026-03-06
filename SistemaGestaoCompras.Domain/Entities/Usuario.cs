@@ -4,11 +4,9 @@ using SistemaGestaoCompras.Domain.ValueObjects;
 namespace SistemaGestaoCompras.Domain.Entities
 {
     // Classe publica para ser usada em outras camadas do sistema
-    public class Usuario
-    {
-        // Propriedades com métodos de acesso privados para garantir encapsulamento
+    public class Usuario : Entidade
+    {   // Propriedades com métodos de acesso privados para garantir encapsulamento
         // GUID (Globally Unique Identifier) é um identificador único globalmente, garantindo que cada usuário tenha um ID exclusivo, mesmo em sistemas distribuídos
-        public Guid IdUsuario { get; private set; }
         public string Nome { get; private set; }
         public Email Email { get; private set; }
         public Senha Senha { get; private set; }
@@ -30,8 +28,7 @@ namespace SistemaGestaoCompras.Domain.Entities
         public Usuario(string nome, Email email, Senha senha, TipoUsuario tipoUsuario)
         {
             ValidarNome(nome);
-
-            IdUsuario = Guid.NewGuid();
+                        
             Nome = nome.Trim();
             Email = email;
             Senha = senha;

@@ -3,9 +3,8 @@ using SistemaGestaoCompras.Domain.ValueObjects;
 
 namespace SistemaGestaoCompras.Domain.Entities
 {
-    public class Produto
-    {
-        public Guid IdProduto { get; private set; }
+    public class Produto : Entidade
+    {        
         public string Nome { get; private set; }
         public Guid IdCategoria { get; private set; }
         public Guid? IdMarca { get; private set; }
@@ -28,9 +27,7 @@ namespace SistemaGestaoCompras.Domain.Entities
             TipoProduto tipo,
             Guid? idMarca = null,
             Guid? idCriadoPorUsuario = null)
-        {
-            IdProduto = Guid.NewGuid();
-
+        {         
             ValidarNome(nome);
             ValidarCategoria(idCategoria);
             ValidarUnidadeBase(unidadeBase);

@@ -3,9 +3,8 @@ using SistemaGestaoCompras.Domain.ValueObjects;
 
 namespace SistemaGestaoCompras.Domain.Entities
 {
-    public class ItemLista
-    {
-        public Guid IdItemLista { get; private set; }
+    public class ItemLista : Entidade
+    {        
         public Guid IdListaDeCompras { get; private set; }
         public Guid IdProduto { get; private set; }
         public decimal QuantidadePlanejada { get; private set; }
@@ -34,8 +33,7 @@ namespace SistemaGestaoCompras.Domain.Entities
 
             if (unidade == null)
                 throw new ArgumentNullException(nameof(unidade), "Unidade de medida é obrigatória.");
-
-            IdItemLista = Guid.NewGuid();
+                        
             IdListaDeCompras = idListaDeCompras;
             IdProduto = idProduto;
             QuantidadePlanejada = quantidadePlanejada;

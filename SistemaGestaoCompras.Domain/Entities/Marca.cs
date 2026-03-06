@@ -1,9 +1,8 @@
 ﻿
 namespace SistemaGestaoCompras.Domain.Entities
 {
-    public class Marca
-    {
-        public Guid IdMarca { get; private set; }
+    public class Marca : Entidade
+    {        
         public string Nome { get; private set; }
         public bool Ativo { get; private set; }
 
@@ -14,8 +13,7 @@ namespace SistemaGestaoCompras.Domain.Entities
         }
 
         public Marca(string nome)
-        {
-            IdMarca = Guid.NewGuid();
+        {            
             ValidarNome(nome);
             Nome = nome.Trim();
             Ativo = true;

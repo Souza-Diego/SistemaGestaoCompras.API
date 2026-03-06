@@ -2,9 +2,8 @@
 
 namespace SistemaGestaoCompras.Domain.Entities
 {
-    public class RegistroDePreco
-    {
-        public Guid IdRegistroDePreco { get; private set; }
+    public class RegistroDePreco : Entidade
+    {        
         public Guid IdProduto { get; private set; }
         public Guid IdMercado { get; private set; }
         public Guid IdUsuario { get; private set; }
@@ -27,8 +26,7 @@ namespace SistemaGestaoCompras.Domain.Entities
             Dinheiro preco,
             decimal quantidadeReferencia,
             UnidadeMedida unidadeReferencia)
-        {
-            IdRegistroDePreco = Guid.NewGuid();
+        {            
             IdProduto = idProduto;
             IdMercado = idMercado;
             IdUsuario = idUsuario;

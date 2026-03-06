@@ -1,11 +1,11 @@
 ﻿using SistemaGestaoCompras.Domain.ValueObjects;
 namespace SistemaGestaoCompras.Domain.Entities
 {
-    public class ItemCompra
-    {
-        public Guid IdItemCompra { get; private set; }
+    public class ItemCompra : Entidade
+    {        
         public Guid IdCompra { get; private set; }
         public Guid IdProduto { get; private set; }
+        public string NomeProdutoSnapshot { get; private set; }
         public decimal Quantidade { get; private set; }
         public Dinheiro PrecoUnitario { get; private set; }
         public UnidadeMedida Unidade { get; private set; }
@@ -15,18 +15,20 @@ namespace SistemaGestaoCompras.Domain.Entities
             // Construtor protegido para uso do Entity Framework
             Unidade = null!;
             PrecoUnitario = null!;
+            NomeProdutoSnapshot = null!;
         } 
 
         public ItemCompra(
             Guid idCompra,
             Guid idProduto,
+            string nomeProduto,
             decimal quantidade,
             Dinheiro precoUnitario,
             UnidadeMedida unidade)
-        {
-            IdItemCompra = Guid.NewGuid();
+        {            
             IdCompra = idCompra;
             IdProduto = idProduto;
+            NomeProdutoSnapshot = nomeProduto;
             ValidarQuantidade(quantidade);
             Quantidade = quantidade;
             PrecoUnitario = precoUnitario;

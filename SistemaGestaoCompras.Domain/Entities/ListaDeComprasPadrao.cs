@@ -2,9 +2,8 @@
 
 namespace SistemaGestaoCompras.Domain.Entities
 {
-    public class ListaDeComprasPadrao
-    {
-        public Guid IdListaDeComprasPadrao { get; private set; }
+    public class ListaDeComprasPadrao : Entidade
+    {        
         public Guid IdUsuario { get; private set; }
         public string Nome { get; private set; }
         public bool Ativo { get; private set; }
@@ -19,8 +18,7 @@ namespace SistemaGestaoCompras.Domain.Entities
         }
 
         public ListaDeComprasPadrao(Guid idUsuario, string nome)
-        {
-            IdListaDeComprasPadrao = Guid.NewGuid();
+        {            
             IdUsuario = idUsuario;
 
             ValidarNome(nome);
@@ -43,7 +41,7 @@ namespace SistemaGestaoCompras.Domain.Entities
 
         public void AdicionarItem(Guid idProduto, decimal quantidadePlanejada, UnidadeMedida unidade)
         {
-            var item = new ItemListaPadrao(IdListaDeComprasPadrao, idProduto, quantidadePlanejada, unidade);
+            var item = new ItemListaPadrao(Id, idProduto, quantidadePlanejada, unidade);
             _itens.Add(item);
         }
 

@@ -2,29 +2,39 @@
 
 namespace SistemaGestaoCompras.Domain.Entities
 {
-    public class Compra
+    public class Compra : Entidade
     {
-        public Guid IdCompra { get; private set; }
         public Guid IdUsuario { get; private set; }
         public Guid IdMercado { get; private set; }
         public DateTime DataCompra { get; private set; }
+        public DateTime DataCriacao { get; private set; }
+        public DateTime? DataFinalizacao { get; private set; }
         public bool Finalizada { get; private set; }
+        public bool AtivaParaRelatorio { get; private set; }
+        public Dinheiro ValorTotal { get; private set; }
         private readonly List<ItemCompra> _itens = new();
         public IReadOnlyCollection<ItemCompra> Itens => _itens.AsReadOnly();
 
-        protected Compra() { }
-
-        public Compra(Guid idUsuario, Guid idMercado)
+        protected Compra() 
         {
-            IdCompra = Guid.NewGuid();
+            // Construtor protegido para uso do Entity Framework
+             ValorTotal = null!;
+        }
+
+        public Compra(Guid idUsuario, Guid idMercado, DateTime dataCompra)
+        {            
             IdUsuario = idUsuario;
             IdMercado = idMercado;
-            DataCompra = DateTime.UtcNow;
+            DataCriacao = DateTime.UtcNow;
+            DataCompra = dataCompra;
             Finalizada = false;
+            AtivaParaRelatorio = true;
+            ValorTotal = Dinheiro.Zero;
         }
 
         public void AdicionarItem(
             Guid idProduto,
+            string nomeProduto,
             decimal quantidade,
             Dinheiro precoUnitario,
             UnidadeMedida unidade)
@@ -40,19 +50,23 @@ namespace SistemaGestaoCompras.Domain.Entities
                 return;
             }
 
-            var item = new ItemCompra(IdCompra, idProduto, quantidade, precoUnitario, unidade);
+            var item = new ItemCompra(Id, idProduto, nomeProduto, quantidade, precoUnitario, unidade);
             _itens.Add(item);
         }
-
         public void RemoverItem(Guid idItemCompra)
         {
             if (Finalizada)
                 throw new InvalidOperationException("compra finalizada.");
 
-            var item = _itens.FirstOrDefault(i => i.IdItemCompra == idItemCompra);
+            var item = _itens.FirstOrDefault(i => i.Id == idItemCompra);
 
             if (item != null)
                 _itens.Remove(item);
+        }
+
+        public void RemoverDosRelatorios()
+        {
+            AtivaParaRelatorio = false;
         }
 
         public void Finalizar()
@@ -60,7 +74,10 @@ namespace SistemaGestaoCompras.Domain.Entities
             if (!_itens.Any())
                 throw new InvalidOperationException("compra deve conter pelo menos um item.");
 
+            ValorTotal = CalcularValorTotal();
+
             Finalizada = true;
+            DataFinalizacao = DateTime.UtcNow;
         }
 
         public Dinheiro CalcularValorTotal()

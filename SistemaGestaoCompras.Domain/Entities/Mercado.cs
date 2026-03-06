@@ -1,8 +1,7 @@
 ﻿namespace SistemaGestaoCompras.Domain.Entities
 {
-    public class Mercado
-    {
-        public Guid IdMercado { get; private set; }
+    public class Mercado : Entidade
+    {        
         public string Nome { get; private set; }
         
         public bool Ativo { get; private set; }
@@ -14,8 +13,7 @@
         }
 
         public Mercado(string nome)
-        {
-            IdMercado = Guid.NewGuid();
+        {            
             ValidarNome(nome);
             Nome = nome.Trim();
             Ativo = true;

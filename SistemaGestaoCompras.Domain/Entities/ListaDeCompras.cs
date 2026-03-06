@@ -2,11 +2,11 @@
 
 namespace SistemaGestaoCompras.Domain.Entities
 {
-    public class ListaDeCompras
-    {
-        public Guid IdListaDeCompras { get; private set; }
+    public class ListaDeCompras : Entidade
+    {        
         public string Nome { get; private set; }
-        public Guid IdUsuario { get; private set; }
+        public Guid? IdUsuario { get; private set; }
+        public Guid? IdGrupo { get; private set; }
         public DateTime DataCriacao { get; private set; }
         public StatusLista Status { get; private set; }
 
@@ -24,14 +24,27 @@ namespace SistemaGestaoCompras.Domain.Entities
         {
             if(idUsuario == Guid.Empty)
                 throw new ArgumentException("Usuário inválido.");
-
-            IdListaDeCompras = Guid.NewGuid();
+                        
             ValidarNome(nome);
             Nome = nome.Trim();
             IdUsuario = idUsuario;
             DataCriacao = DateTime.UtcNow;
             Status = StatusLista.Aberta;
             _itens = new List<ItemLista>();
+            ValidarProprietario();
+        }
+
+        public ListaDeCompras(string nome, Guid idGrupo, bool isListaGrupo)
+        {
+            if(idGrupo == Guid.Empty)
+                throw new ArgumentException("Grupo inválido.");            
+            ValidarNome(nome);
+            Nome = nome.Trim();
+            IdGrupo = idGrupo;
+            DataCriacao = DateTime.UtcNow;
+            Status = StatusLista.Aberta;
+            _itens = new List<ItemLista>();
+            ValidarProprietario();
         }
 
         private void ValidarNome(string nome)
@@ -55,10 +68,23 @@ namespace SistemaGestaoCompras.Domain.Entities
 
         public void RemoverItem(Guid idItem)
         {
-            var item = _itens.FirstOrDefault(i => i.IdProduto == idItem);
+            var item = _itens.FirstOrDefault(i => i.Id == idItem);
             if (item != null)
             {
                 _itens.Remove(item);
+            }
+        }
+
+        public void ValidarProprietario()
+        {
+            if (IdUsuario == null && IdGrupo == null)
+            {
+                throw new InvalidOperationException("A lista precisa pertencer a um usuário ou a um grupo.");
+            }
+
+            if (IdUsuario != null && IdGrupo != null)
+            {
+                throw new InvalidOperationException("A lista não pode pertencer a um usuário e a um grupo ao mesmo tempo.");
             }
         }
 
