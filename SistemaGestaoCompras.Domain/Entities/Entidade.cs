@@ -2,7 +2,7 @@
 {
     public abstract class Entidade
     {
-        public Guid Id { get; protected set; }
+        public Guid Id { get; private set; }
         protected Entidade()
         {
             Id = Guid.NewGuid();
