@@ -1,15 +1,65 @@
+using Microsoft.EntityFrameworkCore;
+using SistemaGestaoCompras.Infrastructure.Data;
+using SistemaGestaoCompras.Infrastructure.Repositories;
+using SistemaGestaoCompras.Domain.Interfaces.Repositories;
+using SistemaGestaoCompras.Application.UseCase.Convites;
+using SistemaGestaoCompras.Application.UseCase.Grupos;
+
+using Scrutor;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// ===============================
+// Configurações do Banco de Dados
+// ===============================
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// ===============================
+// Configurações dos Repositórios
+// ===============================
+
+builder.Services.AddScoped<IGrupoRepositorio, GrupoRepositorio>();
+builder.Services.AddScoped<IConviteGrupoRepositorio, ConviteGrupoRepositorio>();
+//builder.Services.AddScoped<ICompraRepositorio, CompraRepositorio>();
+//builder.Services.AddScoped<IListaDeComprasRepositorio, ListaDeComprasRepositorio>();
+//builder.Services.AddScoped<IListaDeComprasPadraoRepositorio, ListaDeComprasPadraoRepositorio>();
+//builder.Services.AddScoped<IOrcamentoRepositorio, OrcamentoRepositorio>();
+//builder.Services.AddScoped<IProdutoRepositorio, ProdutoRepositorio>();
+//builder.Services.AddScoped<IRegistroDePrecoRepositorio, RegistroDePrecoRepositorio>();
+//builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
+
+// ===============================
+// Configurações dos Use Cases
+// ===============================
+
+builder.Services.Scan(scan => scan
+    .FromApplicationDependencies()
+    .AddClasses(classes => classes.Where(type => type.Name.EndsWith("UseCase")))
+    .AsSelf()
+    .WithScopedLifetime());
+
+// ===============================
+// Configurações dos Controllers
+// ===============================
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
+// ===============================
+// Configurações do Swagger
+// ===============================
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// ===============================
+// Configurações do Middleware
+// ===============================
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -17,9 +67,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();

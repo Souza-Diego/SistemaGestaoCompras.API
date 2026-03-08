@@ -1,11 +1,9 @@
 ﻿using SistemaGestaoCompras.Domain.Entities;
 namespace SistemaGestaoCompras.Domain.Interfaces.Repositories
 {
-    public interface IRegistroDePrecoRepositorio
+    public interface IRegistroDePrecoRepositorio : IRepositorioBase<RegistroDePreco>
     {
         Task<IEnumerable<RegistroDePreco>> ObterPorProdutoAsync(Guid produtoId);
-        Task<IEnumerable<RegistroDePreco>> ObterPorUsuarioAsync(Guid usuarioId);
-        Task AdicionarAsync(RegistroDePreco registro);
-        Task AtualizarAsync(RegistroDePreco registro);
+        Task<IEnumerable<RegistroDePreco>> ObterPorUsuarioAsync(Guid usuarioId);        
     }
 }

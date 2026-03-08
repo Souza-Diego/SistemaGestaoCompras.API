@@ -15,7 +15,7 @@ namespace SistemaGestaoCompras.Domain.Services
             {
                 foreach(var item in compra.Itens)
                 {
-                    var produto = produtos.FirstOrDefault(p => p.IdProduto == item.IdProduto);
+                    var produto = produtos.FirstOrDefault(p => p.Id == item.Id);
 
                     if(produto == null)
                     {

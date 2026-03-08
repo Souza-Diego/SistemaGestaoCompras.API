@@ -2,11 +2,9 @@
 
 namespace SistemaGestaoCompras.Domain.Interfaces.Repositories
 {
-    public interface IOrcamentoRepositorio
+    public interface IOrcamentoRepositorio : IRepositorioBase<Orcamento>
     {
         Task<Orcamento?> ObterPorUsuarioMesAsync(Guid idUsuario, int ano, int mes);
         Task<IEnumerable<Orcamento>> ObterPorUsuarioAsync(Guid usuarioId);        
-        Task AdicionarAsync(Orcamento orcamento);
-        Task AtualizarAsync(Orcamento orcamento);
     }
 }

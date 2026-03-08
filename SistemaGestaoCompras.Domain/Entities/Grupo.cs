@@ -79,6 +79,13 @@ namespace SistemaGestaoCompras.Domain.Entities
             return _membros.Any(m => m.IdUsuario == idUsuario);
         }
 
+        public bool UsuarioIsAdministrador(Guid idUsuario)
+        {
+            return _membros.Any(m =>
+            m.IdUsuario == idUsuario &&
+            m.Papel == PapelGrupo.Administrador);
+        }
+
         public void Desativar()
         {
             Ativo = false;
