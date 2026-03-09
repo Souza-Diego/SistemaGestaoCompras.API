@@ -14,6 +14,8 @@ namespace SistemaGestaoCompras.Infrastructure.Data
         public DbSet<GrupoUsuario> GrupoUsuarios { get; set; }
         public DbSet<ConviteGrupo> ConvitesGrupo { get; set; }
         public DbSet<Produto> Produtos {  get; set; }
+        public DbSet<Mercado> Mercados { get; set; }
+        public DbSet<Marca> Marcas { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

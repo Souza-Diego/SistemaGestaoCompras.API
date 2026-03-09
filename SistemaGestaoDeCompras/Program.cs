@@ -30,6 +30,8 @@ builder.Services.AddScoped<IConviteGrupoRepositorio, ConviteGrupoRepositorio>();
 builder.Services.AddScoped<IProdutoRepositorio, ProdutoRepositorio>();
 //builder.Services.AddScoped<IRegistroDePrecoRepositorio, RegistroDePrecoRepositorio>();
 builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
+builder.Services.AddScoped<IMercadoRepositorio, MercadoRepositorio>();
+builder.Services.AddScoped<IMarcaRepositorio, MarcaRepositorio>();
 
 // ===============================
 // Configurações dos Use Cases

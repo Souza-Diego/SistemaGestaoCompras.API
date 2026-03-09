@@ -443,6 +443,48 @@
 - Guid IdUsuarioRemover
 
 ---
+## Classe: AtualizarMarcaDto
+
+### Propriedades
+- Guid Id
+- string Nome
+
+---
+## Classe: CriarMarcaDto
+
+### Propriedades
+- string Nome
+
+---
+## Classe: MarcaDto
+
+### Propriedades
+- Guid Id
+- string Nome
+- bool Ativo
+
+---
+## Classe: AtualizarMercadoDto
+
+### Propriedades
+- Guid Id
+- string Nome
+
+---
+## Classe: CriarMercadoDto
+
+### Propriedades
+- string Nome
+
+---
+## Classe: MercadoDto
+
+### Propriedades
+- Guid Id
+- string Nome
+- bool Ativo
+
+---
 ## Classe: AtualizarProdutoDto
 
 ### Propriedades
@@ -531,6 +573,78 @@
 
 ### Métodos
 - Task ExecutarAsync()
+
+---
+## Classe: AtualizarMarcaUseCase
+
+### Construtores
+- AtualizarMarcaUseCase(IMarcaRepositorio marcaRepositorio)
+
+### Métodos
+- Task ExecutarAsync()
+
+---
+## Classe: CriarMarcaUseCase
+
+### Construtores
+- CriarMarcaUseCase(IMarcaRepositorio marcaRepositorio)
+
+### Métodos
+- Task<Guid> ExecutarAsync()
+
+---
+## Classe: DesativarMarcaUseCase
+
+### Construtores
+- DesativarMarcaUseCase(IMarcaRepositorio marcaRepositorio)
+
+### Métodos
+- Task ExecutarAsync()
+
+---
+## Classe: ListarMarcasUseCase
+
+### Construtores
+- ListarMarcasUseCase(IMarcaRepositorio marcaRepositorio)
+
+### Métodos
+- Task<IEnumerable<MarcaDto>> ExecutarAsync()
+
+---
+## Classe: AtualizarMercadoUseCase
+
+### Construtores
+- AtualizarMercadoUseCase(IMercadoRepositorio mercadoRepositorio)
+
+### Métodos
+- Task ExecutarAsync()
+
+---
+## Classe: CriarMercadoUseCase
+
+### Construtores
+- CriarMercadoUseCase(IMercadoRepositorio mercadoRepositorio)
+
+### Métodos
+- Task<Guid> ExecutarAsync()
+
+---
+## Classe: DesativarMercadoUseCase
+
+### Construtores
+- DesativarMercadoUseCase(IMercadoRepositorio mercadoRepositorio)
+
+### Métodos
+- Task ExecutarAsync()
+
+---
+## Classe: ListarMercadosUseCase
+
+### Construtores
+- ListarMercadosUseCase(IMercadoRepositorio mercadoRepositorio)
+
+### Métodos
+- Task<IEnumerable<MercadoDto>> ExecutarAsync()
 
 ---
 ## Classe: AtualizarProdutoUseCase
@@ -627,6 +741,26 @@
 - Task<IEnumerable<Grupo>> ObterPorUsuarioAsync()
 
 ---
+## Classe: MarcaRepositorio
+
+### Construtores
+- MarcaRepositorio(AppDbContext context)
+
+### Métodos
+- Task<IEnumerable<Marca>> ListarAtivosAsync()
+- Task<IEnumerable<Marca>> BuscarPorNomeAsync()
+
+---
+## Classe: MercadoRepositorio
+
+### Construtores
+- MercadoRepositorio(AppDbContext context)
+
+### Métodos
+- Task<IEnumerable<Mercado>> ListarAtivosAsync()
+- Task<IEnumerable<Mercado>> BuscarPorNomeAsync()
+
+---
 ## Classe: ProdutoRepositorio
 
 ### Construtores
@@ -682,6 +816,35 @@
 - Task<IActionResult> RemoverMembro()
 
 ---
+## Classe: MarcaController
+
+### Métodos
+- Task<IActionResult> Criar()
+- Task<IActionResult> Listar()
+- Task<IActionResult> Dexativar()
+
+---
+## Classe: MercadoController
+
+### Métodos
+- Task<IActionResult> Criar()
+- Task<IActionResult> Listar()
+- Task<IActionResult> Atualizar()
+- Task<IActionResult> Desativar()
+
+---
+## Classe: ProdutoController
+
+### Construtores
+- ProdutoController(CriarProdutoUseCase criarProduto, AtualizarProdutoUseCase atualizarProduto, DesativarProdutoUseCase desativarProduto, ListarProdutosUseCase listarProdutos)
+
+### Métodos
+- Task<IActionResult> Criar()
+- Task<IActionResult> Atualizar()
+- Task<IActionResult> Desativar()
+- Task<IActionResult> ObterTodos()
+
+---
 ## Classe: UsuarioController
 
 ### Construtores
@@ -701,6 +864,8 @@
 - IGrupoRepositorio
 - IListaDeComprasPadraoRepositorio
 - IListaDeComprasRepositorio
+- IMarcaRepositorio
+- IMercadoRepositorio
 - IOrcamentoRepositorio
 - IProdutoRepositorio
 - IRegistroDePrecoRepositorio

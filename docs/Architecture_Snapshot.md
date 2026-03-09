@@ -7,7 +7,7 @@
 - ValueObjects: 4
 - Services: 2
 - Enums: 6
-- Repository Interfaces: 10
+- Repository Interfaces: 12
 
 #### Entities
 - Categoria
@@ -53,6 +53,8 @@
 - IGrupoRepositorio
 - IListaDeComprasPadraoRepositorio
 - IListaDeComprasRepositorio
+- IMarcaRepositorio
+- IMercadoRepositorio
 - IOrcamentoRepositorio
 - IProdutoRepositorio
 - IRegistroDePrecoRepositorio
@@ -60,14 +62,20 @@
 - IUsuarioRepositorio
 
 ### Application
-- DTOs: 10
-- UseCases: 12
+- DTOs: 16
+- UseCases: 20
 
 #### DTOs
 - CriarConviteGrupoDto
 - EntrarGrupoPorCodigoDto
 - CriarGrupoDto
 - RemoverMembroGrupoDto
+- AtualizarMarcaDto
+- CriarMarcaDto
+- MarcaDto
+- AtualizarMercadoDto
+- CriarMercadoDto
+- MercadoDto
 - AtualizarProdutoDto
 - CriarProdutoDto
 - ProdutoDto
@@ -80,6 +88,14 @@
 - EntrarGrupoPorCodigoUseCase
 - CriarGrupoUseCase
 - RemoverMembroGrupoUseCase
+- AtualizarMarcaUseCase
+- CriarMarcaUseCase
+- DesativarMarcaUseCase
+- ListarMarcasUseCase
+- AtualizarMercadoUseCase
+- CriarMercadoUseCase
+- DesativarMercadoUseCase
+- ListarMercadosUseCase
 - AtualizarProdutoUseCase
 - CriarProdutoUseCase
 - DesativarProdutoUseCase
@@ -90,20 +106,25 @@
 - LoginUsuarioUseCase
 
 ### Infrastructure
-- Repositories: 5
+- Repositories: 7
 
 #### Repositories
 - ConviteGrupoRepositorio
 - GrupoRepositorio
+- MarcaRepositorio
+- MercadoRepositorio
 - ProdutoRepositorio
 - RepositorioBase
 - UsuarioRepositorio
 
 ### API
-- Controllers: 3
+- Controllers: 6
 
 #### Controllers
 - ConviteGrupoController
 - GrupoController
+- MarcaController
+- MercadoController
+- ProdutoController
 - UsuarioController
 
