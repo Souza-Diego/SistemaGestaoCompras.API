@@ -1,7 +1,7 @@
 ﻿using SistemaGestaoCompras.Domain.Interfaces.Repositories;
 using SistemaGestaoCompras.Application.DTOs.Produtos;
 
-namespace SistemaGestaoCompras.Application.UseCase.Produtos
+namespace SistemaGestaoCompras.Application.UseCases.Produtos
 {
     public class AtualizarProdutoUseCase
     {

@@ -2,7 +2,7 @@
 using SistemaGestaoCompras.Application.DTOs.Grupos;
 using SistemaGestaoCompras.Domain.Entities;
 
-namespace SistemaGestaoCompras.Application.UseCase.Grupos
+namespace SistemaGestaoCompras.Application.UseCases.Grupos
 {
     public class CriarGrupoUseCase
     {

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.36908.2 d17.14
+VisualStudioVersion = 17.14.36908.2
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaGestaoCompras.API", "SistemaGestaoDeCompras\SistemaGestaoCompras.API.csproj", "{4E77EB7B-8642-4A03-9BB6-A53849603811}"
 EndProject
@@ -10,6 +10,14 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaGestaoCompras.Application", "SistemaGestaoCompras.Application\SistemaGestaoCompras.Application.csproj", "{ED9C20CD-1D36-40AD-87CE-452F7CC4F689}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SistemaGestaoCompras.Infrastructure", "SistemaGestaoCompras.Infrastructure\SistemaGestaoCompras.Infrastructure.csproj", "{881AC06C-65B8-48F2-ACE7-8D052F58EB42}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		docs\Architecture_Snapshot.md = docs\Architecture_Snapshot.md
+		docs\Mapa_Estrutural_Projeto.md = docs\Mapa_Estrutural_Projeto.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocGenerator", "DocGenerator\DocGenerator.csproj", "{647E5B89-B72C-4CB6-AD71-AEEB8DD461DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +41,10 @@ Global
 		{881AC06C-65B8-48F2-ACE7-8D052F58EB42}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{881AC06C-65B8-48F2-ACE7-8D052F58EB42}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{881AC06C-65B8-48F2-ACE7-8D052F58EB42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{647E5B89-B72C-4CB6-AD71-AEEB8DD461DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{647E5B89-B72C-4CB6-AD71-AEEB8DD461DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{647E5B89-B72C-4CB6-AD71-AEEB8DD461DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{647E5B89-B72C-4CB6-AD71-AEEB8DD461DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

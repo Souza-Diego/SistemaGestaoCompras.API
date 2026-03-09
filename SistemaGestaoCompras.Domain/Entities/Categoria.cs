@@ -4,7 +4,7 @@ namespace SistemaGestaoCompras.Domain.Entities
     public class Categoria : Entidade
     {
         public string Nome { get; private set; }
-        public bool Ativo { get; private set; }
+        public bool Ativo { get; private set; }        
 
         protected Categoria()
         {

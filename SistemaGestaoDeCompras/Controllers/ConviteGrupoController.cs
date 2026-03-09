@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SistemaGestaoCompras.Application.UseCase.Convites;
+using SistemaGestaoCompras.Application.UseCases.Convites;
 using SistemaGestaoCompras.Application.DTOs.Convites;
 
 namespace SistemaGestaoCompras.API.Controllers

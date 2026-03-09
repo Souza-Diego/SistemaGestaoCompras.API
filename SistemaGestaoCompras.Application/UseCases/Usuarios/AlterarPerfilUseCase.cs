@@ -2,7 +2,7 @@
 using SistemaGestaoCompras.Domain.Interfaces.Repositories;
 using SistemaGestaoCompras.Domain.ValueObjects;
 
-namespace SistemaGestaoCompras.Application.UseCase.Usuarios
+namespace SistemaGestaoCompras.Application.UseCases.Usuarios
 {
     public class AlterarPerfilUseCase
     {

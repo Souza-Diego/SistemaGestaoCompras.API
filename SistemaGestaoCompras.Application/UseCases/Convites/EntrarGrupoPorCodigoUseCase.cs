@@ -1,7 +1,7 @@
 ﻿using SistemaGestaoCompras.Application.DTOs.Convites;
 using SistemaGestaoCompras.Domain.Interfaces.Repositories;
 
-namespace SistemaGestaoCompras.Application.UseCase.Convites
+namespace SistemaGestaoCompras.Application.UseCases.Convites
 {
     public class EntrarGrupoPorCodigoUseCase
     {

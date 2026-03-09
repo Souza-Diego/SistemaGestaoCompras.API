@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SistemaGestaoCompras.Application.UseCase.Usuarios;
+using SistemaGestaoCompras.Application.UseCases.Usuarios;
 using SistemaGestaoCompras.Application.DTOs.Usuarios;
 
 namespace SistemaGestaoCompras.API.Controllers

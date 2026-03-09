@@ -4,7 +4,7 @@ using SistemaGestaoCompras.Domain.Interfaces.Repositories;
 using SistemaGestaoCompras.Domain.Enums;
 using SistemaGestaoCompras.Domain.ValueObjects;
 
-namespace SistemaGestaoCompras.Application.UseCase.Produtos
+namespace SistemaGestaoCompras.Application.UseCases.Produtos
 {
     public class CriarProdutoUseCase
     {

@@ -2,7 +2,7 @@
 using SistemaGestaoCompras.Domain.Interfaces.Repositories;
 using SistemaGestaoCompras.Application.DTOs.Convites;
 
-namespace SistemaGestaoCompras.Application.UseCase.Convites
+namespace SistemaGestaoCompras.Application.UseCases.Convites
 {
     public class CriarConviteGrupoUseCase
     {

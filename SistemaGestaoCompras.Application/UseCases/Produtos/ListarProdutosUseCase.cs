@@ -1,7 +1,7 @@
 ﻿using SistemaGestaoCompras.Application.DTOs.Produtos;
 using SistemaGestaoCompras.Domain.Interfaces.Repositories;
 
-namespace SistemaGestaoCompras.Application.UseCase.Produtos
+namespace SistemaGestaoCompras.Application.UseCases.Produtos
 {
     public class ListarProdutosUseCase
     {

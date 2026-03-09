@@ -1,7 +1,7 @@
 ﻿using SistemaGestaoCompras.Application.DTOs.Usuarios;
 using SistemaGestaoCompras.Domain.Interfaces.Repositories;
 
-namespace SistemaGestaoCompras.Application.UseCase.Usuarios
+namespace SistemaGestaoCompras.Application.UseCases.Usuarios
 {
     public class LoginUsuarioUseCase
     {

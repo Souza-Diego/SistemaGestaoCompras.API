@@ -1,7 +1,7 @@
 ﻿using SistemaGestaoCompras.Domain.Interfaces.Repositories;
 using SistemaGestaoCompras.Application.DTOs.Grupos;
 
-namespace SistemaGestaoCompras.Application.UseCase.Grupos
+namespace SistemaGestaoCompras.Application.UseCases.Grupos
 {
     public class RemoverMembroGrupoUseCase
     {

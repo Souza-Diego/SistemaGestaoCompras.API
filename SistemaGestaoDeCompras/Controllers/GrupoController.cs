@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SistemaGestaoCompras.Application.UseCase.Grupos;
+using SistemaGestaoCompras.Application.UseCases.Grupos;
 using SistemaGestaoCompras.Application.DTOs.Grupos;
 
 namespace SistemaGestaoCompras.API.Controllers
