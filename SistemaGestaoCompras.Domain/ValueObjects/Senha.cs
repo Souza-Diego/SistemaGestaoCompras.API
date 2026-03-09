@@ -41,5 +41,10 @@ namespace SistemaGestaoCompras.Domain.ValueObjects
             var hash = sha256.ComputeHash(bytes);
             return Convert.ToBase64String(hash);
         }
+
+        public bool VerificarSenha(string senhaDigitada)
+        {
+            return BCrypt.Net.BCrypt.Verify(senhaDigitada, Hash);
+        }
     }
 }

@@ -27,9 +27,9 @@ builder.Services.AddScoped<IConviteGrupoRepositorio, ConviteGrupoRepositorio>();
 //builder.Services.AddScoped<IListaDeComprasRepositorio, ListaDeComprasRepositorio>();
 //builder.Services.AddScoped<IListaDeComprasPadraoRepositorio, ListaDeComprasPadraoRepositorio>();
 //builder.Services.AddScoped<IOrcamentoRepositorio, OrcamentoRepositorio>();
-//builder.Services.AddScoped<IProdutoRepositorio, ProdutoRepositorio>();
+builder.Services.AddScoped<IProdutoRepositorio, ProdutoRepositorio>();
 //builder.Services.AddScoped<IRegistroDePrecoRepositorio, RegistroDePrecoRepositorio>();
-//builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
+builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
 
 // ===============================
 // Configurações dos Use Cases

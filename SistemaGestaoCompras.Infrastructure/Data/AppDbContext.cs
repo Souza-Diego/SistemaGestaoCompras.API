@@ -9,9 +9,11 @@ namespace SistemaGestaoCompras.Infrastructure.Data
         {
         }
 
+        public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Grupo> Grupos { get; set; }
         public DbSet<GrupoUsuario> GrupoUsuarios { get; set; }
         public DbSet<ConviteGrupo> ConvitesGrupo { get; set; }
+        public DbSet<Produto> Produtos {  get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
