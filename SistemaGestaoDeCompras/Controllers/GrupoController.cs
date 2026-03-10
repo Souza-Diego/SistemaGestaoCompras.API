@@ -4,44 +4,92 @@ using SistemaGestaoCompras.Application.DTOs.Grupos;
 
 namespace SistemaGestaoCompras.API.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
-    public class GrupoController : ControllerBase
+    public class GrupoController : BaseController
     {
         private readonly CriarGrupoUseCase _criarGrupoUseCase;
+        private readonly BuscarGrupoPorIdUseCase _buscarGrupoPorIdUseCase;
+        private readonly ListarGruposDoUsuarioUseCase _listarGruposDoUsuarioUseCase;
+        private readonly AdicionarMembroGrupoUseCase _adicionarMembroGrupoUseCase;
         private readonly RemoverMembroGrupoUseCase _removerMembroGrupoUseCase;
+        private readonly SairDoGrupoUseCase _sairDoGrupoUseCase;
+        private readonly AlterarNomeGrupoUseCase _alterarNomeGrupoUseCase;
 
         public GrupoController(
-            CriarGrupoUseCase criarGrupoUseCase,
-            RemoverMembroGrupoUseCase removerMembroGrupoUseCase)
+            CriarGrupoUseCase criarGrupo,
+            BuscarGrupoPorIdUseCase buscarGrupoPorId,
+            ListarGruposDoUsuarioUseCase listarGruposDoUsuario,
+            AdicionarMembroGrupoUseCase adicionarMembro,
+            RemoverMembroGrupoUseCase removerMembro,
+            SairDoGrupoUseCase sairDoGrupo,
+            AlterarNomeGrupoUseCase alterarNomeGrupo)
         {
-            _criarGrupoUseCase = criarGrupoUseCase;
-            _removerMembroGrupoUseCase = removerMembroGrupoUseCase;
+            _criarGrupoUseCase = criarGrupo;
+            _buscarGrupoPorIdUseCase = buscarGrupoPorId;
+            _listarGruposDoUsuarioUseCase = listarGruposDoUsuario;
+            _adicionarMembroGrupoUseCase = adicionarMembro;
+            _removerMembroGrupoUseCase = removerMembro;
+            _sairDoGrupoUseCase = sairDoGrupo;
+            _alterarNomeGrupoUseCase = alterarNomeGrupo;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Criar([FromBody] CriarGrupoDto dto)
+        public async Task<IActionResult> CriarGrupo([FromBody] CriarGrupoDto dto)
         {
-            var IdGrupo = await _criarGrupoUseCase.ExecutarAsync(dto);
+            var id = await _criarGrupoUseCase.ExecutarAsync(dto);
 
-            return Ok(IdGrupo);
+            return CreatedResponse(nameof(BuscarGrupoPorId), new { id }, id);
         }
 
-        [HttpDelete("{idGrupo}/membros/{idUsuarioRemover}")]
-        public async Task<IActionResult> RemoverMembro(
-            Guid idGrupo,
-            Guid idUsuarioRemover,
-            [FromQuery] Guid idUsuarioSolicitante)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> BuscarGrupoPorId(Guid id)
         {
-            var dto = new RemoverMembroGrupoDto
-            {
-                IdGrupo = idGrupo,
-                IdUsuarioRemover = idUsuarioRemover,
-                IdUsuarioSolicitante = idUsuarioSolicitante
-            };
+            var grupo = await _buscarGrupoPorIdUseCase.ExecutarAsync(id);
 
+            if (grupo == null)
+                return NotFoundResponse();
+
+            return OkResponse(grupo);
+        }
+
+        [HttpGet("usuario/{usuarioId}")]
+        public async Task<IActionResult> ListarGruposDoUsuario(Guid usuarioId)
+        {
+            var grupos = await _listarGruposDoUsuarioUseCase.ExecutarAsync(usuarioId);
+
+            return OkResponse(grupos);
+        }
+
+        [HttpPost("membros")]
+        public async Task<IActionResult> AdicionarMembro([FromBody] AdicionarMembroGrupoDto dto)
+        {
+            await _adicionarMembroGrupoUseCase.ExecutarAsync(dto);
+
+            return NoContentResponse();
+        }
+
+        [HttpDelete("membros")]
+        public async Task<IActionResult> RemoverMembro([FromBody] RemoverMembroGrupoDto dto)
+        {
             await _removerMembroGrupoUseCase.ExecutarAsync(dto);
-            return NoContent();
+
+            return NoContentResponse();
+        }
+
+        [HttpPost("sair")]
+        public async Task<IActionResult> SairDoGrupo([FromBody] SairDoGrupoDto dto)
+        {
+            await _sairDoGrupoUseCase.ExecutarAsync(dto);
+
+            return NoContentResponse();
+        }
+
+        [HttpPut("nome")]
+        public async Task<IActionResult> AlterarNomeGrupo([FromBody] AlterarNomeGrupoDto dto)
+        {
+            await _alterarNomeGrupoUseCase.ExecutarAsync(dto);
+
+            return NoContentResponse();
         }
     }
 }

@@ -13,7 +13,7 @@ namespace SistemaGestaoCompras.Application.UseCases.Produtos
 
         public async Task ExecutarAsync(Guid id)
         {
-            var produto = await _produtoRepositorio.ObterPorIdAsync(id);
+            var produto = await _produtoRepositorio.BuscarPorIdAsync(id);
             if (produto == null)
             {
                 throw new Exception("Produto não encontrado");

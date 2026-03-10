@@ -11,7 +11,7 @@ namespace SistemaGestaoCompras.Infrastructure.Repositories
         {            
         }
 
-        public async Task<Usuario?> ObterPorEmailAsync(string email)
+        public async Task<Usuario?> BuscarPorEmailAsync(string email)
         {
             return await _context.Usuarios.FirstOrDefaultAsync(u => u.Email.Endereco == email);
         }

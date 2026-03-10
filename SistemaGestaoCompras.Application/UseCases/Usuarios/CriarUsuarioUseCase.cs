@@ -17,7 +17,7 @@ namespace SistemaGestaoCompras.Application.UseCases.Usuarios
 
         public async Task<Guid> ExecutarAsync(CriarUsuarioDto dto)
         {
-            var usuarioExistente = await _usuarioRepositorio.ObterPorEmailAsync(dto.Email);
+            var usuarioExistente = await _usuarioRepositorio.BuscarPorEmailAsync(dto.Email);
             if (usuarioExistente != null)
             {
                 throw new Exception("Já existe um usuário com este email.");

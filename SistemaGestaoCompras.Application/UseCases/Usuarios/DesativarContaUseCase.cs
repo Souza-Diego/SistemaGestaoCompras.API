@@ -13,7 +13,7 @@ namespace SistemaGestaoCompras.Application.UseCases.Usuarios
 
         public async Task ExecutarAsync(Guid idUsuario)
         {
-            var usuario = await _usuarioRepositorio.ObterPorIdAsync(idUsuario);
+            var usuario = await _usuarioRepositorio.BuscarPorIdAsync(idUsuario);
             if (usuario == null)
             {
                 throw new Exception("Usuário não encontrado");

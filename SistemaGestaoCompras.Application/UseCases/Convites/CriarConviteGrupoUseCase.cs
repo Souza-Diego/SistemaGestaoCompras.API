@@ -19,7 +19,7 @@ namespace SistemaGestaoCompras.Application.UseCases.Convites
 
         public async Task<string> ExecutarAsync(CriarConviteGrupoDto dto)
         {
-            var grupo = await _grupoRepositorio.ObterPorIdAsync(dto.IdGrupo);
+            var grupo = await _grupoRepositorio.BuscarPorIdAsync(dto.IdGrupo);
 
             if (grupo == null)
             {

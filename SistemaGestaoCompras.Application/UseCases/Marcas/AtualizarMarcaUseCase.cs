@@ -12,9 +12,9 @@ namespace SistemaGestaoCompras.Application.UseCases.Marcas
             _marcaRepositorio = marcaRepositorio;
         }
 
-        public async Task ExecutarAsync(Guid id, AtualizarMarcaDto dto)
+        public async Task ExecutarAsync(AtualizarMarcaDto dto)
         {
-            var marca = await _marcaRepositorio.ObterPorIdAsync(id);
+            var marca = await _marcaRepositorio.BuscarPorIdAsync(dto.Id);
             if (marca == null)
                 throw new Exception("Marca não encontrada.");
             marca.AlterarNome(dto.Nome);

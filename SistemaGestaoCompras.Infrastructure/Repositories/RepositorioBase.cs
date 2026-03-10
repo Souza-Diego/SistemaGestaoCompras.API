@@ -13,12 +13,12 @@ namespace SistemaGestaoCompras.Infrastructure.Repositories
             _context = context;
         }
 
-        public virtual async Task<T?> ObterPorIdAsync(Guid id)
+        public virtual async Task<T?> BuscarPorIdAsync(Guid id)
         {
             return await _context.Set<T>().FindAsync(id);
         }
 
-        public virtual async Task<IEnumerable<T>> ObterTodosAsync()
+        public virtual async Task<IEnumerable<T>> BuscarTodosAsync()
         {
             return await _context.Set<T>().ToListAsync();
         }
@@ -37,7 +37,7 @@ namespace SistemaGestaoCompras.Infrastructure.Repositories
 
         public virtual async Task RemoverAsync(Guid id)
         {
-            var entidade = await ObterPorIdAsync(id);
+            var entidade = await BuscarPorIdAsync(id);
             if (entidade != null)
             {
                 _context.Set<T>().Remove(entidade);

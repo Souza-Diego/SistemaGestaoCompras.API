@@ -15,7 +15,7 @@ namespace SistemaGestaoCompras.Application.UseCases.Usuarios
 
         public async Task ExecutarAsync(AlterarPerfilDto dto)
         {
-            var usuario = await _usuarioRepositorio.ObterPorIdAsync(dto.Id);
+            var usuario = await _usuarioRepositorio.BuscarPorIdAsync(dto.Id);
             if (usuario == null)
             {
                 throw new Exception("Usuário não encontrado");

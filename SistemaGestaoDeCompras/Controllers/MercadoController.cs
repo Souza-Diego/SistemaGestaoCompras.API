@@ -1,47 +1,71 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SistemaGestaoCompras.Application.UseCases.Mercados;
+using SistemaGestaoCompras.Application.DTOs.Marcas;
 using SistemaGestaoCompras.Application.DTOs.Mercados;
+using SistemaGestaoCompras.Application.UseCases.Mercados;
 
 namespace SistemaGestaoCompras.API.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
-    public class MercadoController : ControllerBase
+    public class MercadoController : BaseController
     {
-        [HttpPost]
-        public async Task<IActionResult> Criar(
-            [FromServices] CriarMercadoUseCase criarMercado,
-            [FromBody] CriarMercadoDto dto)
+        private readonly CriarMercadoUseCase _criarMercado;
+        private readonly ListarMercadosUseCase _listarMercados;
+        private readonly AtualizarMercadoUseCase _atualizarMercado;
+        private readonly DesativarMercadoUseCase _desativarMercado;
+        private readonly BuscarMercadoPorIdUseCase _buscarMercadoPorId;
+
+        public MercadoController(
+            CriarMercadoUseCase criarMercado,
+            ListarMercadosUseCase listarMercados,
+            AtualizarMercadoUseCase atualizarMercado,
+            DesativarMercadoUseCase desativarMarcado,
+            BuscarMercadoPorIdUseCase buscarMercadoPorId)
         {
-            var id = await criarMercado.ExecutarAsync(dto);
-            return Ok(id);
+            _criarMercado = criarMercado;
+            _listarMercados = listarMercados;
+            _atualizarMercado = atualizarMercado;
+            _desativarMercado = desativarMarcado;
+            _buscarMercadoPorId = buscarMercadoPorId;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Criar([FromBody] CriarMercadoDto dto)
+        {
+            var id = await _criarMercado.ExecutarAsync(dto);
+            return CreatedResponse(nameof(BuscarPorId), new { id }, id);
         }
 
         [HttpGet]
-        public async Task<IActionResult> Listar(
-            [FromServices] ListarMercadosUseCase listarMercados)
+        public async Task<IActionResult> Listar()
         {
-            var mercados = await listarMercados.ExecutarAsync();
-            return Ok(mercados);
+            var mercados = await _listarMercados.ExecutarAsync();
+            return OkResponse(mercados);
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Atualizar(
-            [FromServices] AtualizarMercadoUseCase atualizarMercado,
-            [FromBody] AtualizarMercadoDto dto)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> BuscarPorId(Guid id)
         {
-            await atualizarMercado.ExecutarAsync(dto);
-            return NoContent();
+            var mercado = await _buscarMercadoPorId.ExecutarAsync(id);
+
+            if (mercado == null)
+                return NotFoundResponse();
+
+            return OkResponse(mercado);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Atualizar(Guid id, [FromBody] AtualizarMercadoDto dto)
+        {
+            dto.Id = id;
+            await _atualizarMercado.ExecutarAsync(dto);
+            return NoContentResponse();
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Desativar(
-            [FromServices] DesativarMercadoUseCase desativarMercado,
-            Guid id)
+        public async Task<IActionResult> Desativar(Guid id)
         {
-            await desativarMercado.ExecutarAsync(id);
-            return NoContent();
+            await _desativarMercado.ExecutarAsync(id);
+            return NoContentResponse();
         }
-
     }
 }

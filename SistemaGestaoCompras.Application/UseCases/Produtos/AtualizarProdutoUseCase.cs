@@ -14,7 +14,7 @@ namespace SistemaGestaoCompras.Application.UseCases.Produtos
 
         public async Task ExecutarAsync(AtualizarProdutoDto dto)
         {
-            var produto = await _produtoRepositorio.ObterPorIdAsync(dto.Id);
+            var produto = await _produtoRepositorio.BuscarPorIdAsync(dto.Id);
             if(produto == null)
             {
                 throw new Exception("Produto não encontrado");

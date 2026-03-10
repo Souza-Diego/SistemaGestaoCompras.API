@@ -14,7 +14,7 @@ namespace SistemaGestaoCompras.Application.UseCases.Grupos
 
         public async Task ExecutarAsync(RemoverMembroGrupoDto dto)
         {
-            var grupo = await _grupoRepositorio.ObterPorIdAsync(dto.IdGrupo);
+            var grupo = await _grupoRepositorio.BuscarPorIdAsync(dto.IdGrupo);
 
             if(grupo == null)
                 throw new Exception("Grupo não encontrado.");

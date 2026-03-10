@@ -32,6 +32,7 @@ builder.Services.AddScoped<IProdutoRepositorio, ProdutoRepositorio>();
 builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
 builder.Services.AddScoped<IMercadoRepositorio, MercadoRepositorio>();
 builder.Services.AddScoped<IMarcaRepositorio, MarcaRepositorio>();
+builder.Services.AddScoped<ICategoriaRepositorio, CategoriaRepositorio>();
 
 // ===============================
 // Configurações dos Use Cases

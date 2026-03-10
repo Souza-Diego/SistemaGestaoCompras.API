@@ -3,6 +3,8 @@ namespace SistemaGestaoCompras.Domain.Interfaces.Repositories
 {
     public interface IConviteGrupoRepositorio : IRepositorioBase<ConviteGrupo>
     {
-        Task<ConviteGrupo?> ObterPorCodigoAsync(string codigo);        
+        Task<ConviteGrupo?> BuscarPorCodigoAsync(string codigo);
+        Task<List<ConviteGrupo>> ListarPorGrupoIdAsync(Guid grupoId);
+
     }
 }

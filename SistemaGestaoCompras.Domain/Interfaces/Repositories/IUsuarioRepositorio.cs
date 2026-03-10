@@ -3,6 +3,6 @@ namespace SistemaGestaoCompras.Domain.Interfaces.Repositories
 {
     public interface IUsuarioRepositorio : IRepositorioBase<Usuario>
     {        
-        Task<Usuario?> ObterPorEmailAsync(string email);        
+        Task<Usuario?> BuscarPorEmailAsync(string email);        
     }
 }

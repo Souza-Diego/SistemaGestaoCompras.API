@@ -14,7 +14,7 @@ namespace SistemaGestaoCompras.Application.UseCases.Mercados
 
         public async Task ExecutarAsync(Guid id)
         {
-            var mercado = await _mercadoRepositorio.ObterPorIdAsync(id);
+            var mercado = await _mercadoRepositorio.BuscarPorIdAsync(id);
             if (mercado == null)
                 throw new Exception("Mercado não encontrado.");
             mercado.Desativar();

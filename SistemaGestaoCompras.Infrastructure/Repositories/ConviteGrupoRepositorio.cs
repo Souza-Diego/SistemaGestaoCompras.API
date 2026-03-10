@@ -11,11 +11,17 @@ namespace SistemaGestaoCompras.Infrastructure.Repositories
         {            
         }
 
-        public async Task<ConviteGrupo?> ObterPorCodigoAsync(string codigo)
+        public async Task<List<ConviteGrupo>> ListarPorGrupoIdAsync(Guid idGrupo)
+        {
+            return await _context.ConvitesGrupo
+                .Where(c => c.IdGrupo == idGrupo)
+                .ToListAsync();
+        }        
+
+        public async Task<ConviteGrupo?> BuscarPorCodigoAsync(string codigo)
         {
             return await _context.ConvitesGrupo
                 .FirstOrDefaultAsync(c => c.Codigo == codigo);
-        }
+        }        
     }
-    
 }

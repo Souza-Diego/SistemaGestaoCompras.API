@@ -18,7 +18,7 @@ namespace SistemaGestaoCompras.Application.UseCases.Convites
 
         public async Task ExecutarAsync(EntrarGrupoPorCodigoDto dto)
         {
-            var convite = await _conviteGrupoRepositorio.ObterPorCodigoAsync(dto.Codigo);
+            var convite = await _conviteGrupoRepositorio.BuscarPorCodigoAsync(dto.Codigo);
 
             if (convite == null)
                 throw new Exception("Convite não encontrado.");
@@ -26,7 +26,7 @@ namespace SistemaGestaoCompras.Application.UseCases.Convites
             if (!convite.EstaValido())
                 throw new Exception("Convite expirado ou inválido.");
 
-            var grupo = await _grupoRepositorio.ObterPorIdAsync(convite.IdGrupo);
+            var grupo = await _grupoRepositorio.BuscarPorIdAsync(convite.IdGrupo);
 
             if (grupo == null)
                 throw new Exception("Grupo não encontrado.");

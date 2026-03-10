@@ -13,7 +13,7 @@ namespace SistemaGestaoCompras.Application.UseCases.Marcas
 
         public async Task ExecutarAsync(Guid id)
         {
-            var marca = await _marcaRepositorio.ObterPorIdAsync(id);
+            var marca = await _marcaRepositorio.BuscarPorIdAsync(id);
             if (marca == null)
                 throw new Exception("Marca não encontrada.");
             marca.Desativar();

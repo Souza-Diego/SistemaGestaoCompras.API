@@ -1,6 +1,4 @@
-﻿using SistemaGestaoCompras.Domain.Enums;
-
-namespace SistemaGestaoCompras.Domain.Entities
+﻿namespace SistemaGestaoCompras.Domain.Entities
 {
     public class ConviteGrupo : Entidade
     {        

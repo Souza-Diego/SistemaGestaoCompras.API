@@ -14,7 +14,7 @@ namespace SistemaGestaoCompras.Application.UseCases.Usuarios
 
         public async Task<bool> ExecutarAsync(LoginUsuarioDto dto)
         {
-            var usuario = await _usuarioRepositorio.ObterPorEmailAsync(dto.Email);
+            var usuario = await _usuarioRepositorio.BuscarPorEmailAsync(dto.Email);
             if (usuario == null)
                 return false;
 

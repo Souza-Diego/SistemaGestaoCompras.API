@@ -395,6 +395,7 @@
 
 ### Métodos
 - decimal Converter()
+- string ToString()
 
 ---
 # Domain - Services
@@ -413,6 +414,39 @@
 ---
 # Application - DTOs
 
+## Classe: AtualizarCategoriaDto
+
+### Propriedades
+- Guid Id
+- string Nome
+
+---
+## Classe: CategoriaDto
+
+### Propriedades
+- Guid Id
+- string Nome
+- bool Ativo
+
+---
+## Classe: CriarCategoriaDto
+
+### Propriedades
+- string Nome
+
+---
+## Classe: ConviteGrupoDto
+
+### Propriedades
+- Guid Id
+- Guid GrupoId
+- string Codigo
+- Guid IdCriadoPorUsuario
+- DateTime DataCriacao
+- DateTime? DataExpiracao
+- bool Ativo
+
+---
 ## Classe: CriarConviteGrupoDto
 
 ### Propriedades
@@ -428,11 +462,37 @@
 - Guid IdUsuario
 
 ---
+## Classe: AdicionarMembroGrupoDto
+
+### Propriedades
+- Guid GrupoId
+- Guid UsuarioId
+- Guid UsuarioConvidadoId
+
+---
+## Classe: AlterarNomeGrupoDto
+
+### Propriedades
+- Guid GrupoId
+- Guid UsuarioId
+- string NovoNome
+
+---
 ## Classe: CriarGrupoDto
 
 ### Propriedades
 - string Nome
 - Guid IdUsuarioCriador
+
+---
+## Classe: GrupoDto
+
+### Propriedades
+- Guid Id
+- string Nome
+- Guid CriadoPor
+- DateTime DataCriacao
+- bool Ativo
 
 ---
 ## Classe: RemoverMembroGrupoDto
@@ -441,6 +501,13 @@
 - Guid IdGrupo
 - Guid IdUsuarioSolicitante
 - Guid IdUsuarioRemover
+
+---
+## Classe: SairDoGrupoDto
+
+### Propriedades
+- Guid GrupoId
+- Guid UsuarioId
 
 ---
 ## Classe: AtualizarMarcaDto
@@ -511,6 +578,7 @@
 - Guid IdCategoria
 - Guid? IdMarca
 - string UnidadeBase
+- string Tipo
 - bool Ativo
 
 ---
@@ -537,8 +605,74 @@
 - string Senha
 
 ---
+## Classe: UsuarioDto
+
+### Propriedades
+- Guid Id
+- string Nome
+- string Email
+- string Plano
+- string TipoUsuario
+- bool Ativo
+- DateTime DataCriacao
+
+---
 # Application - UseCases
 
+## Classe: AtualizarCategoriaUseCase
+
+### Construtores
+- AtualizarCategoriaUseCase(ICategoriaRepositorio categoriaRepositorio)
+
+### Métodos
+- Task ExecutarAsync()
+
+---
+## Classe: BuscarCategoriaPorIdUseCase
+
+### Construtores
+- BuscarCategoriaPorIdUseCase(ICategoriaRepositorio categoriaRepositorio)
+
+### Métodos
+- Task<CategoriaDto?> ExecutarAsync()
+
+---
+## Classe: CriarCategoriaUseCase
+
+### Construtores
+- CriarCategoriaUseCase(ICategoriaRepositorio categoriaRepository)
+
+### Métodos
+- Task<Guid> ExecutarAsync()
+
+---
+## Classe: DesativarCategoriaUseCase
+
+### Construtores
+- DesativarCategoriaUseCase(ICategoriaRepositorio categoriaRepositorio)
+
+### Métodos
+- Task ExecutarAsync()
+
+---
+## Classe: ListarCategoriasUseCase
+
+### Construtores
+- ListarCategoriasUseCase(ICategoriaRepositorio categoriaRepositorio)
+
+### Métodos
+- Task<IEnumerable<CategoriaDto>> ExecutarAsync()
+
+---
+## Classe: CancelarConviteGrupoUseCase
+
+### Construtores
+- CancelarConviteGrupoUseCase(IConviteGrupoRepositorio conviteRepositorio)
+
+### Métodos
+- Task ExecutarAsync()
+
+---
 ## Classe: CriarConviteGrupoUseCase
 
 ### Construtores
@@ -557,6 +691,42 @@
 - Task ExecutarAsync()
 
 ---
+## Classe: ListarConvitesGrupoUseCase
+
+### Construtores
+- ListarConvitesGrupoUseCase(IConviteGrupoRepositorio conviteRepositorio)
+
+### Métodos
+- Task<List<ConviteGrupoDto>> ExecutarAsync()
+
+---
+## Classe: AdicionarMembroGrupoUseCase
+
+### Construtores
+- AdicionarMembroGrupoUseCase(IGrupoRepositorio grupoRepositorio)
+
+### Métodos
+- Task ExecutarAsync()
+
+---
+## Classe: AlterarNomeGrupoUseCase
+
+### Construtores
+- AlterarNomeGrupoUseCase(IGrupoRepositorio grupoRepositorio)
+
+### Métodos
+- Task ExecutarAsync()
+
+---
+## Classe: BuscarGrupoPorIdUseCase
+
+### Construtores
+- BuscarGrupoPorIdUseCase(IGrupoRepositorio grupoRepositorio)
+
+### Métodos
+- Task<GrupoDto?> ExecutarAsync()
+
+---
 ## Classe: CriarGrupoUseCase
 
 ### Construtores
@@ -566,10 +736,28 @@
 - Task<Guid> ExecutarAsync()
 
 ---
+## Classe: ListarGruposDoUsuarioUseCase
+
+### Construtores
+- ListarGruposDoUsuarioUseCase(IGrupoRepositorio grupoRepositorio)
+
+### Métodos
+- Task<IEnumerable<GrupoDto>> ExecutarAsync()
+
+---
 ## Classe: RemoverMembroGrupoUseCase
 
 ### Construtores
 - RemoverMembroGrupoUseCase(IGrupoRepositorio grupoRepositorio)
+
+### Métodos
+- Task ExecutarAsync()
+
+---
+## Classe: SairDoGrupoUseCase
+
+### Construtores
+- SairDoGrupoUseCase(IGrupoRepositorio grupoRepositorio)
 
 ### Métodos
 - Task ExecutarAsync()
@@ -582,6 +770,15 @@
 
 ### Métodos
 - Task ExecutarAsync()
+
+---
+## Classe: BuscarMarcaPorIdUseCase
+
+### Construtores
+- BuscarMarcaPorIdUseCase(IMarcaRepositorio marcaRepositorio)
+
+### Métodos
+- Task<MarcaDto?> ExecutarAsync()
 
 ---
 ## Classe: CriarMarcaUseCase
@@ -620,6 +817,15 @@
 - Task ExecutarAsync()
 
 ---
+## Classe: BuscarMercadoPorIdUseCase
+
+### Construtores
+- BuscarMercadoPorIdUseCase(IMercadoRepositorio mercadoRepositorio)
+
+### Métodos
+- Task<MercadoDto?> ExecutarAsync()
+
+---
 ## Classe: CriarMercadoUseCase
 
 ### Construtores
@@ -654,6 +860,33 @@
 
 ### Métodos
 - Task ExecutarAsync()
+
+---
+## Classe: BuscarProdutoPorIdUseCase
+
+### Construtores
+- BuscarProdutoPorIdUseCase(IProdutoRepositorio produtoRepositorio)
+
+### Métodos
+- Task<ProdutoDto?> ExecutarAsync()
+
+---
+## Classe: BuscarProdutosPorCategoriaUseCase
+
+### Construtores
+- BuscarProdutosPorCategoriaUseCase(IProdutoRepositorio produtoRepositorio)
+
+### Métodos
+- Task<IEnumerable<ProdutoDto>> ExecutarAsync()
+
+---
+## Classe: BuscarProdutosPorNomeUseCase
+
+### Construtores
+- BuscarProdutosPorNomeUseCase(IProdutoRepositorio produtoRepositorio)
+
+### Métodos
+- Task<IEnumerable<ProdutoDto>> ExecutarAsync()
 
 ---
 ## Classe: CriarProdutoUseCase
@@ -693,6 +926,24 @@
 - Task ExecutarAsync()
 
 ---
+## Classe: BuscarUsuarioPorEmailUseCase
+
+### Construtores
+- BuscarUsuarioPorEmailUseCase(IUsuarioRepositorio usuarioRepositorio)
+
+### Métodos
+- Task<UsuarioDto?> ExecutarAsync()
+
+---
+## Classe: BuscarUsuarioPorIdUseCase
+
+### Construtores
+- BuscarUsuarioPorIdUseCase(IUsuarioRepositorio usuarioRepositorio)
+
+### Métodos
+- Task<UsuarioDto?> ExecutarAsync()
+
+---
 ## Classe: CriarUsuarioUseCase
 
 ### Construtores
@@ -722,13 +973,24 @@
 ---
 # Infrastructure - Repositories
 
+## Classe: CategoriaRepositorio
+
+### Construtores
+- CategoriaRepositorio(AppDbContext context)
+
+### Métodos
+- Task<IEnumerable<Categoria>> ListarAtivosAsync()
+- Task<IEnumerable<Categoria>> BuscarPorNomeAsync()
+
+---
 ## Classe: ConviteGrupoRepositorio
 
 ### Construtores
 - ConviteGrupoRepositorio(AppDbContext context)
 
 ### Métodos
-- Task<ConviteGrupo?> ObterPorCodigoAsync()
+- Task<List<ConviteGrupo>> ListarPorGrupoIdAsync()
+- Task<ConviteGrupo?> BuscarPorCodigoAsync()
 
 ---
 ## Classe: GrupoRepositorio
@@ -737,7 +999,7 @@
 - GrupoRepositorio(AppDbContext context)
 
 ### Métodos
-- Task<Grupo?> ObterPorIdAsync()
+- Task<Grupo?> BuscarPorIdAsync()
 - Task<IEnumerable<Grupo>> ObterPorUsuarioAsync()
 
 ---
@@ -778,8 +1040,8 @@
 - RepositorioBase(AppDbContext context)
 
 ### Métodos
-- Task<T?> ObterPorIdAsync()
-- Task<IEnumerable<T>> ObterTodosAsync()
+- Task<T?> BuscarPorIdAsync()
+- Task<IEnumerable<T>> BuscarTodosAsync()
 - Task AdicionarAsync()
 - Task AtualizarAsync()
 - Task RemoverAsync()
@@ -791,44 +1053,82 @@
 - UsuarioRepositorio(AppDbContext context)
 
 ### Métodos
-- Task<Usuario?> ObterPorEmailAsync()
+- Task<Usuario?> BuscarPorEmailAsync()
 
 ---
 # API - Controllers
 
-## Classe: ConviteGrupoController
+## Classe: BaseController
+
+### Métodos
+- IActionResult OkResponse()
+- IActionResult CreatedResponse()
+- IActionResult NoContentResponse()
+- IActionResult NotFoundResponse()
+
+---
+## Classe: CategoriaController
 
 ### Construtores
-- ConviteGrupoController(CriarConviteGrupoUseCase criarConvite, EntrarGrupoPorCodigoUseCase entrarGrupo)
+- CategoriaController(CriarCategoriaUseCase criarCategoria, ListarCategoriasUseCase listarCategorias, AtualizarCategoriaUseCase atualizarCategoria, DesativarCategoriaUseCase desativarCategoria, BuscarCategoriaPorIdUseCase buscarCategoriaPorId)
 
 ### Métodos
 - Task<IActionResult> Criar()
-- Task<IActionResult> Entrar()
+- Task<IActionResult> Listar()
+- Task<IActionResult> BuscarPorId()
+- Task<IActionResult> Atualizar()
+- Task<IActionResult> Desativar()
+
+---
+## Classe: ConviteGrupoController
+
+### Construtores
+- ConviteGrupoController(CriarConviteGrupoUseCase criarConvite, EntrarGrupoPorCodigoUseCase entrarGrupo, ListarConvitesGrupoUseCase listarConvites, CancelarConviteGrupoUseCase cancelarConvite)
+
+### Métodos
+- Task<IActionResult> Criar()
+- Task<IActionResult> EntrarPorCodigo()
+- Task<IActionResult> ListarPorGrupo()
+- Task<IActionResult> Cancelar()
 
 ---
 ## Classe: GrupoController
 
 ### Construtores
-- GrupoController(CriarGrupoUseCase criarGrupoUseCase, RemoverMembroGrupoUseCase removerMembroGrupoUseCase)
+- GrupoController(CriarGrupoUseCase criarGrupo, BuscarGrupoPorIdUseCase buscarGrupoPorId, ListarGruposDoUsuarioUseCase listarGruposDoUsuario, AdicionarMembroGrupoUseCase adicionarMembro, RemoverMembroGrupoUseCase removerMembro, SairDoGrupoUseCase sairDoGrupo, AlterarNomeGrupoUseCase alterarNomeGrupo)
 
 ### Métodos
-- Task<IActionResult> Criar()
+- Task<IActionResult> CriarGrupo()
+- Task<IActionResult> BuscarGrupoPorId()
+- Task<IActionResult> ListarGruposDoUsuario()
+- Task<IActionResult> AdicionarMembro()
 - Task<IActionResult> RemoverMembro()
+- Task<IActionResult> SairDoGrupo()
+- Task<IActionResult> AlterarNomeGrupo()
 
 ---
 ## Classe: MarcaController
 
+### Construtores
+- MarcaController(CriarMarcaUseCase criarMarca, ListarMarcasUseCase listarMarcas, AtualizarMarcaUseCase atualizarMarca, DesativarMarcaUseCase desativarMarca, BuscarMarcaPorIdUseCase buscarMarcaPorId)
+
 ### Métodos
 - Task<IActionResult> Criar()
 - Task<IActionResult> Listar()
-- Task<IActionResult> Dexativar()
+- Task<IActionResult> BuscarPorId()
+- Task<IActionResult> Atualizar()
+- Task<IActionResult> Desativar()
 
 ---
 ## Classe: MercadoController
 
+### Construtores
+- MercadoController(CriarMercadoUseCase criarMercado, ListarMercadosUseCase listarMercados, AtualizarMercadoUseCase atualizarMercado, DesativarMercadoUseCase desativarMarcado, BuscarMercadoPorIdUseCase buscarMercadoPorId)
+
 ### Métodos
 - Task<IActionResult> Criar()
 - Task<IActionResult> Listar()
+- Task<IActionResult> BuscarPorId()
 - Task<IActionResult> Atualizar()
 - Task<IActionResult> Desativar()
 
@@ -836,29 +1136,35 @@
 ## Classe: ProdutoController
 
 ### Construtores
-- ProdutoController(CriarProdutoUseCase criarProduto, AtualizarProdutoUseCase atualizarProduto, DesativarProdutoUseCase desativarProduto, ListarProdutosUseCase listarProdutos)
+- ProdutoController(CriarProdutoUseCase criarProduto, ListarProdutosUseCase listarProdutos, AtualizarProdutoUseCase atualizarProduto, DesativarProdutoUseCase desativarProduto, BuscarProdutoPorIdUseCase buscarProdutoPorId, BuscarProdutosPorCategoriaUseCase buscarProdutosPorCategoria, BuscarProdutosPorNomeUseCase buscarProdutosPorNome)
 
 ### Métodos
 - Task<IActionResult> Criar()
+- Task<IActionResult> Listar()
+- Task<IActionResult> BuscarPorId()
+- Task<IActionResult> BuscarPorCategoria()
+- Task<IActionResult> BuscarPorNome()
 - Task<IActionResult> Atualizar()
 - Task<IActionResult> Desativar()
-- Task<IActionResult> ObterTodos()
 
 ---
 ## Classe: UsuarioController
 
 ### Construtores
-- UsuarioController(CriarUsuarioUseCase criarUsuario, LoginUsuarioUseCase loginUsuario, AlterarPerfilUseCase alterarPerfil, DesativarContaUseCase desativarConta)
+- UsuarioController(CriarUsuarioUseCase criarUsuario, LoginUsuarioUseCase loginUsuario, AlterarPerfilUseCase alterarPerfil, DesativarContaUseCase desativarConta, BuscarUsuarioPorIdUseCase buscarUsuarioPorId, BuscarUsuarioPorEmailUseCase buscarUsuarioPorEmail)
 
 ### Métodos
 - Task<IActionResult> CriarUsuario()
 - Task<IActionResult> Login()
 - Task<IActionResult> AlterarPerfil()
 - Task<IActionResult> DesativarConta()
+- Task<IActionResult> BuscarPorId()
+- Task<IActionResult> BuscarPorEmail()
 
 ---
 # Interfaces
 
+- ICategoriaRepositorio
 - ICompraRepositorio
 - IConviteGrupoRepositorio
 - IGrupoRepositorio

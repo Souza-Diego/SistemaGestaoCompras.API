@@ -40,5 +40,10 @@ namespace SistemaGestaoCompras.Domain.ValueObjects
 
         public static readonly UnidadeMedida Unidade =
             new("Unidade", "un", TipoUnidade.Contagem, 1m);
+
+        public override string ToString()
+        {
+            return Simbolo;
+        }
     }
 }

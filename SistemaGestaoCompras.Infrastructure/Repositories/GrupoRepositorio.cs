@@ -11,7 +11,7 @@ namespace SistemaGestaoCompras.Infrastructure.Repositories
         {            
         }
 
-        public override async Task<Grupo?> ObterPorIdAsync(Guid id)
+        public override async Task<Grupo?> BuscarPorIdAsync(Guid id)
         {
             return await _context.Grupos
                 .Include(g => g.Membros)

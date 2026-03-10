@@ -14,7 +14,7 @@ namespace SistemaGestaoCompras.Application.UseCases.Mercados
 
         public async Task ExecutarAsync(AtualizarMercadoDto dto)
         {
-            var mercado = await _mercadoRepositorio.ObterPorIdAsync(dto.Id);
+            var mercado = await _mercadoRepositorio.BuscarPorIdAsync(dto.Id);
             if (mercado == null)
                 throw new Exception("Mercado não encontrado.");
             mercado.AlterarNome(dto.Nome);

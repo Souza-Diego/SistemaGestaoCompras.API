@@ -7,7 +7,7 @@
 - ValueObjects: 4
 - Services: 2
 - Enums: 6
-- Repository Interfaces: 12
+- Repository Interfaces: 13
 
 #### Entities
 - Categoria
@@ -48,6 +48,7 @@
 
 #### Repository Interfaces
 
+- ICategoriaRepositorio
 - ICompraRepositorio
 - IConviteGrupoRepositorio
 - IGrupoRepositorio
@@ -62,14 +63,22 @@
 - IUsuarioRepositorio
 
 ### Application
-- DTOs: 16
-- UseCases: 20
+- DTOs: 25
+- UseCases: 39
 
 #### DTOs
+- AtualizarCategoriaDto
+- CategoriaDto
+- CriarCategoriaDto
+- ConviteGrupoDto
 - CriarConviteGrupoDto
 - EntrarGrupoPorCodigoDto
+- AdicionarMembroGrupoDto
+- AlterarNomeGrupoDto
 - CriarGrupoDto
+- GrupoDto
 - RemoverMembroGrupoDto
+- SairDoGrupoDto
 - AtualizarMarcaDto
 - CriarMarcaDto
 - MarcaDto
@@ -82,33 +91,54 @@
 - AlterarPerfilDto
 - CriarUsuarioDto
 - LoginUsuarioDto
+- UsuarioDto
 
 #### UseCases
+- AtualizarCategoriaUseCase
+- BuscarCategoriaPorIdUseCase
+- CriarCategoriaUseCase
+- DesativarCategoriaUseCase
+- ListarCategoriasUseCase
+- CancelarConviteGrupoUseCase
 - CriarConviteGrupoUseCase
 - EntrarGrupoPorCodigoUseCase
+- ListarConvitesGrupoUseCase
+- AdicionarMembroGrupoUseCase
+- AlterarNomeGrupoUseCase
+- BuscarGrupoPorIdUseCase
 - CriarGrupoUseCase
+- ListarGruposDoUsuarioUseCase
 - RemoverMembroGrupoUseCase
+- SairDoGrupoUseCase
 - AtualizarMarcaUseCase
+- BuscarMarcaPorIdUseCase
 - CriarMarcaUseCase
 - DesativarMarcaUseCase
 - ListarMarcasUseCase
 - AtualizarMercadoUseCase
+- BuscarMercadoPorIdUseCase
 - CriarMercadoUseCase
 - DesativarMercadoUseCase
 - ListarMercadosUseCase
 - AtualizarProdutoUseCase
+- BuscarProdutoPorIdUseCase
+- BuscarProdutosPorCategoriaUseCase
+- BuscarProdutosPorNomeUseCase
 - CriarProdutoUseCase
 - DesativarProdutoUseCase
 - ListarProdutosUseCase
 - AlterarPerfilUseCase
+- BuscarUsuarioPorEmailUseCase
+- BuscarUsuarioPorIdUseCase
 - CriarUsuarioUseCase
 - DesativarContaUseCase
 - LoginUsuarioUseCase
 
 ### Infrastructure
-- Repositories: 7
+- Repositories: 8
 
 #### Repositories
+- CategoriaRepositorio
 - ConviteGrupoRepositorio
 - GrupoRepositorio
 - MarcaRepositorio
@@ -118,9 +148,11 @@
 - UsuarioRepositorio
 
 ### API
-- Controllers: 6
+- Controllers: 8
 
 #### Controllers
+- BaseController
+- CategoriaController
 - ConviteGrupoController
 - GrupoController
 - MarcaController

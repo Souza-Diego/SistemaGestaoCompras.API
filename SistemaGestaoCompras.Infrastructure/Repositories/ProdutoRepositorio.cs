@@ -23,7 +23,9 @@ namespace SistemaGestaoCompras.Infrastructure.Repositories
 
         public async Task<IEnumerable<Produto>> BuscarPorNomeAsync(string nome)
         {
-            return await _context.Produtos.Where(p => p.Nome.Contains(nome)).ToListAsync();
+            return await _context.Produtos
+                .Where(p => EF.Functions.Like(p.Nome, $"%{nome}%"))
+                .ToListAsync();
         }
     }
 }
