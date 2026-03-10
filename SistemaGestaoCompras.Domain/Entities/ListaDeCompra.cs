@@ -2,7 +2,7 @@
 
 namespace SistemaGestaoCompras.Domain.Entities
 {
-    public class ListaDeCompras : Entidade
+    public class ListaDeCompra : Entidade
     {        
         public string Nome { get; private set; }
         public Guid? IdUsuario { get; private set; }
@@ -13,14 +13,14 @@ namespace SistemaGestaoCompras.Domain.Entities
         private readonly List<ItemLista> _itens;
         public IReadOnlyCollection<ItemLista> Itens => _itens.AsReadOnly();
 
-        protected ListaDeCompras()
+        protected ListaDeCompra()
         {
             // Construtor protegido para uso do Entity Framework
             Nome = null!;
             _itens = new List<ItemLista>();
         }
 
-        public ListaDeCompras(string nome, Guid idUsuario)
+        public ListaDeCompra(string nome, Guid idUsuario)
         {
             if(idUsuario == Guid.Empty)
                 throw new ArgumentException("Usuário inválido.");
@@ -34,7 +34,7 @@ namespace SistemaGestaoCompras.Domain.Entities
             ValidarProprietario();
         }
 
-        public ListaDeCompras(string nome, Guid idGrupo, bool isListaGrupo)
+        public ListaDeCompra(string nome, Guid idGrupo, bool isListaGrupo)
         {
             if(idGrupo == Guid.Empty)
                 throw new ArgumentException("Grupo inválido.");            

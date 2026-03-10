@@ -1,9 +1,9 @@
 ﻿using SistemaGestaoCompras.Domain.Entities;
 namespace SistemaGestaoCompras.Domain.Interfaces.Repositories
 {
-    public interface IListaDeComprasRepositorio : IRepositorioBase<ListaDeCompras>
+    public interface IListaDeComprasRepositorio : IRepositorioBase<ListaDeCompra>
     {        
-        Task<IEnumerable<ListaDeCompras>> ObterPorUsuarioAsync(Guid usuarioId);
-        Task<IEnumerable<ListaDeCompras>> ObterPorGrupoAsync(Guid idGrupo);        
+        Task<IEnumerable<ListaDeCompra>> ListarPorUsuarioIdAsync(Guid idUsuario);
+        Task<IEnumerable<ListaDeCompra>> ListarPorGrupoIdAsync(Guid idGrupo);        
     }
 }

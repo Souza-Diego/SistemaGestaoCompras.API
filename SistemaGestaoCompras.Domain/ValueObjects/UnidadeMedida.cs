@@ -41,6 +41,21 @@ namespace SistemaGestaoCompras.Domain.ValueObjects
         public static readonly UnidadeMedida Unidade =
             new("Unidade", "un", TipoUnidade.Contagem, 1m);
 
+        public static UnidadeMedida ObterPorSimbolo(string simbolo)
+        {
+            simbolo = simbolo.ToLower();
+
+            return simbolo switch
+            {
+                "g" => Grama,
+                "kg" => Quilograma,
+                "ml" => Mililitro,
+                "l" => Litro,
+                "un" => Unidade,
+                _ => throw new ArgumentException("Unidade de medida inválida.")
+            };
+        }
+
         public override string ToString()
         {
             return Simbolo;

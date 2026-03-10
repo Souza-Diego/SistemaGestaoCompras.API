@@ -2,7 +2,7 @@
 
 namespace SistemaGestaoCompras.Domain.Entities
 {
-    public class ListaDeComprasPadrao : Entidade
+    public class ListaDeCompraPadrao : Entidade
     {        
         public Guid IdUsuario { get; private set; }
         public string Nome { get; private set; }
@@ -10,14 +10,14 @@ namespace SistemaGestaoCompras.Domain.Entities
         private readonly List<ItemListaPadrao> _itens;
         public IReadOnlyCollection<ItemListaPadrao> Itens => _itens.AsReadOnly();
 
-        protected ListaDeComprasPadrao()
+        protected ListaDeCompraPadrao()
         {
             // Construtor protegido para uso do Entity Framework
             Nome = null!;
             _itens = new List<ItemListaPadrao>();
         }
 
-        public ListaDeComprasPadrao(Guid idUsuario, string nome)
+        public ListaDeCompraPadrao(Guid idUsuario, string nome)
         {            
             IdUsuario = idUsuario;
 

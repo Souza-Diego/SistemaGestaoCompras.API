@@ -2,8 +2,8 @@
 
 namespace SistemaGestaoCompras.Domain.Interfaces.Repositories
 {
-    public interface IListaDeComprasPadraoRepositorio : IRepositorioBase<ListaDeComprasPadrao>
+    public interface IListaDeComprasPadraoRepositorio : IRepositorioBase<ListaDeCompraPadrao>
     {        
-        Task<IEnumerable<ListaDeComprasPadrao>> ObterPorUsuarioAsync(Guid usuarioId);        
+        Task<IEnumerable<ListaDeCompraPadrao>> ObterPorUsuarioAsync(Guid usuarioId);        
     }
 }
