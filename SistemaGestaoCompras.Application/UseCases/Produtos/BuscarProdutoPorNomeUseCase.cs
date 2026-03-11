@@ -3,18 +3,18 @@ using SistemaGestaoCompras.Domain.Interfaces.Repositories;
 
 namespace SistemaGestaoCompras.Application.UseCases.Produtos
 {
-    public class BuscarProdutosPorCategoriaUseCase
+    public class BuscarProdutoPorNomeUseCase
     {
         private readonly IProdutoRepositorio _produtoRepositorio;
 
-        public BuscarProdutosPorCategoriaUseCase(IProdutoRepositorio produtoRepositorio)
+        public BuscarProdutoPorNomeUseCase(IProdutoRepositorio produtoRepositorio)
         {
             _produtoRepositorio = produtoRepositorio;
         }
 
-        public async Task<IEnumerable<ProdutoDto>> ExecutarAsync(Guid categoriaId)
+        public async Task<IEnumerable<ProdutoDto>> ExecutarAsync(string nome)
         {
-            var produtos = await _produtoRepositorio.ObterPorCategoriaAsync(categoriaId);
+            var produtos = await _produtoRepositorio.BuscarPorNomeAsync(nome);
 
             return produtos.Select(produto => new ProdutoDto
             {

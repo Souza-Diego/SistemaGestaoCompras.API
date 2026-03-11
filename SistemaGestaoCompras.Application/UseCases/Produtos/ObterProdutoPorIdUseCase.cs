@@ -3,20 +3,23 @@ using SistemaGestaoCompras.Domain.Interfaces.Repositories;
 
 namespace SistemaGestaoCompras.Application.UseCases.Produtos
 {
-    public class BuscarProdutosPorNomeUseCase
+    public class ObterProdutoPorIdUseCase
     {
         private readonly IProdutoRepositorio _produtoRepositorio;
 
-        public BuscarProdutosPorNomeUseCase(IProdutoRepositorio produtoRepositorio)
+        public ObterProdutoPorIdUseCase(IProdutoRepositorio produtoRepositorio)
         {
             _produtoRepositorio = produtoRepositorio;
         }
 
-        public async Task<IEnumerable<ProdutoDto>> ExecutarAsync(string nome)
+        public async Task<ProdutoDto?> ExecutarAsync(Guid id)
         {
-            var produtos = await _produtoRepositorio.BuscarPorNomeAsync(nome);
+            var produto = await _produtoRepositorio.BuscarPorIdAsync(id);
 
-            return produtos.Select(produto => new ProdutoDto
+            if (produto == null)
+                return null;
+
+            return new ProdutoDto
             {
                 Id = produto.Id,
                 Nome = produto.Nome,
@@ -25,7 +28,7 @@ namespace SistemaGestaoCompras.Application.UseCases.Produtos
                 UnidadeBase = produto.UnidadeBase.Simbolo,
                 Tipo = produto.Tipo.ToString(),
                 Ativo = produto.Ativo
-            });
+            };
         }
     }
 }

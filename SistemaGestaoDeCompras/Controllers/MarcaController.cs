@@ -10,14 +10,14 @@ namespace SistemaGestaoCompras.API.Controllers
     {
         private readonly CriarMarcaUseCase _criarMarca;
         private readonly ListarMarcasUseCase _listarMarcas;
-        private readonly AtualizarMarcaUseCase _atualizarMarca;
+        private readonly AlterarNomeMarcaUseCase _atualizarMarca;
         private readonly DesativarMarcaUseCase _desativarMarca;
         private readonly BuscarMarcaPorIdUseCase _buscarMarcaPorId;
 
         public MarcaController(
             CriarMarcaUseCase criarMarca,
             ListarMarcasUseCase listarMarcas,
-            AtualizarMarcaUseCase atualizarMarca,
+            AlterarNomeMarcaUseCase atualizarMarca,
             DesativarMarcaUseCase desativarMarca,
             BuscarMarcaPorIdUseCase buscarMarcaPorId)
         {
@@ -54,7 +54,7 @@ namespace SistemaGestaoCompras.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Atualizar(Guid id, [FromBody] AtualizarMarcaDto dto)
+        public async Task<IActionResult> Atualizar(Guid id, [FromBody] AlterarNomeMarcaDto dto)
         {
             dto.Id = id;
             await _atualizarMarca.ExecutarAsync(dto);

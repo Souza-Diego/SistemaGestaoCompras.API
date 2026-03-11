@@ -9,35 +9,44 @@ namespace SistemaGestaoCompras.API.Controllers
     {
         private readonly CriarProdutoUseCase _criarProduto;
         private readonly ListarProdutosUseCase _listarProdutos;
-        private readonly AtualizarProdutoUseCase _atualizarProduto;
+        private readonly ObterProdutoPorIdUseCase _obterProdutoPorId;
+        private readonly ListarProdutosPorCategoriaUseCase _listarProdutosPorCategoria;
+        private readonly BuscarProdutoPorNomeUseCase _buscarProdutoPorNome;
+
+        private readonly AlterarNomeProdutoUseCase _alterarNomeProduto;
+        private readonly AlterarCategoriaProdutoUseCase _alterarCategoriaProduto;
+        private readonly AlterarMarcaProdutoUseCase _alterarMarcaProduto;
+
         private readonly DesativarProdutoUseCase _desativarProduto;
-        private readonly BuscarProdutoPorIdUseCase _buscarProdutoPorId;
-        private readonly BuscarProdutosPorCategoriaUseCase _buscarProdutosPorCategoria;
-        private readonly BuscarProdutosPorNomeUseCase _buscarProdutosPorNome;
 
         public ProdutoController(
             CriarProdutoUseCase criarProduto,
             ListarProdutosUseCase listarProdutos,
-            AtualizarProdutoUseCase atualizarProduto,
-            DesativarProdutoUseCase desativarProduto,
-            BuscarProdutoPorIdUseCase buscarProdutoPorId,
-            BuscarProdutosPorCategoriaUseCase buscarProdutosPorCategoria,
-            BuscarProdutosPorNomeUseCase buscarProdutosPorNome)
+            ObterProdutoPorIdUseCase obterProdutoPorId,
+            ListarProdutosPorCategoriaUseCase listarProdutosPorCategoria,
+            BuscarProdutoPorNomeUseCase buscarProdutoPorNome,
+            AlterarNomeProdutoUseCase alterarNomeProduto,
+            AlterarCategoriaProdutoUseCase alterarCategoriaProduto,
+            AlterarMarcaProdutoUseCase alterarMarcaProduto,
+            DesativarProdutoUseCase desativarProduto)
         {
             _criarProduto = criarProduto;
             _listarProdutos = listarProdutos;
-            _atualizarProduto = atualizarProduto;
+            _obterProdutoPorId = obterProdutoPorId;
+            _listarProdutosPorCategoria = listarProdutosPorCategoria;
+            _buscarProdutoPorNome = buscarProdutoPorNome;
+            _alterarNomeProduto = alterarNomeProduto;
+            _alterarCategoriaProduto = alterarCategoriaProduto;
+            _alterarMarcaProduto = alterarMarcaProduto;
             _desativarProduto = desativarProduto;
-            _buscarProdutoPorId = buscarProdutoPorId;
-            _buscarProdutosPorCategoria = buscarProdutosPorCategoria;
-            _buscarProdutosPorNome = buscarProdutosPorNome;
         }
 
         [HttpPost]
         public async Task<IActionResult> Criar([FromBody] CriarProdutoDto dto)
         {
             var id = await _criarProduto.ExecutarAsync(dto);
-            return CreatedResponse(nameof(BuscarPorId), new { id }, id);
+
+            return CreatedResponse(nameof(ObterPorId), new { id }, new { id });
         }
 
         [HttpGet]
@@ -48,9 +57,9 @@ namespace SistemaGestaoCompras.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> BuscarPorId(Guid id)
+        public async Task<IActionResult> ObterPorId(Guid id)
         {
-            var produto = await _buscarProdutoPorId.ExecutarAsync(id);
+            var produto = await _obterProdutoPorId.ExecutarAsync(id);
 
             if (produto == null)
                 return NotFoundResponse();
@@ -59,24 +68,46 @@ namespace SistemaGestaoCompras.API.Controllers
         }
 
         [HttpGet("categoria/{categoriaId}")]
-        public async Task<IActionResult> BuscarPorCategoria(Guid categoriaId)
+        public async Task<IActionResult> ListarPorCategoria(Guid categoriaId)
         {
-            var produtos = await _buscarProdutosPorCategoria.ExecutarAsync(categoriaId);
+            var produtos = await _listarProdutosPorCategoria.ExecutarAsync(categoriaId);
             return OkResponse(produtos);
         }
 
         [HttpGet("buscar")]
         public async Task<IActionResult> BuscarPorNome([FromQuery] string nome)
         {
-            var produtos = await _buscarProdutosPorNome.ExecutarAsync(nome);
+            var produtos = await _buscarProdutoPorNome.ExecutarAsync(nome);
             return OkResponse(produtos);
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> Atualizar(Guid id, [FromBody] AtualizarProdutoDto dto)
+        [HttpPut("{id}/nome")]
+        public async Task<IActionResult> AlterarNome(Guid id, [FromBody] AlterarNomeProdutoDto dto)
         {
             dto.Id = id;
-            await _atualizarProduto.ExecutarAsync(dto);
+
+            await _alterarNomeProduto.ExecutarAsync(dto);
+
+            return NoContentResponse();
+        }
+
+        [HttpPut("{id}/categoria")]
+        public async Task<IActionResult> AlterarCategoria(Guid id, [FromBody] AlterarCategoriaProdutoDto dto)
+        {
+            dto.Id = id;
+
+            await _alterarCategoriaProduto.ExecutarAsync(dto);
+
+            return NoContentResponse();
+        }
+
+        [HttpPut("{id}/marca")]
+        public async Task<IActionResult> AlterarMarca(Guid id, [FromBody] AlterarMarcaProdutoDto dto)
+        {
+            dto.Id = id;
+
+            await _alterarMarcaProduto.ExecutarAsync(dto);
+
             return NoContentResponse();
         }
 
@@ -84,6 +115,7 @@ namespace SistemaGestaoCompras.API.Controllers
         public async Task<IActionResult> Desativar(Guid id)
         {
             await _desativarProduto.ExecutarAsync(id);
+
             return NoContentResponse();
         }
     }

@@ -10,14 +10,14 @@ namespace SistemaGestaoCompras.API.Controllers
     {
         private readonly CriarCategoriaUseCase _criarCategoria;
         private readonly ListarCategoriasUseCase _listarCategorias;
-        private readonly AtualizarCategoriaUseCase _atualizarCategoria;
+        private readonly AlterarNomeCategoriaUseCase _atualizarCategoria;
         private readonly DesativarCategoriaUseCase _desativarCategoria;
         private readonly BuscarCategoriaPorIdUseCase _buscarCategoriaPorId;
 
         public CategoriaController(
             CriarCategoriaUseCase criarCategoria,
             ListarCategoriasUseCase listarCategorias,
-            AtualizarCategoriaUseCase atualizarCategoria,
+            AlterarNomeCategoriaUseCase atualizarCategoria,
             DesativarCategoriaUseCase desativarCategoria,
             BuscarCategoriaPorIdUseCase buscarCategoriaPorId)
         {
@@ -54,7 +54,7 @@ namespace SistemaGestaoCompras.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Atualizar(Guid id, [FromBody] AtualizarCategoriaDto dto)
+        public async Task<IActionResult> Atualizar(Guid id, [FromBody] AlterarNomeCategoriaDto dto)
         {
             dto.Id = id;
             await _atualizarCategoria.ExecutarAsync(dto);

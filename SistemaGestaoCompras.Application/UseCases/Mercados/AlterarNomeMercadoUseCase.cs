@@ -3,16 +3,16 @@ using SistemaGestaoCompras.Domain.Interfaces.Repositories;
 
 namespace SistemaGestaoCompras.Application.UseCases.Mercados
 {
-    public class AtualizarMercadoUseCase
+    public class AlterarNomeMercadoUseCase
     {
         private readonly IMercadoRepositorio _mercadoRepositorio;
 
-        public AtualizarMercadoUseCase(IMercadoRepositorio mercadoRepositorio)
+        public AlterarNomeMercadoUseCase(IMercadoRepositorio mercadoRepositorio)
         {
             _mercadoRepositorio = mercadoRepositorio;
         }
 
-        public async Task ExecutarAsync(AtualizarMercadoDto dto)
+        public async Task ExecutarAsync(AlterarNomeMercadoDto dto)
         {
             var mercado = await _mercadoRepositorio.BuscarPorIdAsync(dto.Id);
             if (mercado == null)

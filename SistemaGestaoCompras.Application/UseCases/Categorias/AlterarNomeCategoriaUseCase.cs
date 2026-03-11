@@ -3,16 +3,16 @@ using SistemaGestaoCompras.Domain.Interfaces.Repositories;
 
 namespace SistemaGestaoCompras.Application.UseCases.Categorias
 {
-    public class AtualizarCategoriaUseCase
+    public class AlterarNomeCategoriaUseCase
     {
         private readonly ICategoriaRepositorio _categoriaRepositorio;
 
-        public AtualizarCategoriaUseCase(ICategoriaRepositorio categoriaRepositorio)
+        public AlterarNomeCategoriaUseCase(ICategoriaRepositorio categoriaRepositorio)
         {
             _categoriaRepositorio = categoriaRepositorio;
         }
 
-        public async Task ExecutarAsync(AtualizarCategoriaDto dto)
+        public async Task ExecutarAsync(AlterarNomeCategoriaDto dto)
         {
             var categoria = await _categoriaRepositorio.BuscarPorIdAsync(dto.Id);
 

@@ -3,16 +3,16 @@ using SistemaGestaoCompras.Application.DTOs.Marcas;
 
 namespace SistemaGestaoCompras.Application.UseCases.Marcas
 {
-    public class AtualizarMarcaUseCase
+    public class AlterarNomeMarcaUseCase
     {
         private readonly IMarcaRepositorio _marcaRepositorio;
 
-        public AtualizarMarcaUseCase(IMarcaRepositorio marcaRepositorio)
+        public AlterarNomeMarcaUseCase(IMarcaRepositorio marcaRepositorio)
         {
             _marcaRepositorio = marcaRepositorio;
         }
 
-        public async Task ExecutarAsync(AtualizarMarcaDto dto)
+        public async Task ExecutarAsync(AlterarNomeMarcaDto dto)
         {
             var marca = await _marcaRepositorio.BuscarPorIdAsync(dto.Id);
             if (marca == null)

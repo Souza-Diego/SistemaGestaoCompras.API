@@ -16,13 +16,15 @@ namespace SistemaGestaoCompras.Application.UseCases.Produtos
         {
             var produtos = await _produtoRepositorio.ListarAtivosAsync();
 
-            return produtos.Select(p => new ProdutoDto{
-                Id = p.Id,
-                Nome = p.Nome,
-                IdCategoria = p.IdCategoria,
-                IdMarca = p.IdMarca,
-                UnidadeBase = p.UnidadeBase.Simbolo,
-                Ativo = p.Ativo
+            return produtos.Select(produto => new ProdutoDto
+            {
+                Id = produto.Id,
+                Nome = produto.Nome,
+                IdCategoria = produto.IdCategoria,
+                IdMarca = produto.IdMarca,
+                UnidadeBase = produto.UnidadeBase.Simbolo,
+                Tipo = produto.Tipo.ToString(),
+                Ativo = produto.Ativo
             });
         }
     }

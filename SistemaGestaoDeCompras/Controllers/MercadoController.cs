@@ -10,14 +10,14 @@ namespace SistemaGestaoCompras.API.Controllers
     {
         private readonly CriarMercadoUseCase _criarMercado;
         private readonly ListarMercadosUseCase _listarMercados;
-        private readonly AtualizarMercadoUseCase _atualizarMercado;
+        private readonly AlterarNomeMercadoUseCase _atualizarMercado;
         private readonly DesativarMercadoUseCase _desativarMercado;
         private readonly BuscarMercadoPorIdUseCase _buscarMercadoPorId;
 
         public MercadoController(
             CriarMercadoUseCase criarMercado,
             ListarMercadosUseCase listarMercados,
-            AtualizarMercadoUseCase atualizarMercado,
+            AlterarNomeMercadoUseCase atualizarMercado,
             DesativarMercadoUseCase desativarMarcado,
             BuscarMercadoPorIdUseCase buscarMercadoPorId)
         {
@@ -54,7 +54,7 @@ namespace SistemaGestaoCompras.API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Atualizar(Guid id, [FromBody] AtualizarMercadoDto dto)
+        public async Task<IActionResult> Atualizar(Guid id, [FromBody] AlterarNomeMercadoDto dto)
         {
             dto.Id = id;
             await _atualizarMercado.ExecutarAsync(dto);
