@@ -10,11 +10,11 @@ namespace SistemaGestaoCompras.Infrastructure.Data
         }
 
         public DbSet<Categoria> Categorias { get; set; } = null!;
-        //public DbSet<Compra> Compras { get; set; } = null!;
+        public DbSet<Compra> Compras { get; set; } = null!;
         public DbSet<ConviteGrupo> ConvitesGrupo { get; set; } = null!;
         public DbSet<Grupo> Grupos { get; set; } = null!;
         //public DbSet<GrupoUsuario> GrupoUsuarios { get; set; } = null!;
-        //public DbSet<ItemCompra> ItemCompras { get; set; } = null!;
+        public DbSet<ItemCompra> ItensCompra { get; set; } = null!;
         //public DbSet<ItemLista> ItemListas { get; set; } = null!;
         //public DbSet<ItemListaPadrao> ItemListaPadroes { get; set; } = null!;
         public DbSet<ListaDeCompra> ListaDeCompras { get; set; } = null!;

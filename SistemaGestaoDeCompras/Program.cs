@@ -20,7 +20,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddScoped<IGrupoRepositorio, GrupoRepositorio>();
 builder.Services.AddScoped<IConviteGrupoRepositorio, ConviteGrupoRepositorio>();
-//builder.Services.AddScoped<ICompraRepositorio, CompraRepositorio>();
+builder.Services.AddScoped<ICompraRepositorio, CompraRepositorio>();
 builder.Services.AddScoped<IListaDeComprasRepositorio, ListaDeComprasRepositorio>();
 builder.Services.AddScoped<IListaDeComprasPadraoRepositorio, ListaDeComprasPadraoRepositorio>();
 //builder.Services.AddScoped<IOrcamentoRepositorio, OrcamentoRepositorio>();

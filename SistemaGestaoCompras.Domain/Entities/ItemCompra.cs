@@ -52,5 +52,16 @@ namespace SistemaGestaoCompras.Domain.Entities
         {
             return PrecoUnitario * Quantidade;
         }
+
+        public void AlterarQuantidade(decimal quantidade)
+        {
+            ValidarQuantidade(quantidade);
+            Quantidade = quantidade;
+        }
+
+        public void AlterarPreco(Dinheiro preco)
+        {
+            PrecoUnitario = preco;
+        }
     }
 }

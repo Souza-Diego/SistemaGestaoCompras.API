@@ -63,13 +63,20 @@
 - IUsuarioRepositorio
 
 ### Application
-- DTOs: 41
-- UseCases: 63
+- DTOs: 55
+- UseCases: 86
 
 #### DTOs
 - AlterarNomeCategoriaDto
 - CategoriaDto
 - CriarCategoriaDto
+- AdicionarItemCompraDto
+- AlterarPrecoItemCompraDto
+- AlterarQuantidadeItemCompraDto
+- CriarCompraDto
+- ListarComprasPeriodoDto
+- RemoverItemCompraDto
+- TotalGastoPeriodoDto
 - ConviteGrupoDto
 - CriarConviteGrupoDto
 - EntrarGrupoPorCodigoDto
@@ -87,8 +94,15 @@
 - AlterarNomeListaComprasDto
 - AlterarQuantidadeItemListaDto
 - AlterarUnidadeItemListaDto
+- CriarListaAPartirDeTemplateDto
 - CriarListaComprasDto
 - RemoverItemListaDto
+- AdicionarItemListaPadraoDto
+- AlterarNomeListaPadraoDto
+- AlterarQuantidadeItemListaPadraoDto
+- AlterarUnidadeItemListaPadraoDto
+- CriarListaPadraoDto
+- RemoverItemListaPadraoDto
 - AlterarNomeMarcaDto
 - CriarMarcaDto
 - MarcaDto
@@ -115,6 +129,19 @@
 - CriarCategoriaUseCase
 - DesativarCategoriaUseCase
 - ListarCategoriasUseCase
+- AdicionarItemCompraUseCase
+- AlterarPrecoItemCompraUseCase
+- AlterarQuantidadeItemCompraUseCase
+- CriarCompraUseCase
+- FinalizarCompraUseCase
+- ListarComprasDoUsuarioUseCase
+- ListarComprasPorPeriodoUseCase
+- ObterCompraPorIdUseCase
+- ObterMercadosMaisUsadosUseCase
+- ObterProdutosMaisCompradosUseCase
+- ObterTotalGastoPorPeriodoUseCase
+- RemoverCompraDosRelatoriosUseCase
+- RemoverItemCompraUseCase
 - CancelarConviteGrupoUseCase
 - CriarConviteGrupoUseCase
 - EntrarGrupoPorCodigoUseCase
@@ -135,6 +162,7 @@
 - AlterarQuantidadeItemListaUseCase
 - AlterarUnidadeItemListaUseCase
 - BuscarListaDeComprasPorIdUseCase
+- CriarListaDeComprasAPartirDeTemplateUseCase
 - CriarListaDeComprasUseCase
 - DesativarListaDeComprasUseCase
 - FinalizarListaDeComprasUseCase
@@ -142,6 +170,15 @@
 - ListarListasDoUsuarioUseCase
 - ReabrirListaDeComprasUseCase
 - RemoverItemListaUseCase
+- AdicionarItemListaPadraoUseCase
+- AlterarNomeListaPadraoUseCase
+- AlterarQuantidadeItemListaPadraoUseCase
+- AlterarUnidadeItemListaPadraoUseCase
+- CriarListaPadraoUseCase
+- DesativarListaPadraoUseCase
+- ListarListasPadraoUsuarioUseCase
+- ObterListaPadraoPorIdUseCase
+- RemoverItemListaPadraoUseCase
 - AlterarNomeMarcaUseCase
 - BuscarMarcaPorIdUseCase
 - CriarMarcaUseCase
@@ -175,12 +212,14 @@
 - RecuperarSenhaUsuarioUseCase
 
 ### Infrastructure
-- Repositories: 9
+- Repositories: 11
 
 #### Repositories
 - CategoriaRepositorio
+- CompraRepositorio
 - ConviteGrupoRepositorio
 - GrupoRepositorio
+- ListaDeComprasPadraoRepositorio
 - ListaDeComprasRepositorio
 - MarcaRepositorio
 - MercadoRepositorio
@@ -189,14 +228,16 @@
 - UsuarioRepositorio
 
 ### API
-- Controllers: 9
+- Controllers: 11
 
 #### Controllers
 - BaseController
 - CategoriaController
+- CompraController
 - ConviteGrupoController
 - GrupoController
 - ListaDeComprasController
+- ListaPadraoController
 - MarcaController
 - MercadoController
 - ProdutoController
