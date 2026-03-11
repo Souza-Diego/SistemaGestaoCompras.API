@@ -37,12 +37,7 @@
         public void Desativar()
         {
             Ativo = false;
-        }
-
-        public void Reativar()
-        {
-            Ativo = true;
-        }
+        }        
 
         private string GerarCodigoConvite()
         {

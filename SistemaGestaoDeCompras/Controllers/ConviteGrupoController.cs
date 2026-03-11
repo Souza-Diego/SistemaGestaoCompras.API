@@ -7,48 +7,66 @@ namespace SistemaGestaoCompras.API.Controllers
     [Route("api/[controller]")]
     public class ConviteGrupoController : BaseController
     {
-        private readonly CriarConviteGrupoUseCase _criarConvite;
-        private readonly EntrarGrupoPorCodigoUseCase _entrarGrupo;
-        private readonly ListarConvitesGrupoUseCase _listarConvites;
-        private readonly CancelarConviteGrupoUseCase _cancelarConvite;
+        private readonly CriarConviteGrupoUseCase _criarConviteUseCase;
+        private readonly CancelarConviteGrupoUseCase _cancelarConviteUseCase;
+        private readonly EntrarGrupoPorCodigoUseCase _entrarGrupoPorCodigoUseCase;
+        private readonly ListarConvitesGrupoUseCase _listarConvitesUseCase;
+        private readonly ValidarConviteGrupoUseCase _validarConviteUseCase;
 
         public ConviteGrupoController(
             CriarConviteGrupoUseCase criarConvite,
-            EntrarGrupoPorCodigoUseCase entrarGrupo,
+            CancelarConviteGrupoUseCase cancelarConvite,
+            EntrarGrupoPorCodigoUseCase entrarGrupoPorCodigo,
             ListarConvitesGrupoUseCase listarConvites,
-            CancelarConviteGrupoUseCase cancelarConvite)
+            ValidarConviteGrupoUseCase validarConvite)
         {
-            _criarConvite = criarConvite;
-            _entrarGrupo = entrarGrupo;
-            _listarConvites = listarConvites;
-            _cancelarConvite = cancelarConvite;
+            _criarConviteUseCase = criarConvite;
+            _cancelarConviteUseCase = cancelarConvite;
+            _entrarGrupoPorCodigoUseCase = entrarGrupoPorCodigo;
+            _listarConvitesUseCase = listarConvites;
+            _validarConviteUseCase = validarConvite;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Criar([FromBody] CriarConviteGrupoDto dto)
+        public async Task<IActionResult> CriarConvite([FromBody] CriarConviteGrupoDto dto)
         {
-            var id = await _criarConvite.ExecutarAsync(dto);
-            return OkResponse(id);
+            var id = await _criarConviteUseCase.ExecutarAsync(dto);
+
+            return CreatedResponse(nameof(ListarPorGrupo), new { grupoId = dto.IdGrupo }, id);
         }
 
         [HttpPost("entrar")]
         public async Task<IActionResult> EntrarPorCodigo([FromBody] EntrarGrupoPorCodigoDto dto)
         {
-            await _entrarGrupo.ExecutarAsync(dto);
+            await _entrarGrupoPorCodigoUseCase.ExecutarAsync(dto);
+
             return NoContentResponse();
+        }
+
+        [HttpPost("validar")]
+        public async Task<IActionResult> ValidarConvite([FromBody] ValidarConviteGrupoDto dto)
+        {
+            var valido = await _validarConviteUseCase.ExecutarAsync(dto);
+
+            if (!valido)
+                return NotFoundResponse();
+
+            return OkResponse("Convite válido.");
         }
 
         [HttpGet("grupo/{grupoId}")]
         public async Task<IActionResult> ListarPorGrupo(Guid grupoId)
         {
-            var convites = await _listarConvites.ExecutarAsync(grupoId);
+            var convites = await _listarConvitesUseCase.ExecutarAsync(grupoId);
+
             return OkResponse(convites);
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Cancelar(Guid id)
+        public async Task<IActionResult> CancelarConvite(Guid id)
         {
-            await _cancelarConvite.ExecutarAsync(id);
+            await _cancelarConviteUseCase.ExecutarAsync(id);
+
             return NoContentResponse();
         }
     }

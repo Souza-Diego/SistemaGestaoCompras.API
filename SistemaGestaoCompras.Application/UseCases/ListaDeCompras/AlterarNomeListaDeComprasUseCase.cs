@@ -1,16 +1,16 @@
 ﻿using SistemaGestaoCompras.Application.DTOs.ListaDeCompras;
 using SistemaGestaoCompras.Domain.Interfaces.Repositories;
 
-public class AtualizarListaDeComprasUseCase
+public class AlterarNomeListaDeComprasUseCase
 {
     private readonly IListaDeComprasRepositorio _listaRepositorio;
 
-    public AtualizarListaDeComprasUseCase(IListaDeComprasRepositorio listaRepositorio)
+    public AlterarNomeListaDeComprasUseCase(IListaDeComprasRepositorio listaRepositorio)
     {
         _listaRepositorio = listaRepositorio;
     }
 
-    public async Task ExecutarAsync(AtualizarListaComprasDto dto)
+    public async Task ExecutarAsync(AlterarNomeListaComprasDto dto)
     {
         var lista = await _listaRepositorio.BuscarPorIdAsync(dto.Id);
 

@@ -62,7 +62,6 @@
 - bool EstaExpirado()
 - bool EstaValido()
 - void Desativar()
-- void Reativar()
 - string GerarCodigoConvite()
 
 ---
@@ -94,6 +93,8 @@
 - void AlterarNome()
 - void AdicionarMembro()
 - void RemoverMembro()
+- void TornarAdministrador()
+- void RemoverAdministrador()
 - bool UsuarioPertenceAoGrupo()
 - bool UsuarioIsAdministrador()
 - void Desativar()
@@ -462,6 +463,12 @@
 - Guid IdUsuario
 
 ---
+## Classe: ValidarConviteGrupoDto
+
+### Propriedades
+- string Codigo
+
+---
 ## Classe: AdicionarMembroGrupoDto
 
 ### Propriedades
@@ -485,6 +492,13 @@
 - Guid IdUsuarioCriador
 
 ---
+## Classe: DesativarGrupoDto
+
+### Propriedades
+- Guid IdGrupo
+- Guid IdUsuarioSolicitante
+
+---
 ## Classe: GrupoDto
 
 ### Propriedades
@@ -493,6 +507,14 @@
 - Guid CriadoPor
 - DateTime DataCriacao
 - bool Ativo
+
+---
+## Classe: RemoverAdministradorGrupoDto
+
+### Propriedades
+- Guid IdGrupo
+- Guid IdUsuarioSolicitante
+- Guid IdUsuario
 
 ---
 ## Classe: RemoverMembroGrupoDto
@@ -506,8 +528,16 @@
 ## Classe: SairDoGrupoDto
 
 ### Propriedades
-- Guid GrupoId
-- Guid UsuarioId
+- Guid IdGrupo
+- Guid IdUsuario
+
+---
+## Classe: TornarUsuarioAdministradorGrupoDto
+
+### Propriedades
+- Guid IdGrupo
+- Guid IdUsuarioSolicitante
+- Guid IdUsuario
 
 ---
 ## Classe: AdicionarItemListaDto
@@ -519,11 +549,27 @@
 - string Unidade
 
 ---
-## Classe: AtualizarListaComprasDto
+## Classe: AlterarNomeListaComprasDto
 
 ### Propriedades
 - Guid Id
 - string Nome
+
+---
+## Classe: AlterarQuantidadeItemListaDto
+
+### Propriedades
+- Guid IdListaDeCompras
+- Guid IdItem
+- decimal NovaQuantidade
+
+---
+## Classe: AlterarUnidadeItemListaDto
+
+### Propriedades
+- Guid IdListaDeCompras
+- Guid IdItem
+- string UnidadeSimbolo
 
 ---
 ## Classe: CriarListaComprasDto
@@ -759,6 +805,15 @@
 - Task<List<ConviteGrupoDto>> ExecutarAsync()
 
 ---
+## Classe: ValidarConviteGrupoUseCase
+
+### Construtores
+- ValidarConviteGrupoUseCase(IConviteGrupoRepositorio conviteRepositorio)
+
+### Métodos
+- Task<bool> ExecutarAsync()
+
+---
 ## Classe: AdicionarMembroGrupoUseCase
 
 ### Construtores
@@ -795,6 +850,15 @@
 - Task<Guid> ExecutarAsync()
 
 ---
+## Classe: DesativarGrupoUseCase
+
+### Construtores
+- DesativarGrupoUseCase(IGrupoRepositorio grupoRepositorio)
+
+### Métodos
+- Task ExecutarAsync()
+
+---
 ## Classe: ListarGruposDoUsuarioUseCase
 
 ### Construtores
@@ -802,6 +866,15 @@
 
 ### Métodos
 - Task<IEnumerable<GrupoDto>> ExecutarAsync()
+
+---
+## Classe: RemoverAdministradorGrupoUseCase
+
+### Construtores
+- RemoverAdministradorGrupoUseCase(IGrupoRepositorio grupoRepositorio)
+
+### Métodos
+- Task ExecutarAsync()
 
 ---
 ## Classe: RemoverMembroGrupoUseCase
@@ -822,6 +895,15 @@
 - Task ExecutarAsync()
 
 ---
+## Classe: TornarUsuarioAdministradorGrupoUseCase
+
+### Construtores
+- TornarUsuarioAdministradorGrupoUseCase(IGrupoRepositorio grupoRepositorio)
+
+### Métodos
+- Task ExecutarAsync()
+
+---
 ## Classe: AdicionarItemListaUseCase
 
 ### Construtores
@@ -831,10 +913,28 @@
 - Task<Guid> ExecutarAsync()
 
 ---
-## Classe: AtualizarListaDeComprasUseCase
+## Classe: AlterarNomeListaDeComprasUseCase
 
 ### Construtores
-- AtualizarListaDeComprasUseCase(IListaDeComprasRepositorio listaRepositorio)
+- AlterarNomeListaDeComprasUseCase(IListaDeComprasRepositorio listaRepositorio)
+
+### Métodos
+- Task ExecutarAsync()
+
+---
+## Classe: AlterarQuantidadeItemListaUseCase
+
+### Construtores
+- AlterarQuantidadeItemListaUseCase(IListaDeComprasRepositorio listaRepositorio)
+
+### Métodos
+- Task ExecutarAsync()
+
+---
+## Classe: AlterarUnidadeItemListaUseCase
+
+### Construtores
+- AlterarUnidadeItemListaUseCase(IListaDeComprasRepositorio listaRepositorio)
 
 ### Métodos
 - Task ExecutarAsync()
@@ -876,10 +976,19 @@
 - Task ExecutarAsync()
 
 ---
-## Classe: ListarListasDeComprasUseCase
+## Classe: ListarListasDoGrupoUseCase
 
 ### Construtores
-- ListarListasDeComprasUseCase(IListaDeComprasRepositorio listaRepositorio)
+- ListarListasDoGrupoUseCase(IListaDeComprasRepositorio listaRepositorio)
+
+### Métodos
+- Task<IEnumerable<ListaDeCompra>> ExecutarAsync()
+
+---
+## Classe: ListarListasDoUsuarioUseCase
+
+### Construtores
+- ListarListasDoUsuarioUseCase(IListaDeComprasRepositorio listaRepositorio)
 
 ### Métodos
 - Task<IEnumerable<ListaDeCompra>> ExecutarAsync()
@@ -1287,19 +1396,20 @@
 ## Classe: ConviteGrupoController
 
 ### Construtores
-- ConviteGrupoController(CriarConviteGrupoUseCase criarConvite, EntrarGrupoPorCodigoUseCase entrarGrupo, ListarConvitesGrupoUseCase listarConvites, CancelarConviteGrupoUseCase cancelarConvite)
+- ConviteGrupoController(CriarConviteGrupoUseCase criarConvite, CancelarConviteGrupoUseCase cancelarConvite, EntrarGrupoPorCodigoUseCase entrarGrupoPorCodigo, ListarConvitesGrupoUseCase listarConvites, ValidarConviteGrupoUseCase validarConvite)
 
 ### Métodos
-- Task<IActionResult> Criar()
+- Task<IActionResult> CriarConvite()
 - Task<IActionResult> EntrarPorCodigo()
+- Task<IActionResult> ValidarConvite()
 - Task<IActionResult> ListarPorGrupo()
-- Task<IActionResult> Cancelar()
+- Task<IActionResult> CancelarConvite()
 
 ---
 ## Classe: GrupoController
 
 ### Construtores
-- GrupoController(CriarGrupoUseCase criarGrupo, BuscarGrupoPorIdUseCase buscarGrupoPorId, ListarGruposDoUsuarioUseCase listarGruposDoUsuario, AdicionarMembroGrupoUseCase adicionarMembro, RemoverMembroGrupoUseCase removerMembro, SairDoGrupoUseCase sairDoGrupo, AlterarNomeGrupoUseCase alterarNomeGrupo)
+- GrupoController(CriarGrupoUseCase criarGrupo, BuscarGrupoPorIdUseCase buscarGrupoPorId, ListarGruposDoUsuarioUseCase listarGruposDoUsuario, AdicionarMembroGrupoUseCase adicionarMembro, RemoverMembroGrupoUseCase removerMembro, SairDoGrupoUseCase sairDoGrupo, AlterarNomeGrupoUseCase alterarNomeGrupo, DesativarGrupoUseCase desativarGrupo, TornarUsuarioAdministradorGrupoUseCase tornarAdministrador, RemoverAdministradorGrupoUseCase removerAdministrador)
 
 ### Métodos
 - Task<IActionResult> CriarGrupo()
@@ -1309,23 +1419,29 @@
 - Task<IActionResult> RemoverMembro()
 - Task<IActionResult> SairDoGrupo()
 - Task<IActionResult> AlterarNomeGrupo()
+- Task<IActionResult> TornarAdministrador()
+- Task<IActionResult> RemoverAdministrador()
+- Task<IActionResult> DesativarGrupo()
 
 ---
 ## Classe: ListaDeComprasController
 
 ### Construtores
-- ListaDeComprasController(CriarListaDeComprasUseCase criarListaUseCase, BuscarListaDeComprasPorIdUseCase buscarListaUseCase, ListarListasDeComprasUseCase listarListasUseCase, AtualizarListaDeComprasUseCase atualizarListaUseCase, DesativarListaDeComprasUseCase desativarListaUseCase, FinalizarListaDeComprasUseCase finalizarListaUseCase, ReabrirListaDeComprasUseCase reabrirListaUseCase, AdicionarItemListaUseCase adicionarItemUseCase, RemoverItemListaUseCase removerItemUseCase)
+- ListaDeComprasController(CriarListaDeComprasUseCase criarListaUseCase, BuscarListaDeComprasPorIdUseCase buscarListaUseCase, ListarListasDoUsuarioUseCase listarListasUsuarioUseCase, ListarListasDoGrupoUseCase listarListasGrupoUseCase, AlterarNomeListaDeComprasUseCase alterarNomeListaUseCase, DesativarListaDeComprasUseCase desativarListaUseCase, FinalizarListaDeComprasUseCase finalizarListaUseCase, ReabrirListaDeComprasUseCase reabrirListaUseCase, AdicionarItemListaUseCase adicionarItemUseCase, RemoverItemListaUseCase removerItemUseCase, AlterarQuantidadeItemListaUseCase alterarQuantidadeItemUseCase, AlterarUnidadeItemListaUseCase alterarUnidadeItemUseCase)
 
 ### Métodos
 - Task<IActionResult> CriarLista()
 - Task<IActionResult> BuscarListaPorId()
-- Task<IActionResult> ListarListas()
-- Task<IActionResult> AtualizarLista()
+- Task<IActionResult> ListarListasDoUsuario()
+- Task<IActionResult> ListarListasDoGrupo()
+- Task<IActionResult> AlterarNome()
 - Task<IActionResult> DesativarLista()
 - Task<IActionResult> FinalizarLista()
 - Task<IActionResult> ReabrirLista()
 - Task<IActionResult> AdicionarItem()
 - Task<IActionResult> RemoverItem()
+- Task<IActionResult> AlterarQuantidadeItem()
+- Task<IActionResult> AlterarUnidadeItem()
 
 ---
 ## Classe: MarcaController

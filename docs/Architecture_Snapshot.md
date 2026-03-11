@@ -63,8 +63,8 @@
 - IUsuarioRepositorio
 
 ### Application
-- DTOs: 33
-- UseCases: 54
+- DTOs: 39
+- UseCases: 61
 
 #### DTOs
 - AtualizarCategoriaDto
@@ -73,14 +73,20 @@
 - ConviteGrupoDto
 - CriarConviteGrupoDto
 - EntrarGrupoPorCodigoDto
+- ValidarConviteGrupoDto
 - AdicionarMembroGrupoDto
 - AlterarNomeGrupoDto
 - CriarGrupoDto
+- DesativarGrupoDto
 - GrupoDto
+- RemoverAdministradorGrupoDto
 - RemoverMembroGrupoDto
 - SairDoGrupoDto
+- TornarUsuarioAdministradorGrupoDto
 - AdicionarItemListaDto
-- AtualizarListaComprasDto
+- AlterarNomeListaComprasDto
+- AlterarQuantidadeItemListaDto
+- AlterarUnidadeItemListaDto
 - CriarListaComprasDto
 - RemoverItemListaDto
 - AtualizarMarcaDto
@@ -111,20 +117,27 @@
 - CriarConviteGrupoUseCase
 - EntrarGrupoPorCodigoUseCase
 - ListarConvitesGrupoUseCase
+- ValidarConviteGrupoUseCase
 - AdicionarMembroGrupoUseCase
 - AlterarNomeGrupoUseCase
 - BuscarGrupoPorIdUseCase
 - CriarGrupoUseCase
+- DesativarGrupoUseCase
 - ListarGruposDoUsuarioUseCase
+- RemoverAdministradorGrupoUseCase
 - RemoverMembroGrupoUseCase
 - SairDoGrupoUseCase
+- TornarUsuarioAdministradorGrupoUseCase
 - AdicionarItemListaUseCase
-- AtualizarListaDeComprasUseCase
+- AlterarNomeListaDeComprasUseCase
+- AlterarQuantidadeItemListaUseCase
+- AlterarUnidadeItemListaUseCase
 - BuscarListaDeComprasPorIdUseCase
 - CriarListaDeComprasUseCase
 - DesativarListaDeComprasUseCase
 - FinalizarListaDeComprasUseCase
-- ListarListasDeComprasUseCase
+- ListarListasDoGrupoUseCase
+- ListarListasDoUsuarioUseCase
 - ReabrirListaDeComprasUseCase
 - RemoverItemListaUseCase
 - AtualizarMarcaUseCase
