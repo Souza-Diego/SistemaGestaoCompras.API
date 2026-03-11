@@ -415,7 +415,7 @@
 ---
 # Application - DTOs
 
-## Classe: AtualizarCategoriaDto
+## Classe: AlterarNomeCategoriaDto
 
 ### Propriedades
 - Guid Id
@@ -587,7 +587,7 @@
 - Guid IdItem
 
 ---
-## Classe: AtualizarMarcaDto
+## Classe: AlterarNomeMarcaDto
 
 ### Propriedades
 - Guid Id
@@ -608,7 +608,7 @@
 - bool Ativo
 
 ---
-## Classe: AtualizarMercadoDto
+## Classe: AlterarNomeMercadoDto
 
 ### Propriedades
 - Guid Id
@@ -629,13 +629,25 @@
 - bool Ativo
 
 ---
-## Classe: AtualizarProdutoDto
+## Classe: AlterarCategoriaProdutoDto
 
 ### Propriedades
 - Guid Id
-- string Nome
-- Guid IdCategoria
-- Guid? IdMarca
+- Guid NovaCategoriaId
+
+---
+## Classe: AlterarMarcaProdutoDto
+
+### Propriedades
+- Guid Id
+- Guid? NovaMarcaId
+
+---
+## Classe: AlterarNomeProdutoDto
+
+### Propriedades
+- Guid Id
+- string NovoNome
 
 ---
 ## Classe: CriarProdutoDto
@@ -724,10 +736,10 @@
 ---
 # Application - UseCases
 
-## Classe: AtualizarCategoriaUseCase
+## Classe: AlterarNomeCategoriaUseCase
 
 ### Construtores
-- AtualizarCategoriaUseCase(ICategoriaRepositorio categoriaRepositorio)
+- AlterarNomeCategoriaUseCase(ICategoriaRepositorio categoriaRepositorio)
 
 ### Métodos
 - Task ExecutarAsync()
@@ -1012,10 +1024,10 @@
 - Task ExecutarAsync()
 
 ---
-## Classe: AtualizarMarcaUseCase
+## Classe: AlterarNomeMarcaUseCase
 
 ### Construtores
-- AtualizarMarcaUseCase(IMarcaRepositorio marcaRepositorio)
+- AlterarNomeMarcaUseCase(IMarcaRepositorio marcaRepositorio)
 
 ### Métodos
 - Task ExecutarAsync()
@@ -1057,10 +1069,10 @@
 - Task<IEnumerable<MarcaDto>> ExecutarAsync()
 
 ---
-## Classe: AtualizarMercadoUseCase
+## Classe: AlterarNomeMercadoUseCase
 
 ### Construtores
-- AtualizarMercadoUseCase(IMercadoRepositorio mercadoRepositorio)
+- AlterarNomeMercadoUseCase(IMercadoRepositorio mercadoRepositorio)
 
 ### Métodos
 - Task ExecutarAsync()
@@ -1102,37 +1114,37 @@
 - Task<IEnumerable<MercadoDto>> ExecutarAsync()
 
 ---
-## Classe: AtualizarProdutoUseCase
+## Classe: AlterarCategoriaProdutoUseCase
 
 ### Construtores
-- AtualizarProdutoUseCase(IProdutoRepositorio produtoRepositorio)
+- AlterarCategoriaProdutoUseCase(IProdutoRepositorio produtoRepositorio)
 
 ### Métodos
 - Task ExecutarAsync()
 
 ---
-## Classe: BuscarProdutoPorIdUseCase
+## Classe: AlterarMarcaProdutoUseCase
 
 ### Construtores
-- BuscarProdutoPorIdUseCase(IProdutoRepositorio produtoRepositorio)
+- AlterarMarcaProdutoUseCase(IProdutoRepositorio produtoRepositorio)
 
 ### Métodos
-- Task<ProdutoDto?> ExecutarAsync()
+- Task ExecutarAsync()
 
 ---
-## Classe: BuscarProdutosPorCategoriaUseCase
+## Classe: AlterarNomeProdutoUseCase
 
 ### Construtores
-- BuscarProdutosPorCategoriaUseCase(IProdutoRepositorio produtoRepositorio)
+- AlterarNomeProdutoUseCase(IProdutoRepositorio produtoRepositorio)
 
 ### Métodos
-- Task<IEnumerable<ProdutoDto>> ExecutarAsync()
+- Task ExecutarAsync()
 
 ---
-## Classe: BuscarProdutosPorNomeUseCase
+## Classe: BuscarProdutoPorNomeUseCase
 
 ### Construtores
-- BuscarProdutosPorNomeUseCase(IProdutoRepositorio produtoRepositorio)
+- BuscarProdutoPorNomeUseCase(IProdutoRepositorio produtoRepositorio)
 
 ### Métodos
 - Task<IEnumerable<ProdutoDto>> ExecutarAsync()
@@ -1145,7 +1157,6 @@
 
 ### Métodos
 - Task<Guid> ExecutarAsync()
-- UnidadeMedida ObterUnidade()
 
 ---
 ## Classe: DesativarProdutoUseCase
@@ -1157,6 +1168,15 @@
 - Task ExecutarAsync()
 
 ---
+## Classe: ListarProdutosPorCategoriaUseCase
+
+### Construtores
+- ListarProdutosPorCategoriaUseCase(IProdutoRepositorio produtoRepositorio)
+
+### Métodos
+- Task<IEnumerable<ProdutoDto>> ExecutarAsync()
+
+---
 ## Classe: ListarProdutosUseCase
 
 ### Construtores
@@ -1164,6 +1184,15 @@
 
 ### Métodos
 - Task<IEnumerable<ProdutoDto>> ExecutarAsync()
+
+---
+## Classe: ObterProdutoPorIdUseCase
+
+### Construtores
+- ObterProdutoPorIdUseCase(IProdutoRepositorio produtoRepositorio)
+
+### Métodos
+- Task<ProdutoDto?> ExecutarAsync()
 
 ---
 ## Classe: AlterarEmailUsuarioUseCase
@@ -1383,7 +1412,7 @@
 ## Classe: CategoriaController
 
 ### Construtores
-- CategoriaController(CriarCategoriaUseCase criarCategoria, ListarCategoriasUseCase listarCategorias, AtualizarCategoriaUseCase atualizarCategoria, DesativarCategoriaUseCase desativarCategoria, BuscarCategoriaPorIdUseCase buscarCategoriaPorId)
+- CategoriaController(CriarCategoriaUseCase criarCategoria, ListarCategoriasUseCase listarCategorias, AlterarNomeCategoriaUseCase atualizarCategoria, DesativarCategoriaUseCase desativarCategoria, BuscarCategoriaPorIdUseCase buscarCategoriaPorId)
 
 ### Métodos
 - Task<IActionResult> Criar()
@@ -1447,7 +1476,7 @@
 ## Classe: MarcaController
 
 ### Construtores
-- MarcaController(CriarMarcaUseCase criarMarca, ListarMarcasUseCase listarMarcas, AtualizarMarcaUseCase atualizarMarca, DesativarMarcaUseCase desativarMarca, BuscarMarcaPorIdUseCase buscarMarcaPorId)
+- MarcaController(CriarMarcaUseCase criarMarca, ListarMarcasUseCase listarMarcas, AlterarNomeMarcaUseCase atualizarMarca, DesativarMarcaUseCase desativarMarca, BuscarMarcaPorIdUseCase buscarMarcaPorId)
 
 ### Métodos
 - Task<IActionResult> Criar()
@@ -1460,7 +1489,7 @@
 ## Classe: MercadoController
 
 ### Construtores
-- MercadoController(CriarMercadoUseCase criarMercado, ListarMercadosUseCase listarMercados, AtualizarMercadoUseCase atualizarMercado, DesativarMercadoUseCase desativarMarcado, BuscarMercadoPorIdUseCase buscarMercadoPorId)
+- MercadoController(CriarMercadoUseCase criarMercado, ListarMercadosUseCase listarMercados, AlterarNomeMercadoUseCase atualizarMercado, DesativarMercadoUseCase desativarMarcado, BuscarMercadoPorIdUseCase buscarMercadoPorId)
 
 ### Métodos
 - Task<IActionResult> Criar()
@@ -1473,15 +1502,17 @@
 ## Classe: ProdutoController
 
 ### Construtores
-- ProdutoController(CriarProdutoUseCase criarProduto, ListarProdutosUseCase listarProdutos, AtualizarProdutoUseCase atualizarProduto, DesativarProdutoUseCase desativarProduto, BuscarProdutoPorIdUseCase buscarProdutoPorId, BuscarProdutosPorCategoriaUseCase buscarProdutosPorCategoria, BuscarProdutosPorNomeUseCase buscarProdutosPorNome)
+- ProdutoController(CriarProdutoUseCase criarProduto, ListarProdutosUseCase listarProdutos, ObterProdutoPorIdUseCase obterProdutoPorId, ListarProdutosPorCategoriaUseCase listarProdutosPorCategoria, BuscarProdutoPorNomeUseCase buscarProdutoPorNome, AlterarNomeProdutoUseCase alterarNomeProduto, AlterarCategoriaProdutoUseCase alterarCategoriaProduto, AlterarMarcaProdutoUseCase alterarMarcaProduto, DesativarProdutoUseCase desativarProduto)
 
 ### Métodos
 - Task<IActionResult> Criar()
 - Task<IActionResult> Listar()
-- Task<IActionResult> BuscarPorId()
-- Task<IActionResult> BuscarPorCategoria()
+- Task<IActionResult> ObterPorId()
+- Task<IActionResult> ListarPorCategoria()
 - Task<IActionResult> BuscarPorNome()
-- Task<IActionResult> Atualizar()
+- Task<IActionResult> AlterarNome()
+- Task<IActionResult> AlterarCategoria()
+- Task<IActionResult> AlterarMarca()
 - Task<IActionResult> Desativar()
 
 ---

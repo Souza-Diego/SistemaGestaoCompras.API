@@ -14,12 +14,12 @@ namespace SistemaGestaoCompras.Application.UseCases.Listas
 
         public async Task ExecutarAsync(AlterarQuantidadeItemListaDto dto)
         {
-            var lista = await _listaRepositorio.BuscarPorIdAsync(dto.ListaId);
+            var lista = await _listaRepositorio.BuscarPorIdAsync(dto.IdListaDeCompras);
 
             if (lista == null)
                 throw new Exception("Lista não encontrada.");
 
-            var item = lista.Itens.FirstOrDefault(i => i.Id == dto.ItemId);
+            var item = lista.Itens.FirstOrDefault(i => i.Id == dto.IdItem);
 
             if (item == null)
                 throw new Exception("Item não encontrado.");

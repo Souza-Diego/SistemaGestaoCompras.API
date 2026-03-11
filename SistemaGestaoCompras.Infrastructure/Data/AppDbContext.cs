@@ -18,7 +18,7 @@ namespace SistemaGestaoCompras.Infrastructure.Data
         //public DbSet<ItemLista> ItemListas { get; set; } = null!;
         //public DbSet<ItemListaPadrao> ItemListaPadroes { get; set; } = null!;
         public DbSet<ListaDeCompra> ListaDeCompras { get; set; } = null!;
-        //public DbSet<ListaDeCompraPadrao> ListaDeComprasPadroes { get; set; } = null!;
+        public DbSet<ListaDeCompraPadrao> ListasPadrao { get; set; } = null!;
         public DbSet<Marca> Marcas { get; set; } = null!;
         public DbSet<Mercado> Mercados { get; set; } = null!;
         //public DbSet<Orcamento> Orcamentos { get; set; } = null!;

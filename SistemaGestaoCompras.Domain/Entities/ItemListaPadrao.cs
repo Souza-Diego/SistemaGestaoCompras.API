@@ -35,7 +35,7 @@ namespace SistemaGestaoCompras.Domain.Entities
                 throw new ArgumentException("A quantidade deve ser maior que zero.");
         }
 
-        public void AlterarQuantidadePlanejada(decimal novaQuantidade)
+        public void AlterarQuantidade(decimal novaQuantidade)
         {
             ValidarQuantidade(novaQuantidade);
             QuantidadePlanejada = novaQuantidade;

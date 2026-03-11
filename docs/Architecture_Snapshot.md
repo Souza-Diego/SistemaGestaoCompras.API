@@ -63,11 +63,11 @@
 - IUsuarioRepositorio
 
 ### Application
-- DTOs: 39
-- UseCases: 61
+- DTOs: 41
+- UseCases: 63
 
 #### DTOs
-- AtualizarCategoriaDto
+- AlterarNomeCategoriaDto
 - CategoriaDto
 - CriarCategoriaDto
 - ConviteGrupoDto
@@ -89,13 +89,15 @@
 - AlterarUnidadeItemListaDto
 - CriarListaComprasDto
 - RemoverItemListaDto
-- AtualizarMarcaDto
+- AlterarNomeMarcaDto
 - CriarMarcaDto
 - MarcaDto
-- AtualizarMercadoDto
+- AlterarNomeMercadoDto
 - CriarMercadoDto
 - MercadoDto
-- AtualizarProdutoDto
+- AlterarCategoriaProdutoDto
+- AlterarMarcaProdutoDto
+- AlterarNomeProdutoDto
 - CriarProdutoDto
 - ProdutoDto
 - AlterarEmailUsuarioDto
@@ -108,7 +110,7 @@
 - UsuarioDto
 
 #### UseCases
-- AtualizarCategoriaUseCase
+- AlterarNomeCategoriaUseCase
 - BuscarCategoriaPorIdUseCase
 - CriarCategoriaUseCase
 - DesativarCategoriaUseCase
@@ -140,23 +142,25 @@
 - ListarListasDoUsuarioUseCase
 - ReabrirListaDeComprasUseCase
 - RemoverItemListaUseCase
-- AtualizarMarcaUseCase
+- AlterarNomeMarcaUseCase
 - BuscarMarcaPorIdUseCase
 - CriarMarcaUseCase
 - DesativarMarcaUseCase
 - ListarMarcasUseCase
-- AtualizarMercadoUseCase
+- AlterarNomeMercadoUseCase
 - BuscarMercadoPorIdUseCase
 - CriarMercadoUseCase
 - DesativarMercadoUseCase
 - ListarMercadosUseCase
-- AtualizarProdutoUseCase
-- BuscarProdutoPorIdUseCase
-- BuscarProdutosPorCategoriaUseCase
-- BuscarProdutosPorNomeUseCase
+- AlterarCategoriaProdutoUseCase
+- AlterarMarcaProdutoUseCase
+- AlterarNomeProdutoUseCase
+- BuscarProdutoPorNomeUseCase
 - CriarProdutoUseCase
 - DesativarProdutoUseCase
+- ListarProdutosPorCategoriaUseCase
 - ListarProdutosUseCase
+- ObterProdutoPorIdUseCase
 - AlterarEmailUsuarioUseCase
 - AlterarNomeUsuarioUseCase
 - AlterarPlanoUsuarioUseCase
