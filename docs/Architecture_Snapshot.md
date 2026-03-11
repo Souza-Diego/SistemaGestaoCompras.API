@@ -19,8 +19,8 @@
 - ItemCompra
 - ItemLista
 - ItemListaPadrao
-- ListaDeCompras
-- ListaDeComprasPadrao
+- ListaDeCompra
+- ListaDeCompraPadrao
 - Marca
 - Mercado
 - Orcamento
@@ -63,8 +63,8 @@
 - IUsuarioRepositorio
 
 ### Application
-- DTOs: 25
-- UseCases: 39
+- DTOs: 29
+- UseCases: 48
 
 #### DTOs
 - AtualizarCategoriaDto
@@ -79,6 +79,10 @@
 - GrupoDto
 - RemoverMembroGrupoDto
 - SairDoGrupoDto
+- AdicionarItemListaDto
+- AtualizarListaComprasDto
+- CriarListaComprasDto
+- RemoverItemListaDto
 - AtualizarMarcaDto
 - CriarMarcaDto
 - MarcaDto
@@ -110,6 +114,15 @@
 - ListarGruposDoUsuarioUseCase
 - RemoverMembroGrupoUseCase
 - SairDoGrupoUseCase
+- AdicionarItemListaUseCase
+- AtualizarListaDeComprasUseCase
+- BuscarListaDeComprasPorIdUseCase
+- CriarListaDeComprasUseCase
+- DesativarListaDeComprasUseCase
+- FinalizarListaDeComprasUseCase
+- ListarListasDeComprasUseCase
+- ReabrirListaDeComprasUseCase
+- RemoverItemListaUseCase
 - AtualizarMarcaUseCase
 - BuscarMarcaPorIdUseCase
 - CriarMarcaUseCase
@@ -135,12 +148,13 @@
 - LoginUsuarioUseCase
 
 ### Infrastructure
-- Repositories: 8
+- Repositories: 9
 
 #### Repositories
 - CategoriaRepositorio
 - ConviteGrupoRepositorio
 - GrupoRepositorio
+- ListaDeComprasRepositorio
 - MarcaRepositorio
 - MercadoRepositorio
 - ProdutoRepositorio
@@ -148,13 +162,14 @@
 - UsuarioRepositorio
 
 ### API
-- Controllers: 8
+- Controllers: 9
 
 #### Controllers
 - BaseController
 - CategoriaController
 - ConviteGrupoController
 - GrupoController
+- ListaDeComprasController
 - MarcaController
 - MercadoController
 - ProdutoController

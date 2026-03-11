@@ -1,28 +1,26 @@
 ﻿using SistemaGestaoCompras.Application.DTOs.Usuarios;
 using SistemaGestaoCompras.Domain.Interfaces.Repositories;
-using SistemaGestaoCompras.Domain.ValueObjects;
 
 namespace SistemaGestaoCompras.Application.UseCases.Usuarios
 {
-    public class AlterarPerfilUseCase
+    public class AlterarNomeUsuarioUseCase
     {
         private readonly IUsuarioRepositorio _usuarioRepositorio;
 
-        public AlterarPerfilUseCase(IUsuarioRepositorio usuarioRepositorio)
+        public AlterarNomeUsuarioUseCase(IUsuarioRepositorio usuarioRepositorio)
         {
             _usuarioRepositorio = usuarioRepositorio;
         }
 
-        public async Task ExecutarAsync(AlterarPerfilDto dto)
+        public async Task ExecutarAsync(AlterarNomeUsuarioDto dto)
         {
             var usuario = await _usuarioRepositorio.BuscarPorIdAsync(dto.Id);
+
             if (usuario == null)
-            {
                 throw new Exception("Usuário não encontrado");
-            }
 
             usuario.AlterarNome(dto.NovoNome);
-            usuario.AlterarEmail(new Email(dto.NovoEmail));
+
             await _usuarioRepositorio.AtualizarAsync(usuario);
         }
     }

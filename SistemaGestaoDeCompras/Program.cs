@@ -2,9 +2,6 @@ using Microsoft.EntityFrameworkCore;
 using SistemaGestaoCompras.Infrastructure.Data;
 using SistemaGestaoCompras.Infrastructure.Repositories;
 using SistemaGestaoCompras.Domain.Interfaces.Repositories;
-using SistemaGestaoCompras.Application.UseCases.Convites;
-using SistemaGestaoCompras.Application.UseCases.Grupos;
-
 using Scrutor;
 
 var builder = WebApplication.CreateBuilder(args);

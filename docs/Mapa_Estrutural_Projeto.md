@@ -174,7 +174,7 @@
 - void AlterarUnidade()
 
 ---
-## Classe: ListaDeCompras
+## Classe: ListaDeCompra
 
 ### Propriedades
 - string Nome
@@ -185,9 +185,9 @@
 - IReadOnlyCollection<ItemLista> Itens
 
 ### Construtores
-- ListaDeCompras()
-- ListaDeCompras(string nome, Guid idUsuario)
-- ListaDeCompras(string nome, Guid idGrupo, bool isListaGrupo)
+- ListaDeCompra()
+- ListaDeCompra(string nome, Guid idUsuario)
+- ListaDeCompra(string nome, Guid idGrupo, bool isListaGrupo)
 
 ### Métodos
 - void ValidarNome()
@@ -199,7 +199,7 @@
 - void Reabrir()
 
 ---
-## Classe: ListaDeComprasPadrao
+## Classe: ListaDeCompraPadrao
 
 ### Propriedades
 - Guid IdUsuario
@@ -208,8 +208,8 @@
 - IReadOnlyCollection<ItemListaPadrao> Itens
 
 ### Construtores
-- ListaDeComprasPadrao()
-- ListaDeComprasPadrao(Guid idUsuario, string nome)
+- ListaDeCompraPadrao()
+- ListaDeCompraPadrao(Guid idUsuario, string nome)
 
 ### Métodos
 - void ValidarNome()
@@ -395,6 +395,7 @@
 
 ### Métodos
 - decimal Converter()
+- UnidadeMedida ObterPorSimbolo()
 - string ToString()
 
 ---
@@ -508,6 +509,37 @@
 ### Propriedades
 - Guid GrupoId
 - Guid UsuarioId
+
+---
+## Classe: AdicionarItemListaDto
+
+### Propriedades
+- Guid IdListaDeCompras
+- Guid IdProduto
+- decimal QuantidadePlanejada
+- string Unidade
+
+---
+## Classe: AtualizarListaComprasDto
+
+### Propriedades
+- Guid Id
+- string Nome
+
+---
+## Classe: CriarListaComprasDto
+
+### Propriedades
+- string Nome
+- Guid? IdUsuario
+- Guid? IdGrupo
+
+---
+## Classe: RemoverItemListaDto
+
+### Propriedades
+- Guid IdListaDeCompras
+- Guid IdItem
 
 ---
 ## Classe: AtualizarMarcaDto
@@ -763,6 +795,87 @@
 - Task ExecutarAsync()
 
 ---
+## Classe: AdicionarItemListaUseCase
+
+### Construtores
+- AdicionarItemListaUseCase(IListaDeComprasRepositorio listaRepositorio)
+
+### Métodos
+- Task<Guid> ExecutarAsync()
+
+---
+## Classe: AtualizarListaDeComprasUseCase
+
+### Construtores
+- AtualizarListaDeComprasUseCase(IListaDeComprasRepositorio listaRepositorio)
+
+### Métodos
+- Task ExecutarAsync()
+
+---
+## Classe: BuscarListaDeComprasPorIdUseCase
+
+### Construtores
+- BuscarListaDeComprasPorIdUseCase(IListaDeComprasRepositorio listaRepositorio)
+
+### Métodos
+- Task<ListaDeCompra?> ExecutarAsync()
+
+---
+## Classe: CriarListaDeComprasUseCase
+
+### Construtores
+- CriarListaDeComprasUseCase(IListaDeComprasRepositorio listaRepositorio)
+
+### Métodos
+- Task<Guid> ExecutarAsync()
+
+---
+## Classe: DesativarListaDeComprasUseCase
+
+### Construtores
+- DesativarListaDeComprasUseCase(IListaDeComprasRepositorio listaRepositorio)
+
+### Métodos
+- Task ExecutarAsync()
+
+---
+## Classe: FinalizarListaDeComprasUseCase
+
+### Construtores
+- FinalizarListaDeComprasUseCase(IListaDeComprasRepositorio listaRepositorio)
+
+### Métodos
+- Task ExecutarAsync()
+
+---
+## Classe: ListarListasDeComprasUseCase
+
+### Construtores
+- ListarListasDeComprasUseCase(IListaDeComprasRepositorio listaRepositorio)
+
+### Métodos
+- Task<IEnumerable<ListaDeCompra>> ExecutarAsync()
+
+---
+## Classe: ReabrirListaDeComprasUseCase
+
+### Construtores
+- ReabrirListaDeComprasUseCase(IListaDeComprasRepositorio listaRepositorio)
+
+### Métodos
+- Task ExecutarAsync()
+
+---
+## Classe: RemoverItemListaUseCase
+
+### Construtores
+- RemoverItemListaUseCase(IListaDeComprasRepositorio listaRepositorio)
+
+### Métodos
+- Task ExecutarAsync()
+
+---
 ## Classe: AtualizarMarcaUseCase
 
 ### Construtores
@@ -1003,6 +1116,16 @@
 - Task<IEnumerable<Grupo>> ObterPorUsuarioAsync()
 
 ---
+## Classe: ListaDeComprasRepositorio
+
+### Construtores
+- ListaDeComprasRepositorio(AppDbContext context)
+
+### Métodos
+- Task<IEnumerable<ListaDeCompra>> ListarPorUsuarioIdAsync()
+- Task<IEnumerable<ListaDeCompra>> ListarPorGrupoIdAsync()
+
+---
 ## Classe: MarcaRepositorio
 
 ### Construtores
@@ -1105,6 +1228,23 @@
 - Task<IActionResult> RemoverMembro()
 - Task<IActionResult> SairDoGrupo()
 - Task<IActionResult> AlterarNomeGrupo()
+
+---
+## Classe: ListaDeComprasController
+
+### Construtores
+- ListaDeComprasController(CriarListaDeComprasUseCase criarListaUseCase, BuscarListaDeComprasPorIdUseCase buscarListaUseCase, ListarListasDeComprasUseCase listarListasUseCase, AtualizarListaDeComprasUseCase atualizarListaUseCase, DesativarListaDeComprasUseCase desativarListaUseCase, FinalizarListaDeComprasUseCase finalizarListaUseCase, ReabrirListaDeComprasUseCase reabrirListaUseCase, AdicionarItemListaUseCase adicionarItemUseCase, RemoverItemListaUseCase removerItemUseCase)
+
+### Métodos
+- Task<IActionResult> CriarLista()
+- Task<IActionResult> BuscarListaPorId()
+- Task<IActionResult> ListarListas()
+- Task<IActionResult> AtualizarLista()
+- Task<IActionResult> DesativarLista()
+- Task<IActionResult> FinalizarLista()
+- Task<IActionResult> ReabrirLista()
+- Task<IActionResult> AdicionarItem()
+- Task<IActionResult> RemoverItem()
 
 ---
 ## Classe: MarcaController
