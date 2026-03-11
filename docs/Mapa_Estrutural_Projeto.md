@@ -378,7 +378,6 @@
 
 ### Métodos
 - bool SenhaForte()
-- string GerarHash()
 - bool VerificarSenha()
 
 ---
@@ -614,12 +613,33 @@
 - bool Ativo
 
 ---
-## Classe: AlterarPerfilDto
+## Classe: AlterarEmailUsuarioDto
+
+### Propriedades
+- Guid Id
+- string NovoEmail
+
+---
+## Classe: AlterarNomeUsuarioDto
 
 ### Propriedades
 - Guid Id
 - string NovoNome
-- string NovoEmail
+
+---
+## Classe: AlterarPlanoUsuarioDto
+
+### Propriedades
+- Guid Id
+- PlanoUsuario NovoPlano
+
+---
+## Classe: AlterarSenhaUsuarioDto
+
+### Propriedades
+- Guid Id
+- string SenhaAtual
+- string NovaSenha
 
 ---
 ## Classe: CriarUsuarioDto
@@ -635,6 +655,13 @@
 ### Propriedades
 - string Email
 - string Senha
+
+---
+## Classe: RecuperarSenhaUsuarioDto
+
+### Propriedades
+- string Email
+- string NovaSenha
 
 ---
 ## Classe: UsuarioDto
@@ -1030,10 +1057,37 @@
 - Task<IEnumerable<ProdutoDto>> ExecutarAsync()
 
 ---
-## Classe: AlterarPerfilUseCase
+## Classe: AlterarEmailUsuarioUseCase
 
 ### Construtores
-- AlterarPerfilUseCase(IUsuarioRepositorio usuarioRepositorio)
+- AlterarEmailUsuarioUseCase(IUsuarioRepositorio usuarioRepositorio)
+
+### Métodos
+- Task ExecutarAsync()
+
+---
+## Classe: AlterarNomeUsuarioUseCase
+
+### Construtores
+- AlterarNomeUsuarioUseCase(IUsuarioRepositorio usuarioRepositorio)
+
+### Métodos
+- Task ExecutarAsync()
+
+---
+## Classe: AlterarPlanoUsuarioUseCase
+
+### Construtores
+- AlterarPlanoUsuarioUseCase(IUsuarioRepositorio usuarioRepositorio)
+
+### Métodos
+- Task ExecutarAsync()
+
+---
+## Classe: AlterarSenhaUsuarioUseCase
+
+### Construtores
+- AlterarSenhaUsuarioUseCase(IUsuarioRepositorio usuarioRepositorio)
 
 ### Métodos
 - Task ExecutarAsync()
@@ -1075,6 +1129,15 @@
 - Task ExecutarAsync()
 
 ---
+## Classe: ListarUsuariosUseCase
+
+### Construtores
+- ListarUsuariosUseCase(IUsuarioRepositorio usuarioRepositorio)
+
+### Métodos
+- Task<IEnumerable<UsuarioDto>> ExecutarAsync()
+
+---
 ## Classe: LoginUsuarioUseCase
 
 ### Construtores
@@ -1082,6 +1145,24 @@
 
 ### Métodos
 - Task<bool> ExecutarAsync()
+
+---
+## Classe: ReativarContaUseCase
+
+### Construtores
+- ReativarContaUseCase(IUsuarioRepositorio usuarioRepositorio)
+
+### Métodos
+- Task ExecutarAsync()
+
+---
+## Classe: RecuperarSenhaUsuarioUseCase
+
+### Construtores
+- RecuperarSenhaUsuarioUseCase(IUsuarioRepositorio usuarioRepositorio)
+
+### Métodos
+- Task ExecutarAsync()
 
 ---
 # Infrastructure - Repositories
@@ -1291,15 +1372,21 @@
 ## Classe: UsuarioController
 
 ### Construtores
-- UsuarioController(CriarUsuarioUseCase criarUsuario, LoginUsuarioUseCase loginUsuario, AlterarPerfilUseCase alterarPerfil, DesativarContaUseCase desativarConta, BuscarUsuarioPorIdUseCase buscarUsuarioPorId, BuscarUsuarioPorEmailUseCase buscarUsuarioPorEmail)
+- UsuarioController(CriarUsuarioUseCase criarUsuario, LoginUsuarioUseCase loginUsuario, AlterarNomeUsuarioUseCase alterarNome, AlterarEmailUsuarioUseCase alterarEmail, AlterarSenhaUsuarioUseCase alterarSenha, AlterarPlanoUsuarioUseCase alterarPlano, DesativarContaUseCase desativarConta, ReativarContaUseCase reativarConta, BuscarUsuarioPorIdUseCase buscarUsuarioPorId, BuscarUsuarioPorEmailUseCase buscarUsuarioPorEmail, ListarUsuariosUseCase listarUsuarios, RecuperarSenhaUsuarioUseCase recuperarSenha)
 
 ### Métodos
 - Task<IActionResult> CriarUsuario()
 - Task<IActionResult> Login()
-- Task<IActionResult> AlterarPerfil()
-- Task<IActionResult> DesativarConta()
+- Task<IActionResult> ListarUsuarios()
 - Task<IActionResult> BuscarPorId()
 - Task<IActionResult> BuscarPorEmail()
+- Task<IActionResult> AlterarNome()
+- Task<IActionResult> AlterarEmail()
+- Task<IActionResult> AlterarSenha()
+- Task<IActionResult> AlterarPlano()
+- Task<IActionResult> DesativarConta()
+- Task<IActionResult> ReativarConta()
+- Task<IActionResult> RecuperarSenha()
 
 ---
 # Interfaces

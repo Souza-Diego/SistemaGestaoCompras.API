@@ -1,5 +1,5 @@
-﻿using SistemaGestaoCompras.Application.DTOs.Grupos;
-using SistemaGestaoCompras.Domain.Interfaces.Repositories;
+﻿using SistemaGestaoCompras.Domain.Interfaces.Repositories;
+using SistemaGestaoCompras.Application.DTOs.Grupos;
 
 namespace SistemaGestaoCompras.Application.UseCases.Grupos
 {
@@ -14,12 +14,15 @@ namespace SistemaGestaoCompras.Application.UseCases.Grupos
 
         public async Task ExecutarAsync(SairDoGrupoDto dto)
         {
-            var grupo = await _grupoRepositorio.BuscarPorIdAsync(dto.GrupoId);
+            var grupo = await _grupoRepositorio.BuscarPorIdAsync(dto.IdGrupo);
 
             if (grupo == null)
-                throw new Exception("Grupo não encontrado");
+                throw new Exception("Grupo não encontrado.");
 
-            grupo.RemoverMembro(dto.UsuarioId);
+            if (!grupo.UsuarioPertenceAoGrupo(dto.IdUsuario))
+                throw new Exception("Usuário não pertence ao grupo.");
+
+            grupo.RemoverMembro(dto.IdUsuario);
 
             await _grupoRepositorio.AtualizarAsync(grupo);
         }

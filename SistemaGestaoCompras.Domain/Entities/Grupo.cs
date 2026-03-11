@@ -60,18 +60,54 @@ namespace SistemaGestaoCompras.Domain.Entities
 
         public void RemoverMembro(Guid idUsuario)
         {
-            if(idUsuario == IdCriadoPorUsuario)
-            {
-                throw new InvalidOperationException("O criador do grupo não pode ser removido.");
-            }
-                        
             var membro = _membros.FirstOrDefault(m => m.IdUsuario == idUsuario);
 
             if (membro == null)
-            {
                 throw new InvalidOperationException("Usuário não encontrado no grupo.");
+
+            if (membro.Papel == PapelGrupo.Administrador)
+            {
+                var totalAdministradores = _membros.Count(m => m.Papel == PapelGrupo.Administrador);
+
+                if (totalAdministradores <= 1)
+                    throw new InvalidOperationException("O grupo precisa ter pelo menos um administrador.");
             }
+
             _membros.Remove(membro);
+        }
+
+        public void TornarAdministrador(Guid idUsuario)
+        {
+            var membro = _membros.FirstOrDefault(m => m.IdUsuario == idUsuario);
+
+            if (membro == null)
+                throw new InvalidOperationException("Usuário não pertence ao grupo.");
+
+            if (membro.Papel == PapelGrupo.Administrador)
+                throw new InvalidOperationException("Usuário já é administrador.");
+
+            membro.TornarAdministrador();
+        }
+
+        public void RemoverAdministrador(Guid idUsuario)
+        {
+            var membro = _membros.FirstOrDefault(m => m.IdUsuario == idUsuario);
+
+            if (membro == null)
+                throw new InvalidOperationException("Usuário não pertence ao grupo.");
+
+            if (idUsuario == IdCriadoPorUsuario)
+                throw new InvalidOperationException("O criador do grupo não pode perder o papel de administrador.");
+
+            if (membro.Papel != PapelGrupo.Administrador)
+                throw new InvalidOperationException("Usuário não é administrador.");
+
+            var totalAdministradores = _membros.Count(m => m.Papel == PapelGrupo.Administrador);
+
+            if (totalAdministradores <= 1)
+                throw new InvalidOperationException("O grupo precisa ter pelo menos um administrador.");
+
+            membro.TornarMembro();
         }
 
         public bool UsuarioPertenceAoGrupo(Guid idUsuario)

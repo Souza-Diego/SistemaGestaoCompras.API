@@ -63,8 +63,8 @@
 - IUsuarioRepositorio
 
 ### Application
-- DTOs: 29
-- UseCases: 48
+- DTOs: 33
+- UseCases: 54
 
 #### DTOs
 - AtualizarCategoriaDto
@@ -92,9 +92,13 @@
 - AtualizarProdutoDto
 - CriarProdutoDto
 - ProdutoDto
-- AlterarPerfilDto
+- AlterarEmailUsuarioDto
+- AlterarNomeUsuarioDto
+- AlterarPlanoUsuarioDto
+- AlterarSenhaUsuarioDto
 - CriarUsuarioDto
 - LoginUsuarioDto
+- RecuperarSenhaUsuarioDto
 - UsuarioDto
 
 #### UseCases
@@ -140,12 +144,18 @@
 - CriarProdutoUseCase
 - DesativarProdutoUseCase
 - ListarProdutosUseCase
-- AlterarPerfilUseCase
+- AlterarEmailUsuarioUseCase
+- AlterarNomeUsuarioUseCase
+- AlterarPlanoUsuarioUseCase
+- AlterarSenhaUsuarioUseCase
 - BuscarUsuarioPorEmailUseCase
 - BuscarUsuarioPorIdUseCase
 - CriarUsuarioUseCase
 - DesativarContaUseCase
+- ListarUsuariosUseCase
 - LoginUsuarioUseCase
+- ReativarContaUseCase
+- RecuperarSenhaUsuarioUseCase
 
 ### Infrastructure
 - Repositories: 9

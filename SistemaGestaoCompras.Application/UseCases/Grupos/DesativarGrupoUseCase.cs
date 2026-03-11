@@ -3,16 +3,16 @@ using SistemaGestaoCompras.Application.DTOs.Grupos;
 
 namespace SistemaGestaoCompras.Application.UseCases.Grupos
 {
-    public class RemoverMembroGrupoUseCase
+    public class DesativarGrupoUseCase
     {
         private readonly IGrupoRepositorio _grupoRepositorio;
 
-        public RemoverMembroGrupoUseCase(IGrupoRepositorio grupoRepositorio)
+        public DesativarGrupoUseCase(IGrupoRepositorio grupoRepositorio)
         {
             _grupoRepositorio = grupoRepositorio;
         }
 
-        public async Task ExecutarAsync(RemoverMembroGrupoDto dto)
+        public async Task ExecutarAsync(DesativarGrupoDto dto)
         {
             var grupo = await _grupoRepositorio.BuscarPorIdAsync(dto.IdGrupo);
 
@@ -20,9 +20,9 @@ namespace SistemaGestaoCompras.Application.UseCases.Grupos
                 throw new Exception("Grupo não encontrado.");
 
             if (!grupo.UsuarioIsAdministrador(dto.IdUsuarioSolicitante))
-                throw new Exception("Somente administradores podem remover membros.");
+                throw new Exception("Somente administradores podem desativar o grupo.");
 
-            grupo.RemoverMembro(dto.IdUsuarioRemover);
+            grupo.Desativar();
 
             await _grupoRepositorio.AtualizarAsync(grupo);
         }
