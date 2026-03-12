@@ -5,7 +5,7 @@
 ### Domain
 - Entities: 17
 - ValueObjects: 4
-- Services: 2
+- Services: 3
 - Enums: 6
 - Repository Interfaces: 13
 
@@ -37,6 +37,7 @@
 #### Domain Services
 - CalculadoraOrcamentoAutomatico
 - EstatisticasCompraService
+- CalculadoraOrcamentoAutomatico
 
 #### Enums
 - PapelGrupo
@@ -63,8 +64,8 @@
 - IUsuarioRepositorio
 
 ### Application
-- DTOs: 55
-- UseCases: 86
+- DTOs: 65
+- UseCases: 100
 
 #### DTOs
 - AlterarNomeCategoriaDto
@@ -81,6 +82,9 @@
 - CriarConviteGrupoDto
 - EntrarGrupoPorCodigoDto
 - ValidarConviteGrupoDto
+- GastosMensaisDto
+- GastosPorCategoriaDto
+- MediaMensalGastosDto
 - AdicionarMembroGrupoDto
 - AlterarNomeGrupoDto
 - CriarGrupoDto
@@ -109,11 +113,18 @@
 - AlterarNomeMercadoDto
 - CriarMercadoDto
 - MercadoDto
+- AlterarValorOrcamentoDTO
+- CriarOrcamentoMensalDTO
+- ObterOrcamentoDoMesDTO
+- OrcamentoDto
 - AlterarCategoriaProdutoDto
 - AlterarMarcaProdutoDto
 - AlterarNomeProdutoDto
 - CriarProdutoDto
 - ProdutoDto
+- CorrigirPrecoRegistradoDto
+- ListarPrecosPorMercadoDto
+- RegistrarPrecoProdutoDto
 - AlterarEmailUsuarioDto
 - AlterarNomeUsuarioDto
 - AlterarPlanoUsuarioDto
@@ -147,6 +158,9 @@
 - EntrarGrupoPorCodigoUseCase
 - ListarConvitesGrupoUseCase
 - ValidarConviteGrupoUseCase
+- ObterGastosMensaisUseCase
+- ObterGastosPorCategoriaUseCase
+- ObterMediaMensalGastosUseCase
 - AdicionarMembroGrupoUseCase
 - AlterarNomeGrupoUseCase
 - BuscarGrupoPorIdUseCase
@@ -189,6 +203,11 @@
 - CriarMercadoUseCase
 - DesativarMercadoUseCase
 - ListarMercadosUseCase
+- AlterarValorOrcamentoUseCase
+- CalcularOrcamentoAutomaticoUseCase
+- CriarOrcamentoMensalUseCase
+- ListarOrcamentosUsuarioUseCase
+- ObterOrcamentoDoMesUseCase
 - AlterarCategoriaProdutoUseCase
 - AlterarMarcaProdutoUseCase
 - AlterarNomeProdutoUseCase
@@ -198,6 +217,12 @@
 - ListarProdutosPorCategoriaUseCase
 - ListarProdutosUseCase
 - ObterProdutoPorIdUseCase
+- CorrigirPrecoRegistradoUseCase
+- ListarPrecosPorMercadoUseCase
+- ListarPrecosProdutoUseCase
+- ObterHistoricoPrecoProdutoUseCase
+- ObterMelhorPrecoProdutoUseCase
+- RegistrarPrecoProdutoUseCase
 - AlterarEmailUsuarioUseCase
 - AlterarNomeUsuarioUseCase
 - AlterarPlanoUsuarioUseCase
@@ -212,7 +237,7 @@
 - RecuperarSenhaUsuarioUseCase
 
 ### Infrastructure
-- Repositories: 11
+- Repositories: 13
 
 #### Repositories
 - CategoriaRepositorio
@@ -223,23 +248,28 @@
 - ListaDeComprasRepositorio
 - MarcaRepositorio
 - MercadoRepositorio
+- OrcamentoRepositorio
 - ProdutoRepositorio
+- RegistroDePrecoRepositorio
 - RepositorioBase
 - UsuarioRepositorio
 
 ### API
-- Controllers: 11
+- Controllers: 14
 
 #### Controllers
 - BaseController
 - CategoriaController
 - CompraController
 - ConviteGrupoController
+- EstatisticasController
 - GrupoController
 - ListaDeComprasController
 - ListaPadraoController
 - MarcaController
 - MercadoController
+- OrcamentoController
 - ProdutoController
+- RegistroDePrecoController
 - UsuarioController
 

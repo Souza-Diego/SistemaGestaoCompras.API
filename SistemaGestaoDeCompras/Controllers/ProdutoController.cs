@@ -12,11 +12,9 @@ namespace SistemaGestaoCompras.API.Controllers
         private readonly ObterProdutoPorIdUseCase _obterProdutoPorId;
         private readonly ListarProdutosPorCategoriaUseCase _listarProdutosPorCategoria;
         private readonly BuscarProdutoPorNomeUseCase _buscarProdutoPorNome;
-
         private readonly AlterarNomeProdutoUseCase _alterarNomeProduto;
         private readonly AlterarCategoriaProdutoUseCase _alterarCategoriaProduto;
         private readonly AlterarMarcaProdutoUseCase _alterarMarcaProduto;
-
         private readonly DesativarProdutoUseCase _desativarProduto;
 
         public ProdutoController(

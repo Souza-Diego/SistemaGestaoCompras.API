@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SistemaGestaoCompras.Domain.Entities;
+using SistemaGestaoCompras.Domain.ValueObjects;
 
 namespace SistemaGestaoCompras.Infrastructure.Data
 {
@@ -17,19 +18,33 @@ namespace SistemaGestaoCompras.Infrastructure.Data
         public DbSet<ItemCompra> ItensCompra { get; set; } = null!;
         public DbSet<ItemLista> ItensListas { get; set; } = null!;
         public DbSet<ItemListaPadrao> ItensListaPadrao { get; set; } = null!;
-        public DbSet<ListaDeCompra> ListaDeCompras { get; set; } = null!;
-        public DbSet<ListaDeCompraPadrao> ListasPadrao { get; set; } = null!;
+        public DbSet<ListaDeCompra> ListasDeCompra { get; set; } = null!;
+        public DbSet<ListaDeCompraPadrao> ListasDeCompraPadrao { get; set; } = null!;
         public DbSet<Marca> Marcas { get; set; } = null!;
         public DbSet<Mercado> Mercados { get; set; } = null!;
         public DbSet<Orcamento> Orcamentos { get; set; } = null!;
         public DbSet<Produto> Produtos {  get; set; } = null!;
-        public DbSet<RegistroDePreco> RegistroDePrecos { get; set; } = null!;
+        public DbSet<RegistroDePreco> RegistrosDePreco { get; set; } = null!;
         public DbSet<Usuario> Usuarios { get; set; } = null!;
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Owned<Email>();
+            modelBuilder.Owned<Senha>();
+            modelBuilder.Owned<UnidadeMedida>();
+            modelBuilder.Owned<Dinheiro>();
+
+            foreach (var property in modelBuilder.Model
+                .GetEntityTypes()
+                .SelectMany(t => t.GetProperties())
+                .Where(p => p.ClrType == typeof(decimal)))
+            {
+                property.SetPrecision(18);
+                property.SetScale(4);
+            }
 
             modelBuilder.Entity<Grupo>()
                 .HasMany(g => g.Membros)

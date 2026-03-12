@@ -353,6 +353,7 @@
 - Dinheiro Zero
 
 ### Construtores
+- Dinheiro()
 - Dinheiro(decimal valor)
 
 ---
@@ -393,6 +394,7 @@
 - decimal FatorBase
 
 ### Construtores
+- UnidadeMedida()
 - UnidadeMedida(string nome, string simbolo, TipoUnidade tipo, decimal fatorBase)
 
 ### Métodos
@@ -413,6 +415,9 @@
 
 ### Métodos
 - Dictionary<Guid, Dinheiro> GastosPorCategoria()
+
+---
+## Classe: CalculadoraOrcamentoAutomatico
 
 ---
 # Application - DTOs
@@ -527,6 +532,27 @@
 
 ### Propriedades
 - string Codigo
+
+---
+## Classe: GastosMensaisDto
+
+### Propriedades
+- int Ano
+- int Mes
+- decimal ValorTotal
+
+---
+## Classe: GastosPorCategoriaDto
+
+### Propriedades
+- Guid IdCategoria
+- decimal ValorTotal
+
+---
+## Classe: MediaMensalGastosDto
+
+### Propriedades
+- decimal MediaMensal
 
 ---
 ## Classe: AdicionarMembroGrupoDto
@@ -744,6 +770,39 @@
 - bool Ativo
 
 ---
+## Classe: AlterarValorOrcamentoDTO
+
+### Propriedades
+- Guid IdOrcamento
+- decimal NovoValor
+
+---
+## Classe: CriarOrcamentoMensalDTO
+
+### Propriedades
+- Guid IdUsuario
+- int Ano
+- int Mes
+- decimal ValorPlanejado
+
+---
+## Classe: ObterOrcamentoDoMesDTO
+
+### Propriedades
+- Guid IdUsuario
+- int Ano
+- int Mes
+
+---
+## Classe: OrcamentoDto
+
+### Propriedades
+- Guid Id
+- int Ano
+- int Mes
+- decimal ValorPlanejado
+
+---
 ## Classe: AlterarCategoriaProdutoDto
 
 ### Propriedades
@@ -784,6 +843,30 @@
 - string UnidadeBase
 - string Tipo
 - bool Ativo
+
+---
+## Classe: CorrigirPrecoRegistradoDto
+
+### Propriedades
+- Guid IdRegistro
+- decimal NovoPreco
+
+---
+## Classe: ListarPrecosPorMercadoDto
+
+### Propriedades
+- Guid IdMercado
+
+---
+## Classe: RegistrarPrecoProdutoDto
+
+### Propriedades
+- Guid IdProduto
+- Guid IdMercado
+- Guid IdUsuario
+- decimal Preco
+- decimal QuantidadeReferencia
+- string UnidadeReferencia
 
 ---
 ## Classe: AlterarEmailUsuarioDto
@@ -1056,6 +1139,33 @@
 
 ### Métodos
 - Task<bool> ExecutarAsync()
+
+---
+## Classe: ObterGastosMensaisUseCase
+
+### Construtores
+- ObterGastosMensaisUseCase(ICompraRepositorio compraRepositorio)
+
+### Métodos
+- Task<IEnumerable<GastosMensaisDto>> ExecutarAsync()
+
+---
+## Classe: ObterGastosPorCategoriaUseCase
+
+### Construtores
+- ObterGastosPorCategoriaUseCase(ICompraRepositorio compraRepositorio, IProdutoRepositorio produtoRepositorio, EstatisticasCompraService service)
+
+### Métodos
+- Task<IEnumerable<GastosPorCategoriaDto>> ExecutarAsync()
+
+---
+## Classe: ObterMediaMensalGastosUseCase
+
+### Construtores
+- ObterMediaMensalGastosUseCase(ICompraRepositorio compraRepositorio)
+
+### Métodos
+- Task<MediaMensalGastosDto> ExecutarAsync()
 
 ---
 ## Classe: AdicionarMembroGrupoUseCase
@@ -1436,6 +1546,51 @@
 - Task<IEnumerable<MercadoDto>> ExecutarAsync()
 
 ---
+## Classe: AlterarValorOrcamentoUseCase
+
+### Construtores
+- AlterarValorOrcamentoUseCase(IOrcamentoRepositorio orcamentoRepositorio)
+
+### Métodos
+- Task ExecutarAsync()
+
+---
+## Classe: CalcularOrcamentoAutomaticoUseCase
+
+### Construtores
+- CalcularOrcamentoAutomaticoUseCase(ICompraRepositorio compraRepositorio, CalculadoraOrcamentoAutomatico calculadora)
+
+### Métodos
+- Task<decimal> ExecutarAsync()
+
+---
+## Classe: CriarOrcamentoMensalUseCase
+
+### Construtores
+- CriarOrcamentoMensalUseCase(IOrcamentoRepositorio orcamentoRepositorio)
+
+### Métodos
+- Task ExecutarAsync()
+
+---
+## Classe: ListarOrcamentosUsuarioUseCase
+
+### Construtores
+- ListarOrcamentosUsuarioUseCase(IOrcamentoRepositorio orcamentoRepositorio)
+
+### Métodos
+- Task<IEnumerable<OrcamentoDto>> ExecutarAsync()
+
+---
+## Classe: ObterOrcamentoDoMesUseCase
+
+### Construtores
+- ObterOrcamentoDoMesUseCase(IOrcamentoRepositorio orcamentoRepositorio)
+
+### Métodos
+- Task<OrcamentoDto?> ExecutarAsync()
+
+---
 ## Classe: AlterarCategoriaProdutoUseCase
 
 ### Construtores
@@ -1515,6 +1670,60 @@
 
 ### Métodos
 - Task<ProdutoDto?> ExecutarAsync()
+
+---
+## Classe: CorrigirPrecoRegistradoUseCase
+
+### Construtores
+- CorrigirPrecoRegistradoUseCase(IRegistroDePrecoRepositorio repositorio)
+
+### Métodos
+- Task ExecutarAsync()
+
+---
+## Classe: ListarPrecosPorMercadoUseCase
+
+### Construtores
+- ListarPrecosPorMercadoUseCase(IRegistroDePrecoRepositorio repositorio)
+
+### Métodos
+- Task<IEnumerable<RegistroDePreco>> ExecutarAsync()
+
+---
+## Classe: ListarPrecosProdutoUseCase
+
+### Construtores
+- ListarPrecosProdutoUseCase(IRegistroDePrecoRepositorio repositorio)
+
+### Métodos
+- Task<IEnumerable<RegistroDePreco>> ExecutarAsync()
+
+---
+## Classe: ObterHistoricoPrecoProdutoUseCase
+
+### Construtores
+- ObterHistoricoPrecoProdutoUseCase(IRegistroDePrecoRepositorio repositorio)
+
+### Métodos
+- Task<IEnumerable<RegistroDePreco>> ExecutarAsync()
+
+---
+## Classe: ObterMelhorPrecoProdutoUseCase
+
+### Construtores
+- ObterMelhorPrecoProdutoUseCase(IRegistroDePrecoRepositorio repositorio)
+
+### Métodos
+- Task<RegistroDePreco?> ExecutarAsync()
+
+---
+## Classe: RegistrarPrecoProdutoUseCase
+
+### Construtores
+- RegistrarPrecoProdutoUseCase(IRegistroDePrecoRepositorio repositorio)
+
+### Métodos
+- Task<Guid> ExecutarAsync()
 
 ---
 ## Classe: AlterarEmailUsuarioUseCase
@@ -1706,6 +1915,16 @@
 - Task<IEnumerable<Mercado>> BuscarPorNomeAsync()
 
 ---
+## Classe: OrcamentoRepositorio
+
+### Construtores
+- OrcamentoRepositorio(AppDbContext context)
+
+### Métodos
+- Task<Orcamento?> ObterPorUsuarioMesAsync()
+- Task<IEnumerable<Orcamento>> ObterPorUsuarioAsync()
+
+---
 ## Classe: ProdutoRepositorio
 
 ### Construtores
@@ -1715,6 +1934,16 @@
 - Task<IEnumerable<Produto>> ObterPorCategoriaAsync()
 - Task<IEnumerable<Produto>> ListarAtivosAsync()
 - Task<IEnumerable<Produto>> BuscarPorNomeAsync()
+
+---
+## Classe: RegistroDePrecoRepositorio
+
+### Construtores
+- RegistroDePrecoRepositorio(AppDbContext context)
+
+### Métodos
+- Task<IEnumerable<RegistroDePreco>> ObterPorProdutoAsync()
+- Task<IEnumerable<RegistroDePreco>> ObterPorUsuarioAsync()
 
 ---
 ## Classe: RepositorioBase
@@ -1795,6 +2024,17 @@
 - Task<IActionResult> ValidarConvite()
 - Task<IActionResult> ListarPorGrupo()
 - Task<IActionResult> CancelarConvite()
+
+---
+## Classe: EstatisticasController
+
+### Construtores
+- EstatisticasController(ObterGastosPorCategoriaUseCase gastosCategoria, ObterGastosMensaisUseCase gastosMensais, ObterMediaMensalGastosUseCase mediaMensal)
+
+### Métodos
+- Task<IActionResult> GastosPorCategoria()
+- Task<IActionResult> GastosMensais()
+- Task<IActionResult> MediaMensal()
 
 ---
 ## Classe: GrupoController
@@ -1879,6 +2119,19 @@
 - Task<IActionResult> Desativar()
 
 ---
+## Classe: OrcamentoController
+
+### Construtores
+- OrcamentoController(CriarOrcamentoMensalUseCase criar, AlterarValorOrcamentoUseCase alterar, ObterOrcamentoDoMesUseCase obterMes, ListarOrcamentosUsuarioUseCase listar, CalcularOrcamentoAutomaticoUseCase calcularAuto)
+
+### Métodos
+- Task<IActionResult> Criar()
+- Task<IActionResult> AlterarValor()
+- Task<IActionResult> ObterMes()
+- Task<IActionResult> ListarUsuario()
+- Task<IActionResult> CalcularAutomatico()
+
+---
 ## Classe: ProdutoController
 
 ### Construtores
@@ -1894,6 +2147,20 @@
 - Task<IActionResult> AlterarCategoria()
 - Task<IActionResult> AlterarMarca()
 - Task<IActionResult> Desativar()
+
+---
+## Classe: RegistroDePrecoController
+
+### Construtores
+- RegistroDePrecoController(RegistrarPrecoProdutoUseCase registrarPreco, CorrigirPrecoRegistradoUseCase corrigirPreco, ListarPrecosProdutoUseCase listarPrecosProduto, ListarPrecosPorMercadoUseCase listarPrecosMercado, ObterHistoricoPrecoProdutoUseCase historicoPreco, ObterMelhorPrecoProdutoUseCase melhorPreco)
+
+### Métodos
+- Task<IActionResult> RegistrarPreco()
+- Task<IActionResult> CorrigirPreco()
+- Task<IActionResult> ListarPrecosProduto()
+- Task<IActionResult> ListarPrecosMercado()
+- Task<IActionResult> ObterHistorico()
+- Task<IActionResult> MelhorPreco()
 
 ---
 ## Classe: UsuarioController

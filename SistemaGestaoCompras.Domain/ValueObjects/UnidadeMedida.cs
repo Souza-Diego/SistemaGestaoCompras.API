@@ -9,6 +9,12 @@ namespace SistemaGestaoCompras.Domain.ValueObjects
         public TipoUnidade Tipo { get; }
         public decimal FatorBase { get; }
 
+        protected UnidadeMedida()
+        {
+            Nome = null!;
+            Simbolo = null!;            
+        }
+
         private UnidadeMedida(string nome, string simbolo, TipoUnidade tipo, decimal fatorBase)
         {
             Nome = nome;
@@ -43,7 +49,10 @@ namespace SistemaGestaoCompras.Domain.ValueObjects
 
         public static UnidadeMedida ObterPorSimbolo(string simbolo)
         {
-            simbolo = simbolo.ToLower();
+            if (string.IsNullOrWhiteSpace(simbolo))
+                throw new ArgumentException("Símbolo da unidade não informado.");
+
+            simbolo = simbolo.Trim().ToLowerInvariant();
 
             return simbolo switch
             {

@@ -1,8 +1,10 @@
 using Microsoft.EntityFrameworkCore;
+using Scrutor;
+using SistemaGestaoCompras.API.Middlewares;
+using SistemaGestaoCompras.Domain.Interfaces.Repositories;
+using SistemaGestaoCompras.Domain.Services;
 using SistemaGestaoCompras.Infrastructure.Data;
 using SistemaGestaoCompras.Infrastructure.Repositories;
-using SistemaGestaoCompras.Domain.Interfaces.Repositories;
-using Scrutor;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,18 +20,18 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 // Configurações dos Repositórios
 // ===============================
 
-builder.Services.AddScoped<IGrupoRepositorio, GrupoRepositorio>();
-builder.Services.AddScoped<IConviteGrupoRepositorio, ConviteGrupoRepositorio>();
-builder.Services.AddScoped<ICompraRepositorio, CompraRepositorio>();
-builder.Services.AddScoped<IListaDeComprasRepositorio, ListaDeComprasRepositorio>();
-builder.Services.AddScoped<IListaDeComprasPadraoRepositorio, ListaDeComprasPadraoRepositorio>();
-builder.Services.AddScoped<IOrcamentoRepositorio, OrcamentoRepositorio>();
-builder.Services.AddScoped<IProdutoRepositorio, ProdutoRepositorio>();
-builder.Services.AddScoped<IRegistroDePrecoRepositorio, RegistroDePrecoRepositorio>();
-builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
-builder.Services.AddScoped<IMercadoRepositorio, MercadoRepositorio>();
-builder.Services.AddScoped<IMarcaRepositorio, MarcaRepositorio>();
-builder.Services.AddScoped<ICategoriaRepositorio, CategoriaRepositorio>();
+builder.Services.Scan(scan => scan
+    .FromAssemblyOf<GrupoRepositorio>()
+    .AddClasses(classes => classes.Where(type => type.Name.EndsWith("Repositorio")))
+    .AsImplementedInterfaces()
+    .WithScopedLifetime());
+
+// ===============================
+// Configs. dos Domain Services
+// ===============================
+
+builder.Services.AddScoped<CalculadoraOrcamentoAutomatico>();
+builder.Services.AddScoped<EstatisticasCompraService>();
 
 // ===============================
 // Configurações dos Use Cases
@@ -67,6 +69,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseMiddleware<ExceptionMiddleware>();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();

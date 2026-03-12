@@ -2,8 +2,11 @@
 {
     public class Dinheiro
     {
-        public decimal Valor { get; }
+        public decimal Valor { get; private set; }
         public static Dinheiro Zero => new Dinheiro(0);
+
+        protected Dinheiro() { }
+
         public Dinheiro(decimal valor)
         {
             if(valor < 0)
