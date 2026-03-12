@@ -675,6 +675,13 @@
 - Guid? IdGrupo
 
 ---
+## Classe: CustoListaDto
+
+### Propriedades
+- Guid ListaId
+- decimal CustoTotal
+
+---
 ## Classe: RemoverItemListaDto
 
 ### Propriedades
@@ -843,6 +850,16 @@
 - string UnidadeBase
 - string Tipo
 - bool Ativo
+
+---
+## Classe: ComparacaoPrecoDto
+
+### Propriedades
+- Guid MercadoId
+- decimal Preco
+- decimal QuantidadeReferencia
+- string UnidadeReferencia
+- DateTime DataRegistro
 
 ---
 ## Classe: CorrigirPrecoRegistradoDto
@@ -1222,6 +1239,15 @@
 - Task<IEnumerable<GrupoDto>> ExecutarAsync()
 
 ---
+## Classe: ListarMembrosGrupoUseCase
+
+### Construtores
+- ListarMembrosGrupoUseCase(IGrupoRepositorio repositorio)
+
+### Métodos
+- Task<IEnumerable<GrupoUsuario>> ExecutarAsync()
+
+---
 ## Classe: RemoverAdministradorGrupoUseCase
 
 ### Construtores
@@ -1301,6 +1327,15 @@
 
 ### Métodos
 - Task<ListaDeCompra?> ExecutarAsync()
+
+---
+## Classe: CalcularCustoListaUseCase
+
+### Construtores
+- CalcularCustoListaUseCase(IListaDeComprasRepositorio listaRepositorio, IRegistroDePrecoRepositorio precoRepositorio)
+
+### Métodos
+- Task<CustoListaDto> ExecutarAsync()
 
 ---
 ## Classe: CriarListaDeComprasAPartirDeTemplateUseCase
@@ -1672,6 +1707,15 @@
 - Task<ProdutoDto?> ExecutarAsync()
 
 ---
+## Classe: CompararPrecosProdutoUseCase
+
+### Construtores
+- CompararPrecosProdutoUseCase(IRegistroDePrecoRepositorio repositorio)
+
+### Métodos
+- Task<IEnumerable<ComparacaoPrecoDto>> ExecutarAsync()
+
+---
 ## Classe: CorrigirPrecoRegistradoUseCase
 
 ### Construtores
@@ -2040,7 +2084,7 @@
 ## Classe: GrupoController
 
 ### Construtores
-- GrupoController(CriarGrupoUseCase criarGrupo, BuscarGrupoPorIdUseCase buscarGrupoPorId, ListarGruposDoUsuarioUseCase listarGruposDoUsuario, AdicionarMembroGrupoUseCase adicionarMembro, RemoverMembroGrupoUseCase removerMembro, SairDoGrupoUseCase sairDoGrupo, AlterarNomeGrupoUseCase alterarNomeGrupo, DesativarGrupoUseCase desativarGrupo, TornarUsuarioAdministradorGrupoUseCase tornarAdministrador, RemoverAdministradorGrupoUseCase removerAdministrador)
+- GrupoController(CriarGrupoUseCase criarGrupo, BuscarGrupoPorIdUseCase buscarGrupoPorId, ListarGruposDoUsuarioUseCase listarGruposDoUsuario, AdicionarMembroGrupoUseCase adicionarMembro, RemoverMembroGrupoUseCase removerMembro, SairDoGrupoUseCase sairDoGrupo, AlterarNomeGrupoUseCase alterarNomeGrupo, DesativarGrupoUseCase desativarGrupo, TornarUsuarioAdministradorGrupoUseCase tornarAdministrador, RemoverAdministradorGrupoUseCase removerAdministrador, ListarMembrosGrupoUseCase listarMembros)
 
 ### Métodos
 - Task<IActionResult> CriarGrupo()
@@ -2053,12 +2097,13 @@
 - Task<IActionResult> TornarAdministrador()
 - Task<IActionResult> RemoverAdministrador()
 - Task<IActionResult> DesativarGrupo()
+- Task<IActionResult> ListarMembros()
 
 ---
 ## Classe: ListaDeComprasController
 
 ### Construtores
-- ListaDeComprasController(CriarListaDeComprasUseCase criarListaUseCase, BuscarListaDeComprasPorIdUseCase buscarListaUseCase, ListarListasDoUsuarioUseCase listarListasUsuarioUseCase, ListarListasDoGrupoUseCase listarListasGrupoUseCase, AlterarNomeListaDeComprasUseCase alterarNomeListaUseCase, DesativarListaDeComprasUseCase desativarListaUseCase, FinalizarListaDeComprasUseCase finalizarListaUseCase, ReabrirListaDeComprasUseCase reabrirListaUseCase, AdicionarItemListaUseCase adicionarItemUseCase, RemoverItemListaUseCase removerItemUseCase, AlterarQuantidadeItemListaUseCase alterarQuantidadeItemUseCase, AlterarUnidadeItemListaUseCase alterarUnidadeItemUseCase, CriarListaDeComprasAPartirDeTemplateUseCase criarListaAPartirTemplateUseCase)
+- ListaDeComprasController(CriarListaDeComprasUseCase criarListaUseCase, BuscarListaDeComprasPorIdUseCase buscarListaUseCase, ListarListasDoUsuarioUseCase listarListasUsuarioUseCase, ListarListasDoGrupoUseCase listarListasGrupoUseCase, AlterarNomeListaDeComprasUseCase alterarNomeListaUseCase, DesativarListaDeComprasUseCase desativarListaUseCase, FinalizarListaDeComprasUseCase finalizarListaUseCase, ReabrirListaDeComprasUseCase reabrirListaUseCase, AdicionarItemListaUseCase adicionarItemUseCase, RemoverItemListaUseCase removerItemUseCase, AlterarQuantidadeItemListaUseCase alterarQuantidadeItemUseCase, AlterarUnidadeItemListaUseCase alterarUnidadeItemUseCase, CriarListaDeComprasAPartirDeTemplateUseCase criarListaAPartirTemplateUseCase, CalcularCustoListaUseCase calcularCustoLista)
 
 ### Métodos
 - Task<IActionResult> CriarLista()
@@ -2074,6 +2119,7 @@
 - Task<IActionResult> AlterarQuantidadeItem()
 - Task<IActionResult> AlterarUnidadeItem()
 - Task<IActionResult> CriarAPartirDeTemplate()
+- Task<IActionResult> CalcularCustoLista()
 
 ---
 ## Classe: ListaPadraoController
@@ -2152,7 +2198,7 @@
 ## Classe: RegistroDePrecoController
 
 ### Construtores
-- RegistroDePrecoController(RegistrarPrecoProdutoUseCase registrarPreco, CorrigirPrecoRegistradoUseCase corrigirPreco, ListarPrecosProdutoUseCase listarPrecosProduto, ListarPrecosPorMercadoUseCase listarPrecosMercado, ObterHistoricoPrecoProdutoUseCase historicoPreco, ObterMelhorPrecoProdutoUseCase melhorPreco)
+- RegistroDePrecoController(RegistrarPrecoProdutoUseCase registrarPreco, CorrigirPrecoRegistradoUseCase corrigirPreco, ListarPrecosProdutoUseCase listarPrecosProduto, ListarPrecosPorMercadoUseCase listarPrecosMercado, ObterHistoricoPrecoProdutoUseCase historicoPreco, ObterMelhorPrecoProdutoUseCase melhorPreco, CompararPrecosProdutoUseCase compararPrecos)
 
 ### Métodos
 - Task<IActionResult> RegistrarPreco()
@@ -2161,6 +2207,7 @@
 - Task<IActionResult> ListarPrecosMercado()
 - Task<IActionResult> ObterHistorico()
 - Task<IActionResult> MelhorPreco()
+- Task<IActionResult> CompararPrecosProduto()
 
 ---
 ## Classe: UsuarioController

@@ -2,6 +2,7 @@
 using SistemaGestaoCompras.Domain.Interfaces.Repositories;
 using SistemaGestaoCompras.Application.DTOs.ListaDeCompras;
 using SistemaGestaoCompras.Domain.ValueObjects;
+using SistemaGestaoCompras.Domain.Exceptions;
 
 namespace SistemaGestaoCompras.Application.UseCases.ListaDeCompras
 {
@@ -19,7 +20,7 @@ namespace SistemaGestaoCompras.Application.UseCases.ListaDeCompras
             var lista = await _listaRepositorio.BuscarPorIdAsync(dto.IdListaDeCompras);
 
             if (lista == null)
-                throw new Exception("Lista de compras não encontrada.");
+                throw new DomainException("Não encontramos essa lista de compras. Talvez ela ainda não tenha sido criada.");
 
             var unidade = UnidadeMedida.ObterPorSimbolo(dto.Unidade);
 
@@ -32,7 +33,7 @@ namespace SistemaGestaoCompras.Application.UseCases.ListaDeCompras
 
             lista.AdicionarItem(item);
 
-            await _listaRepositorio.AtualizarAsync(lista);
+            await _listaRepositorio.AdicionarAsync(lista);
 
             return item.Id;
         }

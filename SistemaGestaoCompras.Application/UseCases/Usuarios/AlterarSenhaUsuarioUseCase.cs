@@ -1,6 +1,7 @@
 ﻿using SistemaGestaoCompras.Application.DTOs.Usuarios;
 using SistemaGestaoCompras.Domain.Interfaces.Repositories;
 using SistemaGestaoCompras.Domain.ValueObjects;
+using SistemaGestaoCompras.Domain.Exceptions;
 
 namespace SistemaGestaoCompras.Application.UseCases.Usuarios
 {
@@ -18,10 +19,10 @@ namespace SistemaGestaoCompras.Application.UseCases.Usuarios
             var usuario = await _usuarioRepositorio.BuscarPorIdAsync(dto.Id);
 
             if (usuario == null)
-                throw new Exception("Usuário não encontrado");
+                throw new DomainException("Procuramos em todos os cantos, mas não achamos ninguém com esses dados. Tem certeza que o cadastro foi feito com este login?");
 
             if (!usuario.Senha.VerificarSenha(dto.SenhaAtual))
-                throw new Exception("Senha atual inválida");
+                throw new DomainException("A senha atual não bateu com a que temos guardada. Pode dar uma conferida se o Caps Lock não está ligado?");
 
             usuario.AlterarSenha(new Senha(dto.NovaSenha));
 

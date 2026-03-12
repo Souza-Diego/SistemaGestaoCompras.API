@@ -21,6 +21,7 @@ namespace SistemaGestaoCompras.API.Controllers
         private readonly AlterarQuantidadeItemListaUseCase _alterarQuantidadeItemUseCase;
         private readonly AlterarUnidadeItemListaUseCase _alterarUnidadeItemUseCase;
         private readonly CriarListaDeComprasAPartirDeTemplateUseCase _criarListaAPartirTemplateUseCase;
+        private readonly CalcularCustoListaUseCase _calcularCustoLista;
 
         public ListaDeComprasController(
             CriarListaDeComprasUseCase criarListaUseCase,
@@ -35,7 +36,8 @@ namespace SistemaGestaoCompras.API.Controllers
             RemoverItemListaUseCase removerItemUseCase,
             AlterarQuantidadeItemListaUseCase alterarQuantidadeItemUseCase,
             AlterarUnidadeItemListaUseCase alterarUnidadeItemUseCase,
-            CriarListaDeComprasAPartirDeTemplateUseCase criarListaAPartirTemplateUseCase)
+            CriarListaDeComprasAPartirDeTemplateUseCase criarListaAPartirTemplateUseCase,
+            CalcularCustoListaUseCase calcularCustoLista)
         {
             _criarListaUseCase = criarListaUseCase;
             _buscarListaUseCase = buscarListaUseCase;
@@ -50,6 +52,7 @@ namespace SistemaGestaoCompras.API.Controllers
             _alterarQuantidadeItemUseCase = alterarQuantidadeItemUseCase;
             _alterarUnidadeItemUseCase = alterarUnidadeItemUseCase;
             _criarListaAPartirTemplateUseCase = criarListaAPartirTemplateUseCase;
+            _calcularCustoLista = calcularCustoLista;
         }
 
         [HttpPost]
@@ -178,6 +181,14 @@ namespace SistemaGestaoCompras.API.Controllers
             var id = await _criarListaAPartirTemplateUseCase.ExecutarAsync(dto);
 
             return CreatedResponse(nameof(BuscarListaPorId), new { id }, new { id });
+        }
+
+        [HttpGet("{listaId}/custo")]
+        public async Task<IActionResult> CalcularCustoLista(Guid listaId)
+        {
+            var resultado = await _calcularCustoLista.ExecutarAsync(listaId);
+
+            return OkResponse(resultado);
         }
     }
 }

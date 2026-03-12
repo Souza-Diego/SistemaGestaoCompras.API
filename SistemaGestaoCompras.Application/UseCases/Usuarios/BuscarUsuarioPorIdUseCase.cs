@@ -1,5 +1,6 @@
 ﻿using SistemaGestaoCompras.Application.DTOs.Usuarios;
 using SistemaGestaoCompras.Domain.Interfaces.Repositories;
+using SistemaGestaoCompras.Domain.Exceptions;
 
 namespace SistemaGestaoCompras.Application.UseCases.Usuarios
 {
@@ -17,7 +18,7 @@ namespace SistemaGestaoCompras.Application.UseCases.Usuarios
             var usuario = await _usuarioRepositorio.BuscarPorIdAsync(id);
 
             if (usuario == null)
-                return null;
+                throw new DomainException("Hmm... procuramos por esse usuário, mas ele parece não existir por aqui.");
 
             return new UsuarioDto
             {

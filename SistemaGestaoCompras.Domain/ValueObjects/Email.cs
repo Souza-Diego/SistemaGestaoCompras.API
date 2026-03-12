@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
 
 namespace SistemaGestaoCompras.Domain.ValueObjects
 {
@@ -14,13 +15,13 @@ namespace SistemaGestaoCompras.Domain.ValueObjects
         public Email(string endereco)
         {
             if (string.IsNullOrWhiteSpace(endereco))
-                throw new ArgumentException("O email não pode ser vazio.");
+                throw new ValidationException("Não esqueça do email! Prometemos que não vamos enviar spam, mas precisamos de um endereço.");
 
             endereco = endereco.Trim().ToLower();
 
             if (!EmailValido(endereco))
             {
-                throw new ArgumentException("Email inválido.");
+                throw new ValidationException("Hum, esse formato de email parece meio estranho. Pode conferir se não faltou um @ ou um ponto?");
             }
 
             Endereco = endereco;

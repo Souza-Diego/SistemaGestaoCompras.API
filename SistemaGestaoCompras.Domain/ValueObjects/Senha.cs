@@ -1,4 +1,5 @@
 ﻿using BCrypt.Net;
+using System.ComponentModel.DataAnnotations;
 
 namespace SistemaGestaoCompras.Domain.ValueObjects
 {
@@ -15,10 +16,10 @@ namespace SistemaGestaoCompras.Domain.ValueObjects
         public Senha(string senhaTexto)
         {
             if (string.IsNullOrWhiteSpace(senhaTexto))
-                throw new ArgumentException("A senha não pode ser vazia.");
+                throw new ValidationException("Uma porta sem chave não tranca. Digite uma senha para proteger sua conta!");
 
             if (!SenhaForte(senhaTexto))
-                throw new ArgumentException("A senha não atende aos requisitos mínimos.");
+                throw new ValidationException("Sua senha precisa de um pouco mais de 'músculo'. Tente misturar letras maiúsculas e minúsculas, números e símbolos para deixá-la imbatível.");
 
             Hash = BCrypt.Net.BCrypt.HashPassword(senhaTexto);
         }

@@ -1,5 +1,6 @@
 ﻿using SistemaGestaoCompras.Domain.Enums;
 using SistemaGestaoCompras.Domain.ValueObjects;
+using SistemaGestaoCompras.Domain.Exceptions;
 
 namespace SistemaGestaoCompras.Domain.Entities
 {
@@ -45,7 +46,7 @@ namespace SistemaGestaoCompras.Domain.Entities
                 nome.Any(char.IsDigit) ||
                 nome.Any(ch => !char.IsLetter(ch) && !char.IsWhiteSpace(ch)))
             {
-                throw new ArgumentException("Nome inválido. O nome deve conter pelo menos 2 caracteres e não pode conter números ou caracteres especiais.");
+                throw new ValidationException("Quase lá! Mas precisamos de um nome real, com pelo menos 2 letras e sem 'temperos' (números ou símbolos).");
             }                
         }        
 
@@ -83,7 +84,7 @@ namespace SistemaGestaoCompras.Domain.Entities
         public void AlterarPlano(PlanoUsuario novoPlano)
         {
             if (Plano == novoPlano)
-                throw new InvalidOperationException("O usuário já possui esse plano.");
+                throw new DomainException("Esse plano já está ativo na sua conta.");
 
             Plano = novoPlano;
         }

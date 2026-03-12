@@ -14,6 +14,7 @@ namespace SistemaGestaoCompras.API.Controllers
         private readonly ListarPrecosPorMercadoUseCase _listarPrecosMercado;
         private readonly ObterHistoricoPrecoProdutoUseCase _historicoPreco;
         private readonly ObterMelhorPrecoProdutoUseCase _melhorPreco;
+        private readonly CompararPrecosProdutoUseCase _compararPrecosProduto;
 
         public RegistroDePrecoController(
             RegistrarPrecoProdutoUseCase registrarPreco,
@@ -21,7 +22,8 @@ namespace SistemaGestaoCompras.API.Controllers
             ListarPrecosProdutoUseCase listarPrecosProduto,
             ListarPrecosPorMercadoUseCase listarPrecosMercado,
             ObterHistoricoPrecoProdutoUseCase historicoPreco,
-            ObterMelhorPrecoProdutoUseCase melhorPreco)
+            ObterMelhorPrecoProdutoUseCase melhorPreco,
+            CompararPrecosProdutoUseCase compararPrecos)
         {
             _registrarPreco = registrarPreco;
             _corrigirPreco = corrigirPreco;
@@ -29,6 +31,7 @@ namespace SistemaGestaoCompras.API.Controllers
             _listarPrecosMercado = listarPrecosMercado;
             _historicoPreco = historicoPreco;
             _melhorPreco = melhorPreco;
+            _compararPrecosProduto = compararPrecos;
         }
 
         [HttpPost]
@@ -79,6 +82,14 @@ namespace SistemaGestaoCompras.API.Controllers
 
             if (resultado == null)
                 return NotFoundResponse();
+
+            return OkResponse(resultado);
+        }
+
+        [HttpGet("produto/{produtoId}/comparar")]
+        public async Task<IActionResult> CompararPrecosProduto(Guid produtoId)
+        {
+            var resultado = await _compararPrecosProduto.ExecutarAsync(produtoId);
 
             return OkResponse(resultado);
         }

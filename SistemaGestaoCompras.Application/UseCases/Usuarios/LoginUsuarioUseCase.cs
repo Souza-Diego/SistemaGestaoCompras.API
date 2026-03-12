@@ -1,5 +1,6 @@
 ﻿using SistemaGestaoCompras.Application.DTOs.Usuarios;
 using SistemaGestaoCompras.Domain.Interfaces.Repositories;
+using SistemaGestaoCompras.Domain.Exceptions;
 
 namespace SistemaGestaoCompras.Application.UseCases.Usuarios
 {
@@ -12,13 +13,12 @@ namespace SistemaGestaoCompras.Application.UseCases.Usuarios
             _usuarioRepositorio = usuarioRepositorio;
         }
 
-        public async Task<bool> ExecutarAsync(LoginUsuarioDto dto)
+        public async Task ExecutarAsync(LoginUsuarioDto dto)
         {
             var usuario = await _usuarioRepositorio.BuscarPorEmailAsync(dto.Email);
-            if (usuario == null)
-                return false;
 
-            return usuario.Senha.VerificarSenha(dto.Senha);
+            if (usuario == null || !usuario.Senha.VerificarSenha(dto.Senha))
+                throw new DomainException("Ops! Algo na sua dupla de acesso não bateu. Pode dar uma olhadinha no que foi digitado?.");
         }
     }
 }

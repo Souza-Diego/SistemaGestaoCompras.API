@@ -1,5 +1,6 @@
 ﻿using SistemaGestaoCompras.Application.DTOs.Usuarios;
 using SistemaGestaoCompras.Domain.Interfaces.Repositories;
+using SistemaGestaoCompras.Domain.Exceptions;
 
 namespace SistemaGestaoCompras.Application.UseCases.Usuarios
 {
@@ -17,7 +18,7 @@ namespace SistemaGestaoCompras.Application.UseCases.Usuarios
             var usuario = await _usuarioRepositorio.BuscarPorEmailAsync(email);
 
             if (usuario == null)
-                return null;
+                throw new DomainException("Nenhum usuário foi encontrado com esse email");
 
             return new UsuarioDto
             {

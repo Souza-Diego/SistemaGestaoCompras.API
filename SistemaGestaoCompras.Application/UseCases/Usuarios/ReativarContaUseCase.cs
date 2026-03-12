@@ -1,4 +1,5 @@
 ﻿using SistemaGestaoCompras.Domain.Interfaces.Repositories;
+using SistemaGestaoCompras.Domain.Exceptions;
 
 namespace SistemaGestaoCompras.Application.UseCases.Usuarios
 {
@@ -16,7 +17,7 @@ namespace SistemaGestaoCompras.Application.UseCases.Usuarios
             var usuario = await _usuarioRepositorio.BuscarPorIdAsync(usuarioId);
 
             if (usuario == null)
-                throw new Exception("Usuário não encontrado");
+                throw new DomainException("Tentamos reativar a conta, mas não encontramos esse usuário no sistema.");
 
             usuario.ReativarConta();
 

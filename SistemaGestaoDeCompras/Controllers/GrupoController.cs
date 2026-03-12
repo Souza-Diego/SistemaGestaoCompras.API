@@ -17,6 +17,7 @@ namespace SistemaGestaoCompras.API.Controllers
         private readonly DesativarGrupoUseCase _desativarGrupoUseCase;
         private readonly TornarUsuarioAdministradorGrupoUseCase _tornarAdministradorUseCase;
         private readonly RemoverAdministradorGrupoUseCase _removerAdministradorUseCase;
+        private readonly ListarMembrosGrupoUseCase _listarMembrosGrupoUseCase;
 
         public GrupoController(
             CriarGrupoUseCase criarGrupo,
@@ -28,7 +29,8 @@ namespace SistemaGestaoCompras.API.Controllers
             AlterarNomeGrupoUseCase alterarNomeGrupo,
             DesativarGrupoUseCase desativarGrupo,
             TornarUsuarioAdministradorGrupoUseCase tornarAdministrador,
-            RemoverAdministradorGrupoUseCase removerAdministrador)
+            RemoverAdministradorGrupoUseCase removerAdministrador,
+            ListarMembrosGrupoUseCase listarMembros)
         {
             _criarGrupoUseCase = criarGrupo;
             _buscarGrupoPorIdUseCase = buscarGrupoPorId;
@@ -40,6 +42,7 @@ namespace SistemaGestaoCompras.API.Controllers
             _desativarGrupoUseCase = desativarGrupo;
             _tornarAdministradorUseCase = tornarAdministrador;
             _removerAdministradorUseCase = removerAdministrador;
+            _listarMembrosGrupoUseCase = listarMembros;
         }
 
         [HttpPost]
@@ -114,6 +117,14 @@ namespace SistemaGestaoCompras.API.Controllers
         {
             await _desativarGrupoUseCase.ExecutarAsync(dto);
             return NoContentResponse();
+        }
+
+        [HttpGet("{grupoId}/membros")]
+        public async Task<IActionResult> ListarMembros(Guid grupoId)
+        {
+            var membros = await _listarMembrosGrupoUseCase.ExecutarAsync(grupoId);
+
+            return OkResponse(membros);
         }
     }
 }

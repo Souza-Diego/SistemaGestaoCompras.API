@@ -1,5 +1,6 @@
 ﻿using SistemaGestaoCompras.Application.DTOs.Usuarios;
 using SistemaGestaoCompras.Domain.Interfaces.Repositories;
+using SistemaGestaoCompras.Domain.Exceptions;
 
 namespace SistemaGestaoCompras.Application.UseCases.Usuarios
 {
@@ -17,7 +18,7 @@ namespace SistemaGestaoCompras.Application.UseCases.Usuarios
             var usuario = await _usuarioRepositorio.BuscarPorIdAsync(dto.Id);
 
             if (usuario == null)
-                throw new Exception("Usuário não encontrado");
+                throw new DomainException("Não conseguimos encontrar esse usuário para alterar o plano");
 
             usuario.AlterarPlano(dto.NovoPlano);
 

@@ -49,8 +49,13 @@ namespace SistemaGestaoCompras.API.Middlewares
 
                 default:
                     statusCode = HttpStatusCode.InternalServerError;
-                    mensagem = "Erro interno do servidor";
+                    mensagem = $"{ex.GetType().Name}: {ex.Message}";
                     break;
+
+                    //default:
+                    //    statusCode = HttpStatusCode.InternalServerError;
+                    //    mensagem = "Eita! Nossos robôs se atrapalharam um pouco aqui dentro. Já estamos resolvendo, tente novamente em instantes.";
+                    //    break;
             }
 
             var resposta = new

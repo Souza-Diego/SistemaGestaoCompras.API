@@ -1,6 +1,7 @@
 ﻿using SistemaGestaoCompras.Application.DTOs.Usuarios;
 using SistemaGestaoCompras.Domain.Interfaces.Repositories;
 using SistemaGestaoCompras.Domain.ValueObjects;
+using SistemaGestaoCompras.Domain.Exceptions;
 
 namespace SistemaGestaoCompras.Application.UseCases.Usuarios
 {
@@ -18,7 +19,7 @@ namespace SistemaGestaoCompras.Application.UseCases.Usuarios
             var usuario = await _usuarioRepositorio.BuscarPorEmailAsync(dto.Email);
 
             if (usuario == null)
-                throw new Exception("Usuário não encontrado");
+                throw new DomainException("Não encontramos nenhum usuário com esse email");
 
             usuario.AlterarSenha(new Senha(dto.NovaSenha));
 

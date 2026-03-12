@@ -58,11 +58,7 @@ namespace SistemaGestaoCompras.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginUsuarioDto dto)
         {
-            var sucesso = await _loginUsuarioUseCase.ExecutarAsync(dto);
-
-            if (!sucesso)
-                return Unauthorized();
-
+            await _loginUsuarioUseCase.ExecutarAsync(dto);
             return OkResponse("Login realizado com sucesso.");
         }
 
@@ -76,23 +72,15 @@ namespace SistemaGestaoCompras.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> BuscarPorId(Guid id)
         {
-            var usuario = await _buscarUsuarioPorIdUseCase.ExecutarAsync(id);
-
-            if (usuario == null)
-                return NotFoundResponse();
-
-            return OkResponse(usuario);
+            var usuario = await _buscarUsuarioPorIdUseCase.ExecutarAsync(id);          
+            return OkResponse(usuario!);
         }
 
         [HttpGet("email")]
         public async Task<IActionResult> BuscarPorEmail([FromQuery] string email)
         {
-            var usuario = await _buscarUsuarioPorEmailUseCase.ExecutarAsync(email);
-
-            if (usuario == null)
-                return NotFoundResponse();
-
-            return OkResponse(usuario);
+            var usuario = await _buscarUsuarioPorEmailUseCase.ExecutarAsync(email);                      
+            return OkResponse(usuario!);
         }
 
         [HttpPut("{id}/nome")]

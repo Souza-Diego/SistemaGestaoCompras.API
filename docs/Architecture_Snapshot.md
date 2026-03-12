@@ -64,8 +64,8 @@
 - IUsuarioRepositorio
 
 ### Application
-- DTOs: 65
-- UseCases: 100
+- DTOs: 67
+- UseCases: 103
 
 #### DTOs
 - AlterarNomeCategoriaDto
@@ -100,6 +100,7 @@
 - AlterarUnidadeItemListaDto
 - CriarListaAPartirDeTemplateDto
 - CriarListaComprasDto
+- CustoListaDto
 - RemoverItemListaDto
 - AdicionarItemListaPadraoDto
 - AlterarNomeListaPadraoDto
@@ -122,6 +123,7 @@
 - AlterarNomeProdutoDto
 - CriarProdutoDto
 - ProdutoDto
+- ComparacaoPrecoDto
 - CorrigirPrecoRegistradoDto
 - ListarPrecosPorMercadoDto
 - RegistrarPrecoProdutoDto
@@ -167,6 +169,7 @@
 - CriarGrupoUseCase
 - DesativarGrupoUseCase
 - ListarGruposDoUsuarioUseCase
+- ListarMembrosGrupoUseCase
 - RemoverAdministradorGrupoUseCase
 - RemoverMembroGrupoUseCase
 - SairDoGrupoUseCase
@@ -176,6 +179,7 @@
 - AlterarQuantidadeItemListaUseCase
 - AlterarUnidadeItemListaUseCase
 - BuscarListaDeComprasPorIdUseCase
+- CalcularCustoListaUseCase
 - CriarListaDeComprasAPartirDeTemplateUseCase
 - CriarListaDeComprasUseCase
 - DesativarListaDeComprasUseCase
@@ -217,6 +221,7 @@
 - ListarProdutosPorCategoriaUseCase
 - ListarProdutosUseCase
 - ObterProdutoPorIdUseCase
+- CompararPrecosProdutoUseCase
 - CorrigirPrecoRegistradoUseCase
 - ListarPrecosPorMercadoUseCase
 - ListarPrecosProdutoUseCase

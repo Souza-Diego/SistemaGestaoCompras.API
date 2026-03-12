@@ -32,10 +32,95 @@ namespace SistemaGestaoCompras.Infrastructure.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Owned<Email>();
-            modelBuilder.Owned<Senha>();
-            modelBuilder.Owned<UnidadeMedida>();
-            modelBuilder.Owned<Dinheiro>();
+            modelBuilder.Entity<Usuario>(entity =>
+            {
+                entity.OwnsOne(u => u.Email, email =>
+                {
+                    email.Property(e => e.Endereco)
+                         .HasColumnName("Email")
+                         .IsRequired();
+                });
+
+                entity.OwnsOne(u => u.Senha, senha =>
+                {
+                    senha.Property(s => s.Hash)
+                         .HasColumnName("Senha")
+                         .IsRequired();
+                });
+            });
+
+            modelBuilder.Entity<Compra>()
+                .OwnsOne(c => c.ValorTotal, dinheiro =>
+            {
+                dinheiro.Property(d => d.Valor)
+                .HasColumnName("ValorTotal");
+            });
+
+            modelBuilder.Entity<ItemCompra>()
+                .OwnsOne(i => i.PrecoUnitario, dinheiro =>
+            {
+                dinheiro.Property(d => d.Valor)
+                .HasColumnName("PrecoUnitario");
+            });
+
+            modelBuilder.Entity<RegistroDePreco>()
+                .OwnsOne(r => r.Preco, dinheiro =>
+            {
+                dinheiro.Property(d => d.Valor)
+                .HasColumnName("Preco");
+            });
+
+            modelBuilder.Entity<Orcamento>()
+                .OwnsOne(o => o.ValorPlanejado, dinheiro =>
+            {
+                dinheiro.Property(d => d.Valor)
+                .HasColumnName("ValorPlanejado");
+            });
+
+            modelBuilder.Entity<Produto>()
+                .OwnsOne(p => p.UnidadeBase, unidade =>
+            {
+                unidade.Property(u => u.Nome);
+                unidade.Property(u => u.Simbolo);
+                unidade.Property(u => u.Tipo);
+                unidade.Property(u => u.FatorBase);
+            });
+
+            modelBuilder.Entity<ItemLista>()
+                .OwnsOne(i => i.Unidade, unidade =>
+            {
+                unidade.Property(u => u.Nome);
+                unidade.Property(u => u.Simbolo);
+                unidade.Property(u => u.Tipo);
+                unidade.Property(u => u.FatorBase);
+            });
+
+            modelBuilder.Entity<ItemListaPadrao>()
+                .OwnsOne(i => i.Unidade, unidade =>
+            {
+                unidade.Property(u => u.Nome);
+                unidade.Property(u => u.Simbolo);
+                unidade.Property(u => u.Tipo);
+                unidade.Property(u => u.FatorBase);
+            });
+
+            modelBuilder.Entity<ItemCompra>()
+                .OwnsOne(i => i.Unidade, unidade =>
+            {
+                unidade.Property(u => u.Nome);
+                unidade.Property(u => u.Simbolo);
+                unidade.Property(u => u.Tipo);
+                unidade.Property(u => u.FatorBase);
+            });
+
+            modelBuilder.Entity<RegistroDePreco>()
+                .OwnsOne(r => r.UnidadeReferencia, unidade =>
+            {
+                unidade.Property(u => u.Nome);
+                unidade.Property(u => u.Simbolo);
+                unidade.Property(u => u.Tipo);
+                unidade.Property(u => u.FatorBase);
+            });
 
             foreach (var property in modelBuilder.Model
                 .GetEntityTypes()
