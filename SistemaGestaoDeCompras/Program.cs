@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Scrutor;
+using SistemaGestaoCompras.API.Initializers;
 using SistemaGestaoCompras.API.Middlewares;
 using SistemaGestaoCompras.Domain.Interfaces.Repositories;
 using SistemaGestaoCompras.Domain.Services;
@@ -57,6 +58,12 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+// ===============================
+// Config. do DB Initializer
+// ===============================
+
+await DbInitializer.SeedAdminAsync(app.Services);
 
 // ===============================
 // Configurações do Middleware

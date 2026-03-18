@@ -17,7 +17,7 @@ namespace SistemaGestaoCompras.Application.UseCases.Usuarios
             var usuario = await _usuarioRepositorio.BuscarPorIdAsync(usuarioId);
 
             if (usuario == null)
-                throw new DomainException("Tentamos reativar a conta, mas não encontramos esse usuário no sistema.");
+                throw new AppDomainException("Tentamos reativar a conta, mas não encontramos esse usuário no sistema.");
 
             usuario.Ativar();
 

@@ -17,7 +17,7 @@ namespace SistemaGestaoCompras.Application.UseCases.Usuarios
             var usuario = await _usuarioRepositorio.BuscarPorIdAsync(idUsuario);
             
             if (usuario == null)
-                throw new DomainException("Não conseguimos desativar a conta porque esse usuário não foi encontrado.");
+                throw new AppDomainException("Não conseguimos desativar a conta porque esse usuário não foi encontrado.");
             
             usuario.Desativar();
             await _usuarioRepositorio.AtualizarAsync(usuario);

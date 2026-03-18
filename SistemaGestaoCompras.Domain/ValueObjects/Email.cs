@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using SistemaGestaoCompras.Domain.Exceptions;
 using System.Text.RegularExpressions;
 
 namespace SistemaGestaoCompras.Domain.ValueObjects
@@ -15,29 +15,29 @@ namespace SistemaGestaoCompras.Domain.ValueObjects
         public Email(string endereco)
         {
             if (string.IsNullOrWhiteSpace(endereco))
-                throw new ValidationException("Não esqueça do email! Prometemos que não vamos enviar spam, mas precisamos de um endereço.");
+                throw new AppValidationException("Não esqueça do email! Prometemos que não vamos enviar spam, mas precisamos de um endereço.");
 
             endereco = endereco.Trim().ToLower();
 
             if (!EmailValido(endereco))
             {
-                throw new ValidationException("Hum, esse formato de email parece meio estranho. Pode conferir se não faltou um @ ou um ponto?");
+                throw new AppValidationException("Hum, esse formato de email parece meio estranho. Pode conferir se não faltou um @ ou um ponto?");
             }
 
             Endereco = endereco;
         }
 
+        private static readonly Regex EmailRegex =
+            new Regex(@"^[^@\s]+@[^@\s]+\.[^@\s]+$", RegexOptions.Compiled);
+
         private bool EmailValido(string email)
         {
-            // Expressão regular simples para validar o formato do email
-            var regex = new Regex(@"^[^@\s]+@[^@\s]+\.[^@\s]+$");
-            return regex.IsMatch(email);
+            return EmailRegex.IsMatch(email);
         }
 
         public override string ToString()
         {
             return Endereco;
         }
-
     }
 }

@@ -19,6 +19,7 @@ namespace SistemaGestaoCompras.API.Controllers
         private readonly BuscarUsuarioPorEmailUseCase _buscarUsuarioPorEmailUseCase;
         private readonly ListarUsuariosUseCase _listarUsuariosUseCase;
         private readonly RecuperarSenhaUsuarioUseCase _recuperarSenhaUseCase;
+        private readonly AlterarTipoUsuarioUseCase _alterarTipoUsuarioUseCase;
 
         public UsuarioController(
             CriarUsuarioUseCase criarUsuario,
@@ -32,7 +33,8 @@ namespace SistemaGestaoCompras.API.Controllers
             BuscarUsuarioPorIdUseCase buscarUsuarioPorId,
             BuscarUsuarioPorEmailUseCase buscarUsuarioPorEmail,
             ListarUsuariosUseCase listarUsuarios,
-            RecuperarSenhaUsuarioUseCase recuperarSenha)
+            RecuperarSenhaUsuarioUseCase recuperarSenha,
+            AlterarTipoUsuarioUseCase alterarTipoUsuarioUseCase)
         {
             _criarUsuarioUseCase = criarUsuario;
             _loginUsuarioUseCase = loginUsuario;
@@ -46,6 +48,7 @@ namespace SistemaGestaoCompras.API.Controllers
             _buscarUsuarioPorEmailUseCase = buscarUsuarioPorEmail;
             _listarUsuariosUseCase = listarUsuarios;
             _recuperarSenhaUseCase = recuperarSenha;
+            _alterarTipoUsuarioUseCase = alterarTipoUsuarioUseCase;
         }
 
         [HttpPost]
@@ -88,7 +91,7 @@ namespace SistemaGestaoCompras.API.Controllers
         {
             dto.Id = id;
             await _alterarNomeUseCase.ExecutarAsync(dto);
-            return NoContentResponse();
+            return OkResponse("Nome alterado com sucesso.");
         }
 
         [HttpPut("{id}/email")]
@@ -96,7 +99,7 @@ namespace SistemaGestaoCompras.API.Controllers
         {
             dto.Id = id;
             await _alterarEmailUseCase.ExecutarAsync(dto);
-            return NoContentResponse();
+            return OkResponse("Email renovado com sucesso.");
         }
 
         [HttpPut("{id}/senha")]
@@ -104,7 +107,7 @@ namespace SistemaGestaoCompras.API.Controllers
         {
             dto.Id = id;
             await _alterarSenhaUseCase.ExecutarAsync(dto);
-            return NoContentResponse();
+            return OkResponse("Nova senha cadastrada com sucesso.");
         }
 
         [HttpPut("{id}/plano")]
@@ -112,28 +115,38 @@ namespace SistemaGestaoCompras.API.Controllers
         {
             dto.Id = id;
             await _alterarPlanoUseCase.ExecutarAsync(dto);
-            return NoContentResponse();
+            return OkResponse("Plano de Usuário alterado com sucesso.");
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DesativarConta(Guid id)
         {
             await _desativarContaUseCase.ExecutarAsync(id);
-            return NoContentResponse();
+            return OkResponse("Conta Desativada com sucesso.");
         }
 
         [HttpPut("{id}/reativar")]
         public async Task<IActionResult> ReativarConta(Guid id)
         {
             await _reativarContaUseCase.ExecutarAsync(id);
-            return NoContentResponse();
+            return OkResponse("Essa conta ressurgiu no sistema.");
         }
 
         [HttpPost("recuperar-senha")]
         public async Task<IActionResult> RecuperarSenha([FromBody] RecuperarSenhaUsuarioDto dto)
         {
             await _recuperarSenhaUseCase.ExecutarAsync(dto);
-            return NoContentResponse();
+            return OkResponse("Senha alterada com sucesso.");
+        }
+
+        [HttpPut("{id}/tipo")]
+        public async Task<IActionResult> AlterarTipoUsuario(Guid id, [FromBody] AlterarTipoUsuarioDto dto)
+        {
+            dto.IdUsuarioAlvo = id;
+
+            await _alterarTipoUsuarioUseCase.ExecutarAsync(dto);
+
+            return OkResponse("Usuário alterado com sucesso.");
         }
     }
 }

@@ -18,7 +18,7 @@ namespace SistemaGestaoCompras.Application.UseCases.ListaDeCompras
             var lista = await _listaRepositorio.BuscarPorIdAsync(idLista);
 
             if (lista == null)
-                throw new NotFoundException("Lista de compras", idLista);
+                throw new AppNotFoundException("Lista de compras", idLista);
 
             return lista.Itens.Select(i => new ItemListaDetalhadoDto
             {

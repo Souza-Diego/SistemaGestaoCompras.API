@@ -19,7 +19,7 @@ namespace SistemaGestaoCompras.Application.UseCases.Usuarios
             var usuario = await _usuarioRepositorio.BuscarPorEmailAsync(dto.Email);
 
             if (usuario == null)
-                throw new DomainException("Não encontramos nenhum usuário com esse email");
+                throw new AppDomainException("Não encontramos nenhum usuário com esse email");
 
             usuario.AlterarSenha(new Senha(dto.NovaSenha));
 

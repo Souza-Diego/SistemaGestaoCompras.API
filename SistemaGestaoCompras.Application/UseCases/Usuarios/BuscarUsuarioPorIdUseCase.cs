@@ -18,7 +18,7 @@ namespace SistemaGestaoCompras.Application.UseCases.Usuarios
             var usuario = await _usuarioRepositorio.BuscarPorIdAsync(id);
 
             if (usuario == null)
-                throw new DomainException("Hmm... procuramos por esse usuário, mas ele parece não existir por aqui.");
+                throw new AppDomainException("Hmm... procuramos por esse usuário, mas ele parece não existir por aqui.");
 
             return new UsuarioDto
             {

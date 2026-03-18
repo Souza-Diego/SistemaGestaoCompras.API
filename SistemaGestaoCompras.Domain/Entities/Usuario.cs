@@ -24,12 +24,14 @@ namespace SistemaGestaoCompras.Domain.Entities
         public Usuario(string nome, Email email, Senha senha, TipoUsuario tipoUsuario)
         {
             ValidarNome(nome);
-                        
+            ValidarEmail(email);
+            ValidarSenha(senha);
+                                                           
             Nome = nome.Trim();
             Email = email;
             Senha = senha;
             TipoUsuario = tipoUsuario;
-            Plano = PlanoUsuario.Gratuito; // Todos os usuários começam com o plano gratuito
+            AtualizarPlanoComBaseNoTipo();
             DataCriacao = DateTime.UtcNow;            
         }
 
@@ -38,11 +40,23 @@ namespace SistemaGestaoCompras.Domain.Entities
             if (string.IsNullOrWhiteSpace(nome) ||
                 nome.Trim().Length < 2 ||
                 nome.Any(char.IsDigit) ||
-                nome.Any(ch => !char.IsLetter(ch) && !char.IsWhiteSpace(ch)))
+                nome.Any(ch => !char.IsLetter(ch) && !char.IsWhiteSpace(ch) && ch != '-' && ch != '.'))
             {
-                throw new ValidationException("Quase lá! Mas precisamos de um nome real, com pelo menos 2 letras e sem 'temperos' (números ou símbolos).");
+                throw new AppValidationException("Quase lá! Mas precisamos de um nome real, com pelo menos 2 letras e sem 'temperos' (números ou símbolos).");
             }                
-        }        
+        }
+        
+        public void ValidarEmail(Email email)
+        {
+            if (email == null)
+                throw new AppValidationException("Prometemos que não vamos enviar spam, mas precisamos de um endereço de email válido.");
+        }
+
+        public void ValidarSenha(Senha senha)
+        {
+            if (senha == null)
+                throw new AppValidationException("Senha é obrigatória.");
+        }
 
         public void AlterarNome(string novoNome)
         {
@@ -61,7 +75,18 @@ namespace SistemaGestaoCompras.Domain.Entities
         {
             GarantirAtivo();
             Senha = novaSenha;
-        }                
+        }
+
+        public void AlterarTipoUsuario(TipoUsuario novoTipo)
+        {
+            GarantirAtivo();
+
+            if (TipoUsuario == novoTipo)
+                throw new AppDomainException("O usuário já possui esse tipo.");
+
+            TipoUsuario = novoTipo;
+            AtualizarPlanoComBaseNoTipo();
+        }
 
         public bool IsADM()
         {
@@ -72,9 +97,16 @@ namespace SistemaGestaoCompras.Domain.Entities
         {
             GarantirAtivo();
             if (Plano == novoPlano)
-                throw new DomainException("Esse plano já está ativo na sua conta.");
+                throw new AppDomainException("Esse plano já está ativo na sua conta.");
 
             Plano = novoPlano;
+        }
+
+        private void AtualizarPlanoComBaseNoTipo()
+        {
+            Plano = TipoUsuario == TipoUsuario.Administrador
+                ? PlanoUsuario.Premium
+                : PlanoUsuario.Gratuito;
         }
 
         public bool IsPremium()

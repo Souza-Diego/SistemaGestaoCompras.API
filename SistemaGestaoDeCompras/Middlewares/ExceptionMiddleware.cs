@@ -29,39 +29,50 @@ namespace SistemaGestaoCompras.API.Middlewares
         {
             HttpStatusCode statusCode;
             string mensagem;
+            string codigoErro;
 
             switch (ex)
             {
-                case NotFoundException:
+                case AppNotFoundException:
                     statusCode = HttpStatusCode.NotFound;
                     mensagem = ex.Message;
+                    codigoErro = "NOT_FOUND";
                     break;
 
-                case ValidationException:
+                case AppValidationException:
+                case System.ComponentModel.DataAnnotations.ValidationException:
                     statusCode = HttpStatusCode.BadRequest;
                     mensagem = ex.Message;
+                    codigoErro = "VALIDATION_ERROR";
                     break;
 
-                case DomainException:
+                case AppDomainException:
                     statusCode = HttpStatusCode.BadRequest;
                     mensagem = ex.Message;
+                    codigoErro = "DOMAIN_ERROR";
                     break;
+
+                //default:
+                    //statusCode = HttpStatusCode.InternalServerError;
+                    //mensagem = ex.ToString();
+                    //mensagem = $"{ex.GetType().Name}: {ex.Message}";
+                    //break;
 
                 default:
                     statusCode = HttpStatusCode.InternalServerError;
-                    mensagem = ex.ToString();
-                    //mensagem = $"{ex.GetType().Name}: {ex.Message}";
+                    mensagem = "Eita! Nossos robôs se atrapalharam um pouco aqui dentro. Já estamos resolvendo, tente novamente em instantes.";
+                    codigoErro = "INTERNAL_ERROR";
+                    Console.WriteLine(ex);
                     break;
-
-                    //default:
-                    //    statusCode = HttpStatusCode.InternalServerError;
-                    //    mensagem = "Eita! Nossos robôs se atrapalharam um pouco aqui dentro. Já estamos resolvendo, tente novamente em instantes.";
-                    //    break;
             }
 
             var resposta = new
             {
-                erro = mensagem
+                erro = new
+                {
+                    codigo = codigoErro,
+                    mensagem = mensagem
+                }                    
             };
 
             var json = JsonSerializer.Serialize(resposta);

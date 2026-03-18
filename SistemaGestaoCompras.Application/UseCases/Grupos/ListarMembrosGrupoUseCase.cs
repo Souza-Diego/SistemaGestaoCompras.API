@@ -16,7 +16,7 @@ public class ListarMembrosGrupoUseCase
         var grupo = await _repositorio.BuscarPorIdAsync(grupoId);
 
         if (grupo == null)
-            throw new NotFoundException("Grupo", grupoId);
+            throw new AppNotFoundException("Grupo", grupoId);
 
         return grupo.Membros;
     }

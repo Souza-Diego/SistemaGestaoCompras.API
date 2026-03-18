@@ -21,7 +21,7 @@ namespace SistemaGestaoCompras.Application.UseCases.Usuarios
             var usuarioExistente = await _usuarioRepositorio.BuscarPorEmailAsync(dto.Email);
             if (usuarioExistente != null)
             {
-                throw new ValidationException("Parece que você já passou por aqui! Esse email já tem uma conta. Que tal tentar o login?");
+                throw new AppValidationException("Parece que você já passou por aqui! Esse email já tem uma conta. Que tal tentar o login?");
             }
 
             var email = new Email(dto.Email);

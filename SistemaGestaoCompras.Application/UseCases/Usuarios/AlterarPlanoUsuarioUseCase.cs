@@ -18,7 +18,7 @@ namespace SistemaGestaoCompras.Application.UseCases.Usuarios
             var usuario = await _usuarioRepositorio.BuscarPorIdAsync(dto.Id);
 
             if (usuario == null)
-                throw new DomainException("Não conseguimos encontrar esse usuário para alterar o plano");
+                throw new AppDomainException("Não conseguimos encontrar esse usuário para alterar o plano");
 
             usuario.AlterarPlano(dto.NovoPlano);
 

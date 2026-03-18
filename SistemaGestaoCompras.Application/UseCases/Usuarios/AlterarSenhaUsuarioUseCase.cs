@@ -19,10 +19,10 @@ namespace SistemaGestaoCompras.Application.UseCases.Usuarios
             var usuario = await _usuarioRepositorio.BuscarPorIdAsync(dto.Id);
 
             if (usuario == null)
-                throw new DomainException("Procuramos em todos os cantos, mas não achamos ninguém com esses dados. Tem certeza que o cadastro foi feito com este login?");
+                throw new AppDomainException("Procuramos em todos os cantos, mas não achamos ninguém com esses dados. Tem certeza que o cadastro foi feito com este login?");
 
             if (!usuario.Senha.VerificarSenha(dto.SenhaAtual))
-                throw new DomainException("A senha atual não bateu com a que temos guardada. Pode dar uma conferida se o Caps Lock não está ligado?");
+                throw new AppDomainException("A senha atual não bateu com a que temos guardada. Pode dar uma conferida se o Caps Lock não está ligado?");
 
             usuario.AlterarSenha(new Senha(dto.NovaSenha));
 

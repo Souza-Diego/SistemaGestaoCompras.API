@@ -11,18 +11,28 @@ namespace SistemaGestaoCompras.Domain.Entities
             Ativo = true;
         }
 
+        protected string NomeEntidade => GetType().Name;
+
         protected void GarantirAtivo()
         {
             if (!Ativo)
-                throw new DomainException($"Não podemos fazer isso. {GetType().Name} não está mais ativo no sistema.");
+                throw new AppDomainException($"Não podemos fazer isso. Esse(a) {NomeEntidade} não está mais ativo(a) no sistema.");
+        }
+
+        protected void GarantirInativo()
+        {
+            if (Ativo)
+                throw new AppDomainException($"Esse(a) {NomeEntidade} já está ativo(a) no sistema.");
         }
 
         public void Ativar()
         {
+            GarantirInativo();
             Ativo = true;
         }
         public void Desativar()
         {
+            GarantirAtivo();
             Ativo = false;
         }
     }

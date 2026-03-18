@@ -18,7 +18,7 @@ namespace SistemaGestaoCompras.Application.UseCases.Usuarios
             var usuario = await _usuarioRepositorio.BuscarPorIdAsync(dto.Id);
 
             if (usuario == null)
-                throw new DomainException("Esse usuário não foi encontrado. Não deu para atualizar o nome.");
+                throw new AppDomainException("Esse usuário não foi encontrado. Não deu para atualizar o nome.");
 
             usuario.AlterarNome(dto.NovoNome);
 

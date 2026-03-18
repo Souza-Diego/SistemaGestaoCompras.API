@@ -27,12 +27,12 @@ namespace SistemaGestaoCompras.Application.UseCases.ListaDeCompras
             var lista = await _listaRepositorio.BuscarPorIdAsync(dto.IdListaDeCompras);
 
             if (lista == null)
-                throw new NotFoundException("Lista de compras", dto.IdListaDeCompras);
+                throw new AppNotFoundException("Lista de compras", dto.IdListaDeCompras);
 
             var produto = await _produtoRepositorio.BuscarPorIdAsync(dto.IdProduto);
 
             if (produto == null)
-                throw new NotFoundException("Produto", dto.IdProduto);
+                throw new AppNotFoundException("Produto", dto.IdProduto);
 
             var unidade = UnidadeMedida.ObterPorSimbolo(dto.Unidade);
 

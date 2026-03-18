@@ -3,17 +3,18 @@
 ## Estrutura do Sistema
 
 ### Domain
-- Entities: 17
+- Entities: 18
 - ValueObjects: 4
-- Services: 2
+- Services: 3
 - Enums: 6
-- Repository Interfaces: 13
+- Repository Interfaces: 14
 
 #### Entities
 - Categoria
 - Compra
 - ConviteGrupo
 - Entidade
+- EntidadeAtiva
 - Grupo
 - GrupoUsuario
 - ItemCompra
@@ -37,6 +38,7 @@
 #### Domain Services
 - CalculadoraOrcamentoAutomatico
 - EstatisticasCompraService
+- CalculadoraOrcamentoAutomatico
 
 #### Enums
 - PapelGrupo
@@ -52,6 +54,7 @@
 - ICompraRepositorio
 - IConviteGrupoRepositorio
 - IGrupoRepositorio
+- IItemListaRepositorio
 - IListaDeComprasPadraoRepositorio
 - IListaDeComprasRepositorio
 - IMarcaRepositorio
@@ -63,8 +66,8 @@
 - IUsuarioRepositorio
 
 ### Application
-- DTOs: 67
-- UseCases: 103
+- DTOs: 68
+- UseCases: 104
 
 #### DTOs
 - AlterarNomeCategoriaDto
@@ -100,6 +103,7 @@
 - CriarListaAPartirDeTemplateDto
 - CriarListaComprasDto
 - CustoListaDto
+- ItemListaDetalhadoDto
 - RemoverItemListaDto
 - AdicionarItemListaPadraoDto
 - AlterarNomeListaPadraoDto
@@ -183,6 +187,7 @@
 - CriarListaDeComprasUseCase
 - DesativarListaDeComprasUseCase
 - FinalizarListaDeComprasUseCase
+- ListarItensDaListaUseCase
 - ListarListasDoGrupoUseCase
 - ListarListasDoUsuarioUseCase
 - ReabrirListaDeComprasUseCase
@@ -241,13 +246,14 @@
 - RecuperarSenhaUsuarioUseCase
 
 ### Infrastructure
-- Repositories: 13
+- Repositories: 14
 
 #### Repositories
 - CategoriaRepositorio
 - CompraRepositorio
 - ConviteGrupoRepositorio
 - GrupoRepositorio
+- ItemListaRepositorio
 - ListaDeComprasPadraoRepositorio
 - ListaDeComprasRepositorio
 - MarcaRepositorio

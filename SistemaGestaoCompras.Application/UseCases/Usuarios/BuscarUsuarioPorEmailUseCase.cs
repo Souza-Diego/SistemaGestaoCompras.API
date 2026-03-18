@@ -18,10 +18,10 @@ namespace SistemaGestaoCompras.Application.UseCases.Usuarios
             var usuario = await _usuarioRepositorio.BuscarPorEmailAsync(email);
 
             if (usuario == null)
-                throw new DomainException("Nenhum usuário foi encontrado com esse email");
+                throw new AppDomainException("Nenhum usuário foi encontrado com esse email");
 
             if (!usuario.Ativo)
-                throw new DomainException("Esse usuário não consta mais no sistema.");
+                throw new AppDomainException("Esse usuário não consta mais no sistema.");
 
             return new UsuarioDto
             {

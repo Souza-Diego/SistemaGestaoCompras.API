@@ -6,7 +6,6 @@
 
 ### Propriedades
 - string Nome
-- bool Ativo
 
 ### Construtores
 - Categoria()
@@ -15,8 +14,6 @@
 ### Métodos
 - void ValidarNome()
 - void AlterarNome()
-- void Desativar()
-- void Ativar()
 
 ---
 ## Classe: Compra
@@ -52,7 +49,6 @@
 - Guid IdCriadoPorUsuario
 - DateTime DataCriacao
 - DateTime DataExpiracao
-- bool Ativo
 
 ### Construtores
 - ConviteGrupo()
@@ -61,7 +57,6 @@
 ### Métodos
 - bool EstaExpirado()
 - bool EstaValido()
-- void Desativar()
 - string GerarCodigoConvite()
 
 ---
@@ -75,13 +70,26 @@
 - Entidade(Guid id)
 
 ---
+## Classe: EntidadeAtiva
+
+### Propriedades
+- bool Ativo
+
+### Construtores
+- EntidadeAtiva()
+
+### Métodos
+- void GarantirAtivo()
+- void Ativar()
+- void Desativar()
+
+---
 ## Classe: Grupo
 
 ### Propriedades
 - string Nome
 - Guid IdCriadoPorUsuario
 - DateTime DataCriacao
-- bool Ativo
 - IReadOnlyCollection<GrupoUsuario> Membros
 
 ### Construtores
@@ -97,7 +105,6 @@
 - void RemoverAdministrador()
 - bool UsuarioPertenceAoGrupo()
 - bool UsuarioIsAdministrador()
-- void Desativar()
 
 ---
 ## Classe: GrupoUsuario
@@ -146,7 +153,6 @@
 - Guid IdProduto
 - decimal QuantidadePlanejada
 - UnidadeMedida Unidade
-- bool Ativo
 
 ### Construtores
 - ItemLista()
@@ -156,7 +162,6 @@
 - void ValidarQuantidadePlanejada()
 - void AlterarQuantidadePlanejada()
 - void AlterarUnidade()
-- void Remover()
 
 ---
 ## Classe: ItemListaPadrao
@@ -226,7 +231,6 @@
 
 ### Propriedades
 - string Nome
-- bool Ativo
 
 ### Construtores
 - Marca()
@@ -235,14 +239,12 @@
 ### Métodos
 - void ValidarNome()
 - void AlterarNome()
-- void Desativar()
 
 ---
 ## Classe: Mercado
 
 ### Propriedades
 - string Nome
-- bool Ativo
 
 ### Construtores
 - Mercado()
@@ -251,7 +253,6 @@
 ### Métodos
 - void ValidarNome()
 - void AlterarNome()
-- void Desativar()
 
 ---
 ## Classe: Orcamento
@@ -279,7 +280,6 @@
 - UnidadeMedida UnidadeBase
 - Guid? IdCriadoPorUsuario
 - TipoProduto Tipo
-- bool Ativo
 
 ### Construtores
 - Produto()
@@ -292,7 +292,6 @@
 - void AlterarMarca()
 - void AlterarNome()
 - void AlterarCategoria()
-- void DesativarProduto()
 - bool IsGlobal()
 - bool IsPersonalizado()
 
@@ -325,7 +324,6 @@
 - Senha Senha
 - PlanoUsuario Plano
 - DateTime DataCriacao
-- bool Ativo
 - TipoUsuario TipoUsuario
 
 ### Construtores
@@ -337,8 +335,6 @@
 - void AlterarNome()
 - void AlterarEmail()
 - void AlterarSenha()
-- void DesativarConta()
-- void ReativarConta()
 - bool IsADM()
 - void AlterarPlano()
 - bool IsPremium()
@@ -680,6 +676,19 @@
 ### Propriedades
 - Guid ListaId
 - decimal CustoTotal
+
+---
+## Classe: ItemListaDetalhadoDto
+
+### Propriedades
+- Guid IdProduto
+- string NomeProduto
+- string Marca
+- decimal Quantidade
+- string Unidade
+- decimal? MelhorPreco
+- string? Mercado
+- decimal? PrecoTotal
 
 ---
 ## Classe: RemoverItemListaDto
@@ -1287,7 +1296,7 @@
 ## Classe: AdicionarItemListaUseCase
 
 ### Construtores
-- AdicionarItemListaUseCase(IListaDeComprasRepositorio listaRepositorio)
+- AdicionarItemListaUseCase(IListaDeComprasRepositorio listaRepositorio, IProdutoRepositorio produtoRepositorio, IItemListaRepositorio itemRepositorio)
 
 ### Métodos
 - Task<Guid> ExecutarAsync()
@@ -1372,6 +1381,15 @@
 
 ### Métodos
 - Task ExecutarAsync()
+
+---
+## Classe: ListarItensDaListaUseCase
+
+### Construtores
+- ListarItensDaListaUseCase(IListaDeComprasRepositorio listaRepositorio)
+
+### Métodos
+- Task<IEnumerable<ItemListaDetalhadoDto>> ExecutarAsync()
 
 ---
 ## Classe: ListarListasDoGrupoUseCase
@@ -1920,6 +1938,12 @@
 - Task<IEnumerable<Grupo>> ObterPorUsuarioAsync()
 
 ---
+## Classe: ItemListaRepositorio
+
+### Construtores
+- ItemListaRepositorio(AppDbContext context)
+
+---
 ## Classe: ListaDeComprasPadraoRepositorio
 
 ### Construtores
@@ -1937,6 +1961,7 @@
 ### Métodos
 - Task<IEnumerable<ListaDeCompra>> ListarPorUsuarioIdAsync()
 - Task<IEnumerable<ListaDeCompra>> ListarPorGrupoIdAsync()
+- Task<ListaDeCompra?> BuscarPorIdAsync()
 
 ---
 ## Classe: MarcaRepositorio
@@ -2236,6 +2261,7 @@
 - ICompraRepositorio
 - IConviteGrupoRepositorio
 - IGrupoRepositorio
+- IItemListaRepositorio
 - IListaDeComprasPadraoRepositorio
 - IListaDeComprasRepositorio
 - IMarcaRepositorio

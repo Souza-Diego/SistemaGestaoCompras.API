@@ -22,7 +22,7 @@ namespace SistemaGestaoCompras.Application.UseCases.Listas
             var lista = await _listaRepositorio.BuscarPorIdAsync(listaId);
 
             if (lista == null)
-                throw new NotFoundException("Lista não encontrada.");
+                throw new AppNotFoundException("Lista não encontrada.");
 
             decimal total = 0;
 

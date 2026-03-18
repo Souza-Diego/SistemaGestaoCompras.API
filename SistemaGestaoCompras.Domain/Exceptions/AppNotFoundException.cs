@@ -1,13 +1,13 @@
 ﻿namespace SistemaGestaoCompras.Domain.Exceptions
 {
-    public class NotFoundException : Exception
+    public class AppNotFoundException : Exception
     {
-        public NotFoundException(string entidade, object id)
+        public AppNotFoundException(string entidade, object id)
             : base($"{entidade} com identificador {id} não foi encontrado.")
         {
         }
 
-        public NotFoundException(string mensagem) : base(mensagem)
+        public AppNotFoundException(string mensagem) : base(mensagem)
         {
         }
     }
