@@ -1,12 +1,11 @@
 ﻿using SistemaGestaoCompras.Domain.Enums;
 namespace SistemaGestaoCompras.Domain.Entities
 {
-    public class Grupo : Entidade
+    public class Grupo : EntidadeAtiva
     {        
         public string Nome { get; private set; }
         public Guid IdCriadoPorUsuario { get; private set; }
-        public DateTime DataCriacao { get; private set; }
-        public bool Ativo { get; set; }
+        public DateTime DataCriacao { get; private set; }        
 
         private readonly List<GrupoUsuario> _membros = new();
         public IReadOnlyCollection<GrupoUsuario> Membros => _membros.AsReadOnly();
@@ -22,8 +21,7 @@ namespace SistemaGestaoCompras.Domain.Entities
             ValidarNome(nome);
             Nome = nome;
             IdCriadoPorUsuario = idCriadoPorUsuario;
-            DataCriacao = DateTime.UtcNow;
-            Ativo = true;
+            DataCriacao = DateTime.UtcNow;            
 
             var criador = new GrupoUsuario(Id, idCriadoPorUsuario, PapelGrupo.Administrador);
             _membros.Add(criador);
@@ -39,6 +37,7 @@ namespace SistemaGestaoCompras.Domain.Entities
 
         public void AlterarNome(string novoNome)
         {
+            GarantirAtivo();
             ValidarNome(novoNome);
             Nome = novoNome;
         }
@@ -60,6 +59,7 @@ namespace SistemaGestaoCompras.Domain.Entities
 
         public void RemoverMembro(Guid idUsuario)
         {
+            GarantirAtivo();
             var membro = _membros.FirstOrDefault(m => m.IdUsuario == idUsuario);
 
             if (membro == null)
@@ -78,6 +78,7 @@ namespace SistemaGestaoCompras.Domain.Entities
 
         public void TornarAdministrador(Guid idUsuario)
         {
+            GarantirAtivo();
             var membro = _membros.FirstOrDefault(m => m.IdUsuario == idUsuario);
 
             if (membro == null)
@@ -91,6 +92,7 @@ namespace SistemaGestaoCompras.Domain.Entities
 
         public void RemoverAdministrador(Guid idUsuario)
         {
+            GarantirAtivo();
             var membro = _membros.FirstOrDefault(m => m.IdUsuario == idUsuario);
 
             if (membro == null)
@@ -120,12 +122,6 @@ namespace SistemaGestaoCompras.Domain.Entities
             return _membros.Any(m =>
             m.IdUsuario == idUsuario &&
             m.Papel == PapelGrupo.Administrador);
-        }
-
-        public void Desativar()
-        {
-            Ativo = false;
-        }
-
+        }      
     }
 }

@@ -4,23 +4,18 @@ using SistemaGestaoCompras.Domain.Exceptions;
 
 namespace SistemaGestaoCompras.Domain.Entities
 {
-    // Classe publica para ser usada em outras camadas do sistema
-    public class Usuario : Entidade
-    {   // Propriedades com métodos de acesso privados para garantir encapsulamento
-        // GUID (Globally Unique Identifier) é um identificador único globalmente, garantindo que cada usuário tenha um ID exclusivo, mesmo em sistemas distribuídos
+    public class Usuario : EntidadeAtiva
+    {    
         public string Nome { get; private set; }
         public Email Email { get; private set; }
         public Senha Senha { get; private set; }
         public PlanoUsuario Plano { get; private set; }
-        // Data de Criação para rastrear quando o usuário foi criado, útil para auditoria e gerenciamento de contas
-        public DateTime DataCriacao { get; private set; }
-        public bool Ativo { get; private set; }
+        public DateTime DataCriacao { get; private set; }        
         public TipoUsuario TipoUsuario { get; private set; }
 
-        // Construtor protegido para ser usado pelo Entity Framework
+        
         protected Usuario() 
-        {
-            // Inicializa as propriedades para evitar erros de null reference
+        {            
             Nome = null!;
             Email = null!;
             Senha = null!;
@@ -35,8 +30,7 @@ namespace SistemaGestaoCompras.Domain.Entities
             Senha = senha;
             TipoUsuario = tipoUsuario;
             Plano = PlanoUsuario.Gratuito; // Todos os usuários começam com o plano gratuito
-            DataCriacao = DateTime.UtcNow;
-            Ativo = true;
+            DataCriacao = DateTime.UtcNow;            
         }
 
         private void ValidarNome(string nome)
@@ -51,30 +45,23 @@ namespace SistemaGestaoCompras.Domain.Entities
         }        
 
         public void AlterarNome(string novoNome)
-        {                     
+        {
+            GarantirAtivo();
             ValidarNome(novoNome);
             Nome = novoNome;
         }
 
         public void AlterarEmail(Email novoEmail)
         {
+            GarantirAtivo();
             Email = novoEmail;
         }
 
         public void AlterarSenha(Senha novaSenha)
         {
+            GarantirAtivo();
             Senha = novaSenha;
-        }
-
-        public void DesativarConta()
-        {
-            Ativo = false;
-        }
-
-        public void ReativarConta()
-        {
-            Ativo = true;
-        }
+        }                
 
         public bool IsADM()
         {
@@ -83,6 +70,7 @@ namespace SistemaGestaoCompras.Domain.Entities
 
         public void AlterarPlano(PlanoUsuario novoPlano)
         {
+            GarantirAtivo();
             if (Plano == novoPlano)
                 throw new DomainException("Esse plano já está ativo na sua conta.");
 
@@ -92,6 +80,6 @@ namespace SistemaGestaoCompras.Domain.Entities
         public bool IsPremium()
         {
             return Plano == PlanoUsuario.Premium;
-        }
+        }        
     }
 }

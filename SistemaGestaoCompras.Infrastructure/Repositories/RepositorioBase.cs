@@ -31,7 +31,7 @@ namespace SistemaGestaoCompras.Infrastructure.Repositories
 
         public virtual async Task AtualizarAsync(T entidade)
         {
-            _context.Set<T>().Update(entidade);
+            //_context.Set<T>().Update(entidade);
             await _context.SaveChangesAsync();
         }
 

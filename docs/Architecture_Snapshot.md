@@ -5,7 +5,7 @@
 ### Domain
 - Entities: 17
 - ValueObjects: 4
-- Services: 3
+- Services: 2
 - Enums: 6
 - Repository Interfaces: 13
 
@@ -37,7 +37,6 @@
 #### Domain Services
 - CalculadoraOrcamentoAutomatico
 - EstatisticasCompraService
-- CalculadoraOrcamentoAutomatico
 
 #### Enums
 - PapelGrupo

@@ -20,6 +20,9 @@ namespace SistemaGestaoCompras.Application.UseCases.Usuarios
             if (usuario == null)
                 throw new DomainException("Nenhum usuário foi encontrado com esse email");
 
+            if (!usuario.Ativo)
+                throw new DomainException("Esse usuário não consta mais no sistema.");
+
             return new UsuarioDto
             {
                 Id = usuario.Id,

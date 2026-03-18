@@ -1857,7 +1857,7 @@
 - LoginUsuarioUseCase(IUsuarioRepositorio usuarioRepositorio)
 
 ### Métodos
-- Task<bool> ExecutarAsync()
+- Task ExecutarAsync()
 
 ---
 ## Classe: ReativarContaUseCase

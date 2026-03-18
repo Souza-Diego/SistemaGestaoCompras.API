@@ -17,7 +17,13 @@ namespace SistemaGestaoCompras.Application.UseCases.Usuarios
         {
             var usuario = await _usuarioRepositorio.BuscarPorEmailAsync(dto.Email);
 
-            if (usuario == null || !usuario.Senha.VerificarSenha(dto.Senha))
+            if (usuario == null)
+                throw new DomainException("Ops! Algo na sua dupla de acesso não bateu. Pode dar uma olhadinha no que foi digitado?.");
+
+            if (!usuario.Ativo)
+                throw new DomainException("Esta conta está desativada.");
+
+            if (!usuario.Senha.VerificarSenha(dto.Senha))
                 throw new DomainException("Ops! Algo na sua dupla de acesso não bateu. Pode dar uma olhadinha no que foi digitado?.");
         }
     }

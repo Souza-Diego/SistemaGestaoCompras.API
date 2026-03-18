@@ -1,13 +1,12 @@
 ﻿namespace SistemaGestaoCompras.Domain.Entities
 {
-    public class ConviteGrupo : Entidade
+    public class ConviteGrupo : EntidadeAtiva
     {        
         public Guid IdGrupo { get; private set; }
         public string Codigo { get; private set; }
         public Guid IdCriadoPorUsuario { get; private set; }        
         public DateTime DataCriacao { get; private set; }
-        public DateTime DataExpiracao { get; private set; }
-        public bool Ativo { get; private set; }
+        public DateTime DataExpiracao { get; private set; }        
 
         protected ConviteGrupo()
         {
@@ -20,8 +19,7 @@
             IdCriadoPorUsuario = idCriadoPorUsuario;
             Codigo = GerarCodigoConvite();
             DataCriacao = DateTime.UtcNow;
-            DataExpiracao = DataCriacao.AddDays(diasValidade);
-            Ativo = true;
+            DataExpiracao = DataCriacao.AddDays(diasValidade);            
         }
 
         public bool EstaExpirado()
@@ -32,11 +30,6 @@
         public bool EstaValido()
         {
             return Ativo && !EstaExpirado();
-        }
-
-        public void Desativar()
-        {
-            Ativo = false;
         }        
 
         private string GerarCodigoConvite()

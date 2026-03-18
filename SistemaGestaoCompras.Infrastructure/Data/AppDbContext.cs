@@ -167,6 +167,12 @@ namespace SistemaGestaoCompras.Infrastructure.Data
             modelBuilder.Entity<GrupoUsuario>()
                 .HasIndex(g => new { g.IdUsuario, g.IdGrupo })
                 .IsUnique();
+
+            modelBuilder.Entity<ItemLista>()
+                .HasOne<Produto>()
+                .WithMany()
+                .HasForeignKey(i => i.IdProduto)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

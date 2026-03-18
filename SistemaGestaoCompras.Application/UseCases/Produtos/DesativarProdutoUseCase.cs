@@ -18,7 +18,7 @@ namespace SistemaGestaoCompras.Application.UseCases.Produtos
             if (produto == null)
                 throw new Exception("Produto não encontrado.");
 
-            produto.DesativarProduto();
+            produto.Desativar();
 
             await _produtoRepositorio.AtualizarAsync(produto);
         }

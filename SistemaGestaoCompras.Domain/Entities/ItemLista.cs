@@ -3,13 +3,12 @@ using SistemaGestaoCompras.Domain.ValueObjects;
 
 namespace SistemaGestaoCompras.Domain.Entities
 {
-    public class ItemLista : Entidade
+    public class ItemLista : EntidadeAtiva
     {        
         public Guid IdListaDeCompras { get; private set; }
         public Guid IdProduto { get; private set; }
         public decimal QuantidadePlanejada { get; private set; }
-        public UnidadeMedida Unidade { get; private set; }
-        public bool Ativo { get; private set; }
+        public UnidadeMedida Unidade { get; private set; }        
 
         protected ItemLista()
         {
@@ -37,8 +36,7 @@ namespace SistemaGestaoCompras.Domain.Entities
             IdListaDeCompras = idListaDeCompras;
             IdProduto = idProduto;
             QuantidadePlanejada = quantidadePlanejada;
-            Unidade = unidade;
-            Ativo = true;
+            Unidade = unidade;            
         }
 
         private void ValidarQuantidadePlanejada(decimal quantidade)
@@ -59,11 +57,6 @@ namespace SistemaGestaoCompras.Domain.Entities
                 throw new ArgumentNullException(nameof(novaUnidade), "Unidade de medida é obrigatória.");
     
             Unidade = novaUnidade;
-        }
-
-        public void Remover()
-        {
-            Ativo = false;
-        }
+        }        
     }
 }

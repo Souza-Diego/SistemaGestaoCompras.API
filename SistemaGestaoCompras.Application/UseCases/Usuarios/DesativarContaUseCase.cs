@@ -19,7 +19,7 @@ namespace SistemaGestaoCompras.Application.UseCases.Usuarios
             if (usuario == null)
                 throw new DomainException("Não conseguimos desativar a conta porque esse usuário não foi encontrado.");
             
-            usuario.DesativarConta();
+            usuario.Desativar();
             await _usuarioRepositorio.AtualizarAsync(usuario);
         }
     }

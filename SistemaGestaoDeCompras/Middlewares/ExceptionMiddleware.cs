@@ -49,7 +49,8 @@ namespace SistemaGestaoCompras.API.Middlewares
 
                 default:
                     statusCode = HttpStatusCode.InternalServerError;
-                    mensagem = $"{ex.GetType().Name}: {ex.Message}";
+                    mensagem = ex.ToString();
+                    //mensagem = $"{ex.GetType().Name}: {ex.Message}";
                     break;
 
                     //default:

@@ -1,11 +1,9 @@
 ﻿namespace SistemaGestaoCompras.Domain.Entities
 {
-    public class Mercado : Entidade
+    public class Mercado : EntidadeAtiva
     {        
-        public string Nome { get; private set; }
+        public string Nome { get; private set; }       
         
-        public bool Ativo { get; private set; }
-
         protected Mercado()
         {
             // Construtor protegido para uso do Entity Framework
@@ -15,8 +13,7 @@
         public Mercado(string nome)
         {            
             ValidarNome(nome);
-            Nome = nome.Trim();
-            Ativo = true;
+            Nome = nome.Trim();            
         }
 
         private void ValidarNome(string nome)
@@ -29,13 +26,9 @@
 
         public void AlterarNome(string novoNome)
         {
+            GarantirAtivo();
             ValidarNome(novoNome);
             Nome = novoNome.Trim();
-        }
-
-        public void Desativar()
-        {
-            Ativo = false;
-        }
+        }        
     }
 }

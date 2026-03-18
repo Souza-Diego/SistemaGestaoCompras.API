@@ -1,4 +1,5 @@
 ﻿using SistemaGestaoCompras.Domain.Enums;
+using SistemaGestaoCompras.Domain.Exceptions;
 
 namespace SistemaGestaoCompras.Domain.Entities
 {
@@ -62,7 +63,11 @@ namespace SistemaGestaoCompras.Domain.Entities
         public void AdicionarItem(ItemLista item)
         {
             if (item == null)
-                throw new ArgumentNullException(nameof(item), "O item não pode ser nulo.");
+                throw new ValidationException("O item não pode ser nulo.");
+
+            if (_itens.Any(i => i.IdProduto == item.IdProduto))
+                throw new ValidationException("Este produto já está na lista.");
+
             _itens.Add(item);
         }
 

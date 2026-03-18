@@ -1,10 +1,9 @@
 ﻿
 namespace SistemaGestaoCompras.Domain.Entities
 {
-    public class Categoria : Entidade
+    public class Categoria : EntidadeAtiva
     {
-        public string Nome { get; private set; }
-        public bool Ativo { get; private set; }        
+        public string Nome { get; private set; }                
 
         protected Categoria()
         {
@@ -15,8 +14,7 @@ namespace SistemaGestaoCompras.Domain.Entities
         public Categoria(string nome)
         {
             ValidarNome(nome);
-            Nome = nome.Trim();
-            Ativo = true;
+            Nome = nome.Trim();            
         }
 
         public void ValidarNome(string nome)
@@ -32,18 +30,9 @@ namespace SistemaGestaoCompras.Domain.Entities
 
         public void AlterarNome(string novoNome)
         {
+            GarantirAtivo();
             ValidarNome(novoNome);
             Nome = novoNome.Trim();
-        }
-
-        public void Desativar()
-        {
-            Ativo = false;
-        }
-
-        public void Ativar()
-        {
-            Ativo = true;
-        }
+        }        
     }
 }

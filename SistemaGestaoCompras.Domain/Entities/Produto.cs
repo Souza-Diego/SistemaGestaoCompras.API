@@ -3,7 +3,7 @@ using SistemaGestaoCompras.Domain.ValueObjects;
 
 namespace SistemaGestaoCompras.Domain.Entities
 {
-    public class Produto : Entidade
+    public class Produto : EntidadeAtiva
     {        
         public string Nome { get; private set; }
         public Guid IdCategoria { get; private set; }
@@ -11,8 +11,7 @@ namespace SistemaGestaoCompras.Domain.Entities
         public UnidadeMedida UnidadeBase { get; private set; }
         public Guid? IdCriadoPorUsuario { get; private set; }
         public TipoProduto Tipo { get; private set; }
-        public bool Ativo { get; private set; }
-
+        
         protected Produto()
         {
             // Construtor protegido para uso do Entity Framework
@@ -37,8 +36,7 @@ namespace SistemaGestaoCompras.Domain.Entities
             UnidadeBase = unidadeBase;
             IdMarca = idMarca;
             IdCriadoPorUsuario = idCriadoPorUsuario;
-            Tipo = tipo;
-            Ativo = true;
+            Tipo = tipo;            
         }
 
         public void ValidarNome(string nome)
@@ -61,24 +59,22 @@ namespace SistemaGestaoCompras.Domain.Entities
 
         public void AlterarMarca(Guid? idMarca)
         {
+            GarantirAtivo();
             IdMarca = idMarca;
         }
 
         public void AlterarNome(string novoNome)
         {
+            GarantirAtivo();
             ValidarNome(novoNome);
             Nome = novoNome.Trim();
         }
 
         public void AlterarCategoria(Guid novoIdCategoria)
         {
+            GarantirAtivo();
             ValidarCategoria(novoIdCategoria);
             IdCategoria = novoIdCategoria;
-        }        
-
-        public void DesativarProduto()
-        {
-            Ativo = false;
         }
 
         public bool IsGlobal()

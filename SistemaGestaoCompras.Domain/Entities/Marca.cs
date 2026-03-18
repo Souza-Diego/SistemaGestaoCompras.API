@@ -1,10 +1,9 @@
 ﻿
 namespace SistemaGestaoCompras.Domain.Entities
 {
-    public class Marca : Entidade
+    public class Marca : EntidadeAtiva
     {        
-        public string Nome { get; private set; }
-        public bool Ativo { get; private set; }
+        public string Nome { get; private set; }        
 
         protected Marca()
         {
@@ -15,8 +14,7 @@ namespace SistemaGestaoCompras.Domain.Entities
         public Marca(string nome)
         {            
             ValidarNome(nome);
-            Nome = nome.Trim();
-            Ativo = true;
+            Nome = nome.Trim();            
         }
 
         private void ValidarNome(string nome)
@@ -27,13 +25,9 @@ namespace SistemaGestaoCompras.Domain.Entities
 
         public void AlterarNome(string novoNome)
         {
+            GarantirAtivo();
             ValidarNome(novoNome);
             Nome = novoNome.Trim();
-        }
-
-        public void Desativar()
-        {
-            Ativo = false;
-        }
+        }        
     }
 }

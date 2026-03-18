@@ -9,10 +9,17 @@ namespace SistemaGestaoCompras.Application.UseCases.ListaDeCompras
     public class AdicionarItemListaUseCase
     {
         private readonly IListaDeComprasRepositorio _listaRepositorio;
+        private readonly IProdutoRepositorio _produtoRepositorio;
+        private readonly IItemListaRepositorio _itemRepositorio;
 
-        public AdicionarItemListaUseCase(IListaDeComprasRepositorio listaRepositorio)
+        public AdicionarItemListaUseCase(
+            IListaDeComprasRepositorio listaRepositorio,
+            IProdutoRepositorio produtoRepositorio,
+            IItemListaRepositorio itemRepositorio)
         {
             _listaRepositorio = listaRepositorio;
+            _produtoRepositorio = produtoRepositorio;
+            _itemRepositorio = itemRepositorio;
         }
 
         public async Task<Guid> ExecutarAsync(AdicionarItemListaDto dto)
@@ -20,7 +27,12 @@ namespace SistemaGestaoCompras.Application.UseCases.ListaDeCompras
             var lista = await _listaRepositorio.BuscarPorIdAsync(dto.IdListaDeCompras);
 
             if (lista == null)
-                throw new DomainException("Não encontramos essa lista de compras. Talvez ela ainda não tenha sido criada.");
+                throw new NotFoundException("Lista de compras", dto.IdListaDeCompras);
+
+            var produto = await _produtoRepositorio.BuscarPorIdAsync(dto.IdProduto);
+
+            if (produto == null)
+                throw new NotFoundException("Produto", dto.IdProduto);
 
             var unidade = UnidadeMedida.ObterPorSimbolo(dto.Unidade);
 
@@ -33,7 +45,7 @@ namespace SistemaGestaoCompras.Application.UseCases.ListaDeCompras
 
             lista.AdicionarItem(item);
 
-            await _listaRepositorio.AdicionarAsync(lista);
+            await _itemRepositorio.AdicionarAsync(item);
 
             return item.Id;
         }

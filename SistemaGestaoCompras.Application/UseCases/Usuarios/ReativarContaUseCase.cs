@@ -19,7 +19,7 @@ namespace SistemaGestaoCompras.Application.UseCases.Usuarios
             if (usuario == null)
                 throw new DomainException("Tentamos reativar a conta, mas não encontramos esse usuário no sistema.");
 
-            usuario.ReativarConta();
+            usuario.Ativar();
 
             await _usuarioRepositorio.AtualizarAsync(usuario);
         }

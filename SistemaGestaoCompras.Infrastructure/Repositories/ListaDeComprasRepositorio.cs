@@ -25,5 +25,12 @@ namespace SistemaGestaoCompras.Infrastructure.Repositories
                 .Where(l => l.IdGrupo == idGrupo)
                 .ToListAsync();
         }
+
+        public override async Task<ListaDeCompra?> BuscarPorIdAsync(Guid id)
+        {
+            return await _context.ListasDeCompra
+                .Include(l => l.Itens)
+                .FirstOrDefaultAsync(l => l.Id == id);
+        }
     }
 }
