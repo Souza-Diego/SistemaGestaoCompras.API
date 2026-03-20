@@ -4,5 +4,6 @@
     {
         public Guid Id { get; set; }
         public Guid? NovaMarcaId { get; set; }
+        public Guid UsuarioId { get; set; }
     }
 }

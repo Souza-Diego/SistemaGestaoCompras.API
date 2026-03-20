@@ -12,8 +12,8 @@ using SistemaGestaoCompras.Infrastructure.Data;
 namespace SistemaGestaoCompras.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260312181955_CorrecaoValueObjects")]
-    partial class CorrecaoValueObjects
+    [Migration("20260320011426_CriacaoBanco")]
+    partial class CriacaoBanco
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -207,6 +207,8 @@ namespace SistemaGestaoCompras.Infrastructure.Migrations
 
                     b.HasIndex("IdListaDeCompras");
 
+                    b.HasIndex("IdProduto");
+
                     b.ToTable("ItensListas");
                 });
 
@@ -361,6 +363,9 @@ namespace SistemaGestaoCompras.Infrastructure.Migrations
                     b.Property<string>("Nome")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal?>("QuantidadeBase")
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<int>("Tipo")
                         .HasColumnType("int");
@@ -533,6 +538,12 @@ namespace SistemaGestaoCompras.Infrastructure.Migrations
                         .WithMany("Itens")
                         .HasForeignKey("IdListaDeCompras")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SistemaGestaoCompras.Domain.Entities.Produto", null)
+                        .WithMany()
+                        .HasForeignKey("IdProduto")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.OwnsOne("SistemaGestaoCompras.Domain.ValueObjects.UnidadeMedida", "Unidade", b1 =>

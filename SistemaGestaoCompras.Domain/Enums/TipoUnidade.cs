@@ -2,8 +2,8 @@
 {
     public enum TipoUnidade
     {
-        Massa,
-        Volume,
-        Contagem
+        Massa = 1,
+        Volume = 2,
+        Contagem = 3
     }
 }

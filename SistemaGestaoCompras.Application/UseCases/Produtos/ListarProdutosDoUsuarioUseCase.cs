@@ -1,23 +1,20 @@
-﻿using SistemaGestaoCompras.Domain.Interfaces.Repositories;
-using SistemaGestaoCompras.Application.DTOs.Produtos;
+﻿using SistemaGestaoCompras.Application.DTOs.Produtos;
+using SistemaGestaoCompras.Domain.Interfaces.Repositories;
 
 namespace SistemaGestaoCompras.Application.UseCases.Produtos
 {
-    public class BuscarProdutoPorNomeUseCase
+    public class ListarProdutosDoUsuarioUseCase
     {
         private readonly IProdutoRepositorio _produtoRepositorio;
 
-        public BuscarProdutoPorNomeUseCase(IProdutoRepositorio produtoRepositorio)
+        public ListarProdutosDoUsuarioUseCase(IProdutoRepositorio produtoRepositorio)
         {
             _produtoRepositorio = produtoRepositorio;
         }
 
-        public async Task<IEnumerable<ProdutoDto>> ExecutarAsync(string nome)
+        public async Task<IEnumerable<ProdutoDto>> ExecutarAsync(Guid usuarioId)
         {
-            if (string.IsNullOrWhiteSpace(nome))
-                return Enumerable.Empty<ProdutoDto>();
-
-            var produtos = await _produtoRepositorio.BuscarPorNomeAsync(nome);
+            var produtos = await _produtoRepositorio.ListarPorUsuarioAsync(usuarioId);
 
             return produtos.Select(produto => new ProdutoDto
             {

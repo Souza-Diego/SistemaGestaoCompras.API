@@ -1,18 +1,16 @@
 ﻿using SistemaGestaoCompras.Application.DTOs.Produtos;
-using SistemaGestaoCompras.Domain.Entities;
-using SistemaGestaoCompras.Domain.Enums;
 using SistemaGestaoCompras.Domain.Interfaces.Repositories;
 using SistemaGestaoCompras.Domain.ValueObjects;
 using SistemaGestaoCompras.Domain.Exceptions;
 
 namespace SistemaGestaoCompras.Application.UseCases.Produtos
 {
-    public class CriarProdutoUseCase
+    public class AlterarUnidadeProdutoUseCase
     {
         private readonly IProdutoRepositorio _produtoRepositorio;
         private readonly IUsuarioRepositorio _usuarioRepositorio;
 
-        public CriarProdutoUseCase(
+        public AlterarUnidadeProdutoUseCase(
             IProdutoRepositorio produtoRepositorio,
             IUsuarioRepositorio usuarioRepositorio)
         {
@@ -20,44 +18,37 @@ namespace SistemaGestaoCompras.Application.UseCases.Produtos
             _usuarioRepositorio = usuarioRepositorio;
         }
 
-        public async Task<Guid> ExecutarAsync(CriarProdutoDto dto)
+        public async Task ExecutarAsync(AlterarUnidadeProdutoDto dto)
         {
+            var produto = await _produtoRepositorio.BuscarPorIdAsync(dto.Id);
+
+            if (produto == null)
+                throw new AppNotFoundException("Produto não encontrado.");
+
             var usuario = await _usuarioRepositorio.BuscarPorIdAsync(dto.UsuarioId);
 
             if (usuario == null)
                 throw new AppNotFoundException("Usuário não encontrado.");
 
-            
+            if (produto.IsGlobal() && !usuario.IsADM())
+                throw new AppDomainException("Somente administradores podem alterar produtos globais.");
 
-            var unidade = UnidadeMedida.ObterPorSimbolo(dto.UnidadeBase);
+            var novaUnidade = UnidadeMedida.ObterPorSimbolo(dto.NovaUnidade);
 
             var existeDuplicado = await _produtoRepositorio
                 .ExisteProdutoDuplicadoAsync(
-                dto.Nome,
-                dto.IdMarca,
-                unidade.Simbolo,
-                dto.QuantidadeBase);
+                produto.Nome,
+                produto.IdMarca,
+                novaUnidade.Simbolo,
+                produto.QuantidadeBase,
+                produto.Id);
 
             if (existeDuplicado)
                 throw new AppDomainException("Já existe um produto com o mesmo nome, marca e unidade.");
 
-            var tipo = usuario.IsADM()
-                ? TipoProduto.Global
-                : TipoProduto.Personalizado;
+            produto.AlterarUnidade(novaUnidade, dto.UsuarioId);
 
-            var produto = new Produto(
-                dto.Nome,
-                dto.IdCategoria,
-                unidade,
-                tipo,
-                dto.IdMarca,
-                tipo == TipoProduto.Personalizado ? dto.UsuarioId : null,
-                dto.QuantidadeBase
-            );
-
-            await _produtoRepositorio.AdicionarAsync(produto);
-
-            return produto.Id;
+            await _produtoRepositorio.AtualizarAsync(produto);
         }
     }
 }

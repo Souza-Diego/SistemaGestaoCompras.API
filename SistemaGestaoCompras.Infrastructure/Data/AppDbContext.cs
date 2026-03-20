@@ -86,6 +86,10 @@ namespace SistemaGestaoCompras.Infrastructure.Data
                 unidade.Property(u => u.FatorBase);
             });
 
+            modelBuilder.Entity<Produto>()
+                .Property(p => p.QuantidadeBase)
+                .HasColumnType("decimal(18,4)");
+
             modelBuilder.Entity<ItemLista>()
                 .OwnsOne(i => i.Unidade, unidade =>
             {

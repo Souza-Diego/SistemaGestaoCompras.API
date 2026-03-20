@@ -361,6 +361,9 @@ namespace SistemaGestaoCompras.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<decimal?>("QuantidadeBase")
+                        .HasColumnType("decimal(18,4)");
+
                     b.Property<int>("Tipo")
                         .HasColumnType("int");
 

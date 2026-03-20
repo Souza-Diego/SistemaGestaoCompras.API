@@ -1,4 +1,5 @@
 ﻿using SistemaGestaoCompras.Application.DTOs.Produtos;
+using SistemaGestaoCompras.Domain.Exceptions;
 using SistemaGestaoCompras.Domain.Interfaces.Repositories;
 
 namespace SistemaGestaoCompras.Application.UseCases.Produtos
@@ -12,12 +13,15 @@ namespace SistemaGestaoCompras.Application.UseCases.Produtos
             _produtoRepositorio = produtoRepositorio;
         }
 
-        public async Task<ProdutoDto?> ExecutarAsync(Guid id)
+        public async Task<ProdutoDto> ExecutarAsync(Guid id, Guid usuarioId)
         {
             var produto = await _produtoRepositorio.BuscarPorIdAsync(id);
 
             if (produto == null)
-                return null;
+                throw new AppNotFoundException("Produto não encontrado.");
+
+            if (produto.IsPersonalizado() && produto.IdCriadoPorUsuario != usuarioId)
+                throw new AppDomainException("Você não tem permissão para acessar este produto.");
 
             return new ProdutoDto
             {
@@ -27,7 +31,8 @@ namespace SistemaGestaoCompras.Application.UseCases.Produtos
                 IdMarca = produto.IdMarca,
                 UnidadeBase = produto.UnidadeBase.Simbolo,
                 Tipo = produto.Tipo.ToString(),
-                Ativo = produto.Ativo
+                Ativo = produto.Ativo,
+                QuantidadeBase = produto.QuantidadeBase
             };
         }
     }

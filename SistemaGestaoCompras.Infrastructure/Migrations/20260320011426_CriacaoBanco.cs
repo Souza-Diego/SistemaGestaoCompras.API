@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace SistemaGestaoCompras.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class CriacaoBanco : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -36,7 +36,7 @@ namespace SistemaGestaoCompras.Infrastructure.Migrations
                     DataFinalizacao = table.Column<DateTime>(type: "datetime2", nullable: true),
                     Finalizada = table.Column<bool>(type: "bit", nullable: false),
                     AtivaParaRelatorio = table.Column<bool>(type: "bit", nullable: false),
-                    ValorTotal_Valor = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false)
+                    ValorTotal = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -139,7 +139,7 @@ namespace SistemaGestaoCompras.Infrastructure.Migrations
                     IdUsuario = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Ano = table.Column<int>(type: "int", nullable: false),
                     Mes = table.Column<int>(type: "int", nullable: false),
-                    ValorPlanejado_Valor = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false)
+                    ValorPlanejado = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -154,8 +154,13 @@ namespace SistemaGestaoCompras.Infrastructure.Migrations
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IdCategoria = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdMarca = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UnidadeBase_Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UnidadeBase_Simbolo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UnidadeBase_Tipo = table.Column<int>(type: "int", nullable: false),
+                    UnidadeBase_FatorBase = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false),
                     IdCriadoPorUsuario = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Tipo = table.Column<int>(type: "int", nullable: false),
+                    QuantidadeBase = table.Column<decimal>(type: "decimal(18,4)", nullable: true),
                     Ativo = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -171,8 +176,12 @@ namespace SistemaGestaoCompras.Infrastructure.Migrations
                     IdProduto = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdMercado = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdUsuario = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Preco_Valor = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false),
+                    Preco = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false),
                     QuantidadeReferencia = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false),
+                    UnidadeReferencia_Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UnidadeReferencia_Simbolo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UnidadeReferencia_Tipo = table.Column<int>(type: "int", nullable: false),
+                    UnidadeReferencia_FatorBase = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false),
                     DataRegistro = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -186,10 +195,12 @@ namespace SistemaGestaoCompras.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Senha = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Plano = table.Column<int>(type: "int", nullable: false),
                     DataCriacao = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Ativo = table.Column<bool>(type: "bit", nullable: false),
-                    TipoUsuario = table.Column<int>(type: "int", nullable: false)
+                    TipoUsuario = table.Column<int>(type: "int", nullable: false),
+                    Ativo = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -205,7 +216,11 @@ namespace SistemaGestaoCompras.Infrastructure.Migrations
                     IdProduto = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     NomeProdutoSnapshot = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Quantidade = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false),
-                    PrecoUnitario_Valor = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false)
+                    PrecoUnitario = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false),
+                    Unidade_Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Unidade_Simbolo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Unidade_Tipo = table.Column<int>(type: "int", nullable: false),
+                    Unidade_FatorBase = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -219,6 +234,30 @@ namespace SistemaGestaoCompras.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ItensListaPadrao",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IdListaDeComprasPadrao = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IdProduto = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    QuantidadePlanejada = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false),
+                    Unidade_Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Unidade_Simbolo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Unidade_Tipo = table.Column<int>(type: "int", nullable: false),
+                    Unidade_FatorBase = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ItensListaPadrao", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ItensListaPadrao_ListasDeCompraPadrao_IdListaDeComprasPadrao",
+                        column: x => x.IdListaDeComprasPadrao,
+                        principalTable: "ListasDeCompraPadrao",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ItensListas",
                 columns: table => new
                 {
@@ -226,6 +265,10 @@ namespace SistemaGestaoCompras.Infrastructure.Migrations
                     IdListaDeCompras = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdProduto = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     QuantidadePlanejada = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false),
+                    Unidade_Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Unidade_Simbolo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Unidade_Tipo = table.Column<int>(type: "int", nullable: false),
+                    Unidade_FatorBase = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false),
                     Ativo = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -237,26 +280,12 @@ namespace SistemaGestaoCompras.Infrastructure.Migrations
                         principalTable: "ListasDeCompra",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ItensListaPadrao",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdListaDeComprasPadrao = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    IdProduto = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    QuantidadePlanejada = table.Column<decimal>(type: "decimal(18,4)", precision: 18, scale: 4, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ItensListaPadrao", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ItensListaPadrao_ListasDeCompraPadrao_IdListaDeComprasPadrao",
-                        column: x => x.IdListaDeComprasPadrao,
-                        principalTable: "ListasDeCompraPadrao",
+                        name: "FK_ItensListas_Produtos_IdProduto",
+                        column: x => x.IdProduto,
+                        principalTable: "Produtos",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -313,6 +342,11 @@ namespace SistemaGestaoCompras.Infrastructure.Migrations
                 column: "IdListaDeCompras");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ItensListas_IdProduto",
+                table: "ItensListas",
+                column: "IdProduto");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Orcamentos_IdUsuario_Ano_Mes",
                 table: "Orcamentos",
                 columns: new[] { "IdUsuario", "Ano", "Mes" },
@@ -356,9 +390,6 @@ namespace SistemaGestaoCompras.Infrastructure.Migrations
                 name: "Orcamentos");
 
             migrationBuilder.DropTable(
-                name: "Produtos");
-
-            migrationBuilder.DropTable(
                 name: "RegistrosDePreco");
 
             migrationBuilder.DropTable(
@@ -375,6 +406,9 @@ namespace SistemaGestaoCompras.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "ListasDeCompra");
+
+            migrationBuilder.DropTable(
+                name: "Produtos");
         }
     }
 }

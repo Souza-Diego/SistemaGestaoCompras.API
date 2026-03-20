@@ -24,7 +24,7 @@ namespace SistemaGestaoCompras.API.Initializers
                     TipoUsuario.Administrador
                 );
 
-                await repo.AdicionarAsync(admin);
+                await repo.AdicionarAsync(admin);                
             }
         }
     }

@@ -1,9 +1,9 @@
 ﻿namespace SistemaGestaoCompras.Application.DTOs.Produtos
 {
-    public class AlterarCategoriaProdutoDto
+    public class AlterarQuantidadeProdutoDto
     {
         public Guid Id { get; set; }
-        public Guid NovaCategoriaId { get; set; }
+        public decimal? NovaQuantidade { get; set; }
         public Guid UsuarioId { get; set; }
     }
 }

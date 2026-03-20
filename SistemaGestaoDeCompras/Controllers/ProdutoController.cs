@@ -15,7 +15,11 @@ namespace SistemaGestaoCompras.API.Controllers
         private readonly AlterarNomeProdutoUseCase _alterarNomeProduto;
         private readonly AlterarCategoriaProdutoUseCase _alterarCategoriaProduto;
         private readonly AlterarMarcaProdutoUseCase _alterarMarcaProduto;
+        private readonly AlterarQuantidadeProdutoUseCase _alterarQuantidadeProduto;
         private readonly DesativarProdutoUseCase _desativarProduto;
+        private readonly ReativarProdutoUseCase _reativarProduto;
+        private readonly ListarProdutosDoUsuarioUseCase _listarProdutosDoUsuario;
+        private readonly AlterarUnidadeProdutoUseCase _alterarUnidadeProduto;
 
         public ProdutoController(
             CriarProdutoUseCase criarProduto,
@@ -26,7 +30,11 @@ namespace SistemaGestaoCompras.API.Controllers
             AlterarNomeProdutoUseCase alterarNomeProduto,
             AlterarCategoriaProdutoUseCase alterarCategoriaProduto,
             AlterarMarcaProdutoUseCase alterarMarcaProduto,
-            DesativarProdutoUseCase desativarProduto)
+            AlterarQuantidadeProdutoUseCase alterarQuantidadeProduto,
+            DesativarProdutoUseCase desativarProduto,
+            ReativarProdutoUseCase reativarProduto,
+            ListarProdutosDoUsuarioUseCase listarProdutosDoUsuario,
+            AlterarUnidadeProdutoUseCase alterarUnidadeProduto)
         {
             _criarProduto = criarProduto;
             _listarProdutos = listarProdutos;
@@ -36,39 +44,38 @@ namespace SistemaGestaoCompras.API.Controllers
             _alterarNomeProduto = alterarNomeProduto;
             _alterarCategoriaProduto = alterarCategoriaProduto;
             _alterarMarcaProduto = alterarMarcaProduto;
+            _alterarQuantidadeProduto = alterarQuantidadeProduto;
             _desativarProduto = desativarProduto;
+            _reativarProduto = reativarProduto;
+            _listarProdutosDoUsuario = listarProdutosDoUsuario;
+            _alterarUnidadeProduto = alterarUnidadeProduto;
         }
 
         [HttpPost]
         public async Task<IActionResult> Criar([FromBody] CriarProdutoDto dto)
         {
             var id = await _criarProduto.ExecutarAsync(dto);
-
             return CreatedResponse(nameof(ObterPorId), new { id }, new { id });
         }
 
         [HttpGet]
-        public async Task<IActionResult> Listar()
+        public async Task<IActionResult> Listar([FromQuery] Guid usuarioId)
         {
-            var produtos = await _listarProdutos.ExecutarAsync();
+            var produtos = await _listarProdutos.ExecutarAsync(usuarioId);
             return OkResponse(produtos);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> ObterPorId(Guid id)
+        public async Task<IActionResult> ObterPorId(Guid id, [FromQuery] Guid usuarioId)
         {
-            var produto = await _obterProdutoPorId.ExecutarAsync(id);
-
-            if (produto == null)
-                return NotFoundResponse();
-
+            var produto = await _obterProdutoPorId.ExecutarAsync(id, usuarioId);
             return OkResponse(produto);
         }
 
         [HttpGet("categoria/{categoriaId}")]
-        public async Task<IActionResult> ListarPorCategoria(Guid categoriaId)
+        public async Task<IActionResult> ListarPorCategoria(Guid categoriaId, [FromQuery] Guid usuarioId)
         {
-            var produtos = await _listarProdutosPorCategoria.ExecutarAsync(categoriaId);
+            var produtos = await _listarProdutosPorCategoria.ExecutarAsync(categoriaId, usuarioId);
             return OkResponse(produtos);
         }
 
@@ -79,13 +86,18 @@ namespace SistemaGestaoCompras.API.Controllers
             return OkResponse(produtos);
         }
 
+        [HttpGet("meus-produtos")]
+        public async Task<IActionResult> MeusProdutos([FromQuery] Guid usuarioId)
+        {
+            var produtos = await _listarProdutosDoUsuario.ExecutarAsync(usuarioId);
+            return OkResponse(produtos);
+        }
+
         [HttpPut("{id}/nome")]
         public async Task<IActionResult> AlterarNome(Guid id, [FromBody] AlterarNomeProdutoDto dto)
         {
             dto.Id = id;
-
             await _alterarNomeProduto.ExecutarAsync(dto);
-
             return NoContentResponse();
         }
 
@@ -93,9 +105,7 @@ namespace SistemaGestaoCompras.API.Controllers
         public async Task<IActionResult> AlterarCategoria(Guid id, [FromBody] AlterarCategoriaProdutoDto dto)
         {
             dto.Id = id;
-
             await _alterarCategoriaProduto.ExecutarAsync(dto);
-
             return NoContentResponse();
         }
 
@@ -103,17 +113,37 @@ namespace SistemaGestaoCompras.API.Controllers
         public async Task<IActionResult> AlterarMarca(Guid id, [FromBody] AlterarMarcaProdutoDto dto)
         {
             dto.Id = id;
-
             await _alterarMarcaProduto.ExecutarAsync(dto);
+            return NoContentResponse();
+        }
+        
+        [HttpPut("{id}/quantidade")]
+        public async Task<IActionResult> AlterarQuantidade(Guid id, [FromBody] AlterarQuantidadeProdutoDto dto)
+        {
+            dto.Id = id;
+            await _alterarQuantidadeProduto.ExecutarAsync(dto);
+            return NoContentResponse();
+        }
 
+        [HttpPut("{id}/unidade")]
+        public async Task<IActionResult> AlterarUnidade(Guid id, [FromBody] AlterarUnidadeProdutoDto dto)
+        {
+            dto.Id = id;
+            await _alterarUnidadeProduto.ExecutarAsync(dto);
             return NoContentResponse();
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Desativar(Guid id)
+        public async Task<IActionResult> Desativar(Guid id, [FromQuery] Guid usuarioId)
         {
-            await _desativarProduto.ExecutarAsync(id);
+            await _desativarProduto.ExecutarAsync(id, usuarioId);
+            return NoContentResponse();
+        }
 
+        [HttpPut("{id}/reativar")]
+        public async Task<IActionResult> Reativar(Guid id, [FromQuery] Guid usuarioId)
+        {
+            await _reativarProduto.ExecutarAsync(id, usuarioId);
             return NoContentResponse();
         }
     }

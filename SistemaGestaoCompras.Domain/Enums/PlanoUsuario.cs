@@ -2,7 +2,7 @@
 {
     public enum PlanoUsuario
     {
-        Gratuito = 0,
-        Premium = 1
+        Gratuito = 1,
+        Premium = 2
     }
 }

@@ -2,7 +2,7 @@
 {
     public enum StatusLista
     {
-        Aberta,
-        Finalizada
+        Aberta = 1,
+        Finalizada = 2
     }
 }

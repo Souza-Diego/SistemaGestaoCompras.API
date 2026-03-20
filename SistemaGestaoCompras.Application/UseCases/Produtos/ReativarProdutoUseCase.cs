@@ -3,12 +3,12 @@ using SistemaGestaoCompras.Domain.Exceptions;
 
 namespace SistemaGestaoCompras.Application.UseCases.Produtos
 {
-    public class DesativarProdutoUseCase
+    public class ReativarProdutoUseCase
     {
         private readonly IProdutoRepositorio _produtoRepositorio;
         private readonly IUsuarioRepositorio _usuarioRepositorio;
 
-        public DesativarProdutoUseCase(
+        public ReativarProdutoUseCase(
             IProdutoRepositorio produtoRepositorio,
             IUsuarioRepositorio usuarioRepositorio)
         {
@@ -29,9 +29,9 @@ namespace SistemaGestaoCompras.Application.UseCases.Produtos
                 throw new AppNotFoundException("Usuário não encontrado.");
 
             if (produto.IsGlobal() && !usuario.IsADM())
-                throw new AppDomainException("Somente administradores podem desativar produtos globais.");
+                throw new AppDomainException("Somente administradores podem reativar produtos globais.");
 
-            produto.Desativar(usuarioId);
+            produto.Ativar(usuarioId);
 
             await _produtoRepositorio.AtualizarAsync(produto);
         }

@@ -12,11 +12,13 @@ namespace SistemaGestaoCompras.Application.UseCases.Produtos
             _produtoRepositorio = produtoRepositorio;
         }
 
-        public async Task<IEnumerable<ProdutoDto>> ExecutarAsync(Guid categoriaId)
+        public async Task<IEnumerable<ProdutoDto>> ExecutarAsync(Guid categoriaId, Guid usuarioId)
         {
-            var produtos = await _produtoRepositorio.ObterPorCategoriaAsync(categoriaId);
+            var produtos = await _produtoRepositorio.ListarPorUsuarioAsync(usuarioId);
 
-            return produtos.Select(produto => new ProdutoDto
+            var filtrados = produtos.Where(p => p.IdCategoria == categoriaId);
+
+            return filtrados.Select(produto => new ProdutoDto
             {
                 Id = produto.Id,
                 Nome = produto.Nome,
@@ -24,7 +26,8 @@ namespace SistemaGestaoCompras.Application.UseCases.Produtos
                 IdMarca = produto.IdMarca,
                 UnidadeBase = produto.UnidadeBase.Simbolo,
                 Tipo = produto.Tipo.ToString(),
-                Ativo = produto.Ativo
+                Ativo = produto.Ativo,
+                QuantidadeBase = produto.QuantidadeBase
             });
         }
     }
